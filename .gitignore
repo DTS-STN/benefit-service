@@ -1,6 +1,5 @@
-
-# build file
-benefit-service
+# build files
+bin/*
 
 # IDE's
 .idea
