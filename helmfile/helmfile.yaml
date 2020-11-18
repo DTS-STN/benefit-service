@@ -1,0 +1,29 @@
+repositories:
+  - name: dts
+    url: https://helm.dts-stn.com
+{{- if or (eq .Environment.Name "prod-blue") (eq .Environment.Name "prod-green") }}
+context: EsDCDTSRG-K8S
+{{ else }}
+context: EsDCDTSDevRG-K8S
+{{ end }}
+
+environments:
+  dev:
+  prod-blue:
+  prod-green:
+
+releases:
+  # Benefit Service
+  - name: benefit-service-{{ .Environment.Name }}
+    chart: ../helm/charts/benefit-service
+    version: 0.0.1
+    values:
+      - overrides/benefitService.yaml.gotmpl
+    labels:
+      category: dts
+      app: benefit-service
+      tier: server
+    namespace: benefit-service-{{ .Environment.Name }}
+    installed: true
+    wait: false
+    force: false

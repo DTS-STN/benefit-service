@@ -1,0 +1,14 @@
+name: benefit-service
+home: https://github.com/DTS-STN/benefit-service
+apiVersion: v1
+version: 0.0.1
+appVersion: 0.0.1
+description: Prototype C19 benefit service
+maintainers:
+  - name: ericdube
+    email: eric.dube@hrsdc-rhdcc.gc.ca
+  - name: benlarabie
+    email: ben.larabie@hrsdc-rhdcc.gc.ca
+  - name: marcusblais
+    email: marcus.blais@hrsdc-rhdcc.gc.ca
+
