@@ -5,6 +5,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
 var echoService *echo.Echo
@@ -22,8 +23,7 @@ func service() {
 	echoService.Use(middleware.Recover())
 
 	// Routes
-	// TODO: implement swagger
-	// echoService.GET("/swagger/*", echoSwagger.WrapHandler)
+	echoService.GET("/swagger/*", echoSwagger.WrapHandler)
 	echoService.GET("/healthcheck", handlers.HandlerService.HealthCheck)
 
 	// Start server
