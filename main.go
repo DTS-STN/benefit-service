@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "github.com/DTS-STN/benefit-service/docs"
 	"github.com/DTS-STN/benefit-service/server"
 	"os"
 )
@@ -11,7 +12,6 @@ import (
 
 // @host [TBD]
 // @BasePath /
-
 func main() {
 	//Start the service
 	server.Main(os.Args)

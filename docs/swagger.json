@@ -1,0 +1,28 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This service returns information about benefits",
+        "title": "Benefit Service",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "[TBD]",
+    "basePath": "/",
+    "paths": {
+        "/healthcheck": {
+            "get": {
+                "description": "Returns Healthy",
+                "summary": "Returns Healthy",
+                "operationId": "healthcheck",
+                "responses": {
+                    "200": {
+                        "description": "Healthy",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

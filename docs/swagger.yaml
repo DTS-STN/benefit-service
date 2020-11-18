@@ -1,0 +1,19 @@
+basePath: /
+host: '[TBD]'
+info:
+  contact: {}
+  description: This service returns information about benefits
+  title: Benefit Service
+  version: "1.0"
+paths:
+  /healthcheck:
+    get:
+      description: Returns Healthy
+      operationId: healthcheck
+      responses:
+        "200":
+          description: Healthy
+          schema:
+            type: string
+      summary: Returns Healthy
+swagger: "2.0"
