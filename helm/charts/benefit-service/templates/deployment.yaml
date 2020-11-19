@@ -23,26 +23,26 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-{{- if.Values.extraEnv }}
+{{- if .Values.extraEnv }}
 {{ toYaml .Values.extraEnv | indent 10 }}
 {{ end }}
 {{ if .Values.benefitServicePort.enabled }}
-        ports:
-          - name: {{ .Values.benefitServicePort.name }}
-            containerPort: {{ .Values.benefitServicePort.port }}
-            protocol: {{ .Values.benefitServicePort.protocol }}
+          ports:
+            - name: {{ .Values.benefitServicePort.name }}
+              containerPort: {{ .Values.benefitServicePort.port }}
+              protocol: {{ .Values.benefitServicePort.protocol }}
 {{ end }}
 {{ if .Values.livenessProbe.enabled }}
-        livenessProbe:
-          httpGet:
-            path: {{ .Values.livenessProbe.url }}
-            port: {{ .Values.benefitServicePort.name }}
-          initialDelaySeconds: {{ .Values.livenessProbe.delay }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.livenessProbe.url }}
+              port: {{ .Values.benefitServicePort.name }}
+            initialDelaySeconds: {{ .Values.livenessProbe.delay }}
 {{ end }}
 {{ if .Values.readinessProbe.enabled }}
-        readinessProbe:
-          httpGet:
-            path: {{ .Values.readinessProbe.url }}
-            port: {{ .Values.benefitServicePort.name }}
-          initialDelaySeconds: {{ .Values.readinessProbe.delay }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessProbe.url }}
+              port: {{ .Values.benefitServicePort.name }}
+            initialDelaySeconds: {{ .Values.readinessProbe.delay }}
 {{ end }}
