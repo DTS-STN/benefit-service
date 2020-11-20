@@ -9,6 +9,7 @@ context: EsDCDTSDevRG-K8S
 
 environments:
   dev:
+  review:
   prod-blue:
   prod-green:
 
