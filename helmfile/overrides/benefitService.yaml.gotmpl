@@ -1,6 +1,6 @@
 image:
   repository: mtscontainers.azurecr.io/benefit-service
-{{ if or (eq .Environment.Name "prod-blue") (eq .Environment.Name "prod-green") (eq .Environment.Name "dev") }}
+{{ if or (eq .Environment.Name "prod-blue") (eq .Environment.Name "prod-green") (eq .Environment.Name "dev") (eq .Environment.Name "review") }}
   tag: "{{ requiredEnv "DOCKER_TAG" }}"
 {{ else }}
   tag: latest
