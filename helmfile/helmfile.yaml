@@ -24,7 +24,6 @@ releases:
       category: dts
       app: benefit-service
       tier: server
-    namespace: benefit-service-{{ .Environment.Name }}
     installed: true
     wait: false
     force: false

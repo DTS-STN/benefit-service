@@ -26,3 +26,9 @@ readinessDelay: 60
 livenessPath: /
 readinessPath: /
 port: 80
+releases:
+  {{ if (eq .Environment.Name "review") }}
+  namespace: {{ requiredEnv "REVIEW_NAMESPACE" }}
+  {{ else }}
+  namespace: benefit-service-{{ .Environment.Name }}
+  {{ end }}
