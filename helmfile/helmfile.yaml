@@ -24,11 +24,7 @@ releases:
       category: dts
       app: benefit-service
       tier: server
-    {{ if  (eq .Environment.Name "review") }}
-    namespace: benefit-service-{{ requiredEnv "REVIEW_NAME" }}
-    {{ else }}
-    namespace: benefit-service-{{ .Environment.Name }}
-    {{ end }}
+    namespace: {{ requiredEnv "NAMESPACE" }}
     installed: true
     wait: false
     force: false
