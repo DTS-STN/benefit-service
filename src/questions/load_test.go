@@ -72,7 +72,7 @@ func TestQuestionsNotEqual(t *testing.T) {
 	// Create a Mock for the interface
 	qsMock := new(QuestionServiceMock)
 	// Add a mock call request
-	qsMock.On("loadQuestions").
+	qsMock.On("LoadQuestions").
 		Return([]models.Question{{ID: "2", Description: "are you a resident of canada?", Answer: "", OpenFiscaIds: []string{"2"}}}, nil)
 	// Set the mock to be used by the code
 	QuestionService = QuestionInterface(qsMock)

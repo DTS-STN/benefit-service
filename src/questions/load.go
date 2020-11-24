@@ -28,7 +28,7 @@ func (q *QuestionServiceStruct) Questions() []models.Question {
 // trust me, I'm a developer
 var osOpen = os.Open
 
-// Loads questions from an external source
+// LoadQuestions loads questions from an external source
 // Returns a list of questions
 func (q *QuestionServiceStruct) LoadQuestions() (questions []models.Question, err error) {
 	jsonFile, err := osOpen(q.Filename)
