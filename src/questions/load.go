@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/DTS-STN/question-priority-service/models"
+	"github.com/DTS-STN/benefit-service/models"
 	"github.com/labstack/gommon/log"
 )
 

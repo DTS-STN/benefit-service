@@ -1,7 +1,7 @@
 package questions
 
 import (
-	"github.com/DTS-STN/question-priority-service/models"
+	"github.com/DTS-STN/benefit-service/models"
 )
 
 // QuestionInterface for getting questions and loading questions from file

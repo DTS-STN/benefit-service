@@ -1,6 +1,6 @@
 package bindings
 
-import "github.com/DTS-STN/question-priority-service/models"
+import "github.com/DTS-STN/benefit-service/models"
 
 // BenefitQuestionsRequest is the request sent by the client that contains the benefits
 // for which they would like the list of required questions.

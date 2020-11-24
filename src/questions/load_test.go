@@ -3,7 +3,7 @@ package questions
 import (
 	"bytes"
 	"errors"
-	"github.com/DTS-STN/question-priority-service/models"
+	"github.com/DTS-STN/benefit-service/models"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"os"

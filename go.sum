@@ -1,6 +1,4 @@
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/DTS-STN/question-priority-service v0.0.0-20201113151739-9bcdf4ba4e56 h1:ftXh0bEUEkx98eJ0JhQOTEfcxD1Wab0WSswhO+1Xi+Y=
-github.com/DTS-STN/question-priority-service v0.0.0-20201113151739-9bcdf4ba4e56/go.mod h1:4TnecsN8NeiJebOcuqzhObhxe7f5iN0VUSqNmwRNfeE=
 github.com/KyleBanks/depth v1.2.1 h1:5h8fQADFrWtarTdtDudMmGsC7GPbOAu6RVB3ffsVFHc=
 github.com/KyleBanks/depth v1.2.1/go.mod h1:jzSb9d0L43HxTQfT+oSA1EEp2q+ne2uh6XgeJcm8brE=
 github.com/PuerkitoBio/purell v1.1.0/go.mod h1:c11w/QuzBsJSee3cPx9rAFu61PvFxuPbtSwDGJws/X0=
