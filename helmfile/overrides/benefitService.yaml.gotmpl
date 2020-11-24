@@ -26,7 +26,3 @@ readinessDelay: 60
 livenessPath: /
 readinessPath: /
 port: 80
-{{ if (eq .Environment.Name "review") }}
-nameOverride: {{ requiredEnv "REVIEW_NAME" }}
-fullnameOverride: {{ requiredEnv "REVIEW_NAME" }}
-{{ end }}
