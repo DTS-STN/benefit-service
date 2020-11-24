@@ -26,7 +26,7 @@ func service() {
 	echoService.GET("/swagger/*", echoSwagger.WrapHandler)
 	echoService.GET("/healthcheck", handlers.HandlerService.HealthCheck)
 	echoService.GET("/benefit", func(c echo.Context) error {
-		return c.String(200, "some benefits")
+		return c.String(200, "some benefits test")
 	})
 
 	// Start server
