@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// Healthcheck
+// HealthCheck ...
 // @Summary Returns Healthy
 // @Description Returns Healthy
 // @ID healthcheck

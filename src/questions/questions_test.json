@@ -2,7 +2,7 @@
   {
     "id": "1",
     "description": "are you a resident?",
-    "openfiscaids": [
+    "openfisca_ids": [
       "is_canadian_resident"
     ],
     "answer": ""
