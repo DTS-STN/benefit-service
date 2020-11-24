@@ -12,7 +12,7 @@ import (
 
 var questions []models.Question
 
-// The getter for questions.
+// Questions is the getter for questions.
 // If questions
 func (q *QuestionServiceStruct) Questions() []models.Question {
 	if questions == nil || len(questions) == 0 {

@@ -4,7 +4,7 @@ import (
 	"github.com/DTS-STN/question-priority-service/models"
 )
 
-// This function returns the list of questions
+// GetNext returns the list of questions
 func GetNext(answers []models.Question) (nextQuestions []models.Question, err error) {
 	// This is not permanent and will only be used as Phase 0.1 to return hardcoded content
 	if len(answers) == 0 {
