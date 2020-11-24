@@ -7,7 +7,7 @@ import (
 // QuestionInterface for getting questions and loading questions from file
 type QuestionInterface interface {
 	Questions() []models.Question
-	loadQuestions() ([]models.Question, error)
+	LoadQuestions() ([]models.Question, error)
 }
 
 // QuestionServiceStruct is a struct used for passing in the questions file
