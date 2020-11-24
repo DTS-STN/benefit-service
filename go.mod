@@ -3,6 +3,7 @@ module github.com/DTS-STN/benefit-service
 go 1.15
 
 require (
+	github.com/DTS-STN/question-priority-service v0.0.0-20201124150903-d4bcb5e94ce3
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
 	github.com/go-openapi/spec v0.19.14 // indirect

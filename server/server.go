@@ -10,6 +10,7 @@ import (
 
 var echoService *echo.Echo
 
+// Main function
 func Main(args []string) {
 	// Echo instance
 	echoService = echo.New()
@@ -25,6 +26,7 @@ func service() {
 	// Routes
 	echoService.GET("/swagger/*", echoSwagger.WrapHandler)
 	echoService.GET("/healthcheck", handlers.HandlerService.HealthCheck)
+	echoService.GET("/getquestions", handlers.HandlerService.GetQuestions)
 
 	// Start server
 	echoService.Logger.Fatal(echoService.Start(":8080"))
