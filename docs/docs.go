@@ -38,6 +38,92 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/lifejourney": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Request Info on Life Journey",
+                "operationId": "Life Journey",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.LifeJourneyResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.QPSError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.QPSError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.QPSError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.LifeJourney": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "description_fr": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "related_benefits": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                },
+                "title_fr": {
+                    "type": "string"
+                }
+            }
+        },
+        "renderings.LifeJourneyResponse": {
+            "type": "object",
+            "properties": {
+                "lifejourneys": {
+                    "description": "Life Journey ID",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.LifeJourney"
+                    }
+                }
+            }
+        },
+        "renderings.QPSError": {
+            "type": "object",
+            "properties": {
+                "error_code": {
+                    "type": "string"
+                }
+            }
         }
     }
 }`
@@ -58,7 +144,7 @@ var SwaggerInfo = swaggerInfo{
 	BasePath:    "/",
 	Schemes:     []string{},
 	Title:       "Benefit Service",
-	Description: "This service returns information about benefits",
+	Description: "This service returns information about lifejourneys",
 }
 
 type s struct{}

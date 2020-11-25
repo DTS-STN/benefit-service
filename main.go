@@ -8,7 +8,7 @@ import (
 
 // @title Benefit Service
 // @version 1.0
-// @description This service returns information about benefits
+// @description This service returns information about lifejourneys
 
 // @host [TBD]
 // @BasePath /

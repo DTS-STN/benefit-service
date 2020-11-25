@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "title": "Adult Life Journey",
+    "description": "Adult Life Journey relates all benefits to support Adults",
+    "title_fr": "[FR}Adult Life Journey",
+    "description_fr": "{FR}Adult Life Journey relates all benefits to support Adults",
+    "related_benefits": ["1"]
+  },
+  {
+    "id": 2,
+    "title": "Student Life Journey",
+    "description": "Student Life Journey relates all benefits to support Students",
+    "title_fr": "[FR] Student Life Journey",
+    "description_fr": "[FR] Student Life Journey relates all benefits to support Students",
+    "related_benefits": ["1"]
+  },
+  {
+    "id": 3,
+    "title": "Senior Life Journey",
+    "description": "Senior Life Journey relates all benefits to support Seniors",
+    "title_fr": "[FR]Senior Life Journey",
+    "description_fr": "[FR]Senior Life Journey relates all benefits to support Seniors",
+    "related_benefits": ["1"]
+  },
+  {
+    "id": 4,
+    "title": "Disability Life Journey",
+    "description": "Senior Life Journey relates all benefits to support Seniors",
+    "title_fr": "[FR]Senior Life Journey",
+    "description_fr": "[FR]Senior Life Journey relates all benefits to support Seniors",
+    "related_benefits": ["1"]
+  }
+]
