@@ -13,5 +13,5 @@ import (
 // @Success 200 {string} string	"Healthy"
 // @Router /healthcheck [get]
 func (h *Handler) HealthCheck(c echo.Context) error {
-	return c.String(http.StatusOK, "version 99.69.99: nice")
+	return c.String(http.StatusOK, "version 9000.1")
 }
