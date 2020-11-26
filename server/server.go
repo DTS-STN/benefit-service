@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/DTS-STN/benefit-service/handlers"
+	"github.com/DTS-STN/benefit-service/src/benefits"
 	"github.com/DTS-STN/benefit-service/src/lifejourneys"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -12,14 +13,17 @@ import (
 var echoService *echo.Echo
 
 func Main(args []string) {
-	setupLifeJourneyFile()
+	setupJsonFilePath()
 	// Echo instance
 	echoService = echo.New()
 	service()
 }
-func setupLifeJourneyFile() {
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "/home/bungay/Github/benefit-service/src/lifejourneys/life_journeys.json"}
+
+func setupJsonFilePath() {
+	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "life_journeys.json"}
+	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "benefit_info.json"}
 }
+
 func service() {
 	echoService.Logger.SetLevel(log.DEBUG)
 
@@ -30,7 +34,7 @@ func service() {
 	echoService.GET("/swagger/*", echoSwagger.WrapHandler)
 	echoService.GET("/healthcheck", handlers.HandlerService.HealthCheck)
 	echoService.GET("/lifejourney", handlers.HandlerService.LifeJourney)
-
+	echoService.GET("/benefits", handlers.HandlerService.Benefits)
 	// Start server
 	echoService.Logger.Fatal(echoService.Start(":8080"))
 }
