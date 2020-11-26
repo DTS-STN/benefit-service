@@ -1,8 +1,9 @@
 package handlers
 
 import (
-	"github.com/labstack/echo/v4"
 	"net/http"
+
+	"github.com/labstack/echo/v4"
 )
 
 // Healthcheck
@@ -12,5 +13,5 @@ import (
 // @Success 200 {string} string	"Healthy"
 // @Router /healthcheck [get]
 func (h *Handler) HealthCheck(c echo.Context) error {
-	return c.String(http.StatusOK, "Healthy")
+	return c.String(http.StatusOK, "Very Healthy, indeed!")
 }
