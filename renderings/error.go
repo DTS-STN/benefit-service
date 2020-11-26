@@ -1,5 +1,5 @@
 package renderings
 
-type QPSError struct {
+type BenefitServiceError struct {
 	ErrorCode string `json:"error_code"`
 }

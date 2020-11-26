@@ -14,12 +14,12 @@ import (
 // @Accept  json
 // @Produce json
 // @Success 200 {object} renderings.LifeJourneyResponse
-// @Failure 400 {object} renderings.QPSError
-// @Failure 404 {object} renderings.QPSError
-// @Failure 500 {object} renderings.QPSError
+// @Failure 400 {object} renderings.BenefitServiceError
+// @Failure 404 {object} renderings.BenefitServiceError
+// @Failure 500 {object} renderings.BenefitServiceError
 // @Router /lifejourney [get]
 
-func (h *Handler) LifeJourney(c echo.Context) (err error) {
+func (h *Handler) LifeJourney(c echo.Context) error {
 	var lifeJourneyResponse = new(renderings.LifeJourneyResponse)
 	lifeJourneyRequest := new(bindings.LifeJourneyRequest)
 
@@ -35,9 +35,9 @@ func (h *Handler) LifeJourney(c echo.Context) (err error) {
 	}
 
 	if lifeJourneyRequest.Id != 0 {
-		for i, _ := range ljList {
-			if ljList[i].ID == lifeJourneyRequest.Id {
-				lifeJourneyResponse.LifeJourneyList = append(lifeJourneyResponse.LifeJourneyList, ljList[i])
+		for _, lj := range ljList {
+			if lj.ID == lifeJourneyRequest.Id {
+				lifeJourneyResponse.LifeJourneyList = append(lifeJourneyResponse.LifeJourneyList, lj)
 				break
 			}
 
