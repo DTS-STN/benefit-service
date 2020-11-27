@@ -18,7 +18,7 @@ func Main(args []string) {
 	service()
 }
 func setupLifeJourneyFile() {
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "/home/bungay/Github/benefit-service/src/lifejourneys/life_journeys.json"}
+	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "life_journeys.json"}
 }
 func service() {
 	echoService.Logger.SetLevel(log.DEBUG)
