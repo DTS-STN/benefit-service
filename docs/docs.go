@@ -58,7 +58,7 @@ var SwaggerInfo = swaggerInfo{
 	BasePath:    "/",
 	Schemes:     []string{},
 	Title:       "Benefit Service",
-	Description: "This service returns information about lifejourneys",
+	Description: "This service returns information about Benefits",
 }
 
 type s struct{}

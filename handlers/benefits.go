@@ -18,6 +18,7 @@ import (
 // @Failure 400 {object} renderings.BenefitServiceError
 // @Failure 404 {object} renderings.BenefitServiceError
 // @Failure 500 {object} renderings.BenefitServiceError
+// @Param Benefits body bindings.BenefitsRequest
 // @Router /benefits [get]
 
 func (h *Handler) Benefits(c echo.Context) error {

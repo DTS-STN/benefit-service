@@ -2,7 +2,7 @@ basePath: /
 host: '[TBD]'
 info:
   contact: {}
-  description: This service returns information about lifejourneys
+  description: This service returns information about Benefits
   title: Benefit Service
   version: "1.0"
 paths:

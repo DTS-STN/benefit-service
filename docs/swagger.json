@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This service returns information about lifejourneys",
+        "description": "This service returns information about Benefits",
         "title": "Benefit Service",
         "contact": {},
         "version": "1.0"
