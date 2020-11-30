@@ -17,9 +17,11 @@ func Main(args []string) {
 	echoService = echo.New()
 	service()
 }
+
 func setupLifeJourneyFile() {
 	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "life_journeys.json"}
 }
+
 func service() {
 	echoService.Logger.SetLevel(log.DEBUG)
 
