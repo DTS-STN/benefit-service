@@ -15,7 +15,7 @@ environments:
 
 releases:
   # Benefit Service
-  - name: benefit-service-{{ .Environment.Name }}
+  - name: {{ requiredEnv "RELEASE_NAME" }}
     chart: ../helm/charts/benefit-service
     version: 0.0.1
     values:
@@ -24,7 +24,7 @@ releases:
       category: dts
       app: benefit-service
       tier: server
-    namespace: {{ requiredEnv "NAMESPACE" }}
+    namespace: benefit-service-{{ .Environment.Name }}
     installed: true
     wait: false
     force: false
