@@ -34,7 +34,7 @@ func (h *Handler) LifeJourney(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
 	}
 
-	if lifeJourneyRequest.Id != 0 {
+	if lifeJourneyRequest.Id != "" {
 		for _, lj := range ljList {
 			if lj.ID == lifeJourneyRequest.Id {
 				lifeJourneyResponse.LifeJourneyList = append(lifeJourneyResponse.LifeJourneyList, lj)
