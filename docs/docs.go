@@ -24,6 +24,44 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/benefits": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Request Info on Benefits",
+                "operationId": "benefits",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    }
+                }
+            }
+        },
         "/healthcheck": {
             "get": {
                 "description": "Returns Healthy",
@@ -35,6 +73,165 @@ var doc = `{
                         "schema": {
                             "type": "string"
                         }
+                    }
+                }
+            }
+        },
+        "/lifejourney": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Request Info on Life Journey",
+                "operationId": "life-journey",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.LifeJourneyResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Benefits": {
+            "type": "object",
+            "properties": {
+                "benefit_details": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.FieldDetails"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "description_fr": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "related_benefits": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                },
+                "title_fr": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.FieldDetails": {
+            "type": "object",
+            "properties": {
+                "field_long_description": {
+                    "type": "string"
+                },
+                "field_long_description_fr": {
+                    "type": "string"
+                },
+                "field_short_description": {
+                    "type": "string"
+                },
+                "field_short_description_fr": {
+                    "type": "string"
+                },
+                "fieldname": {
+                    "type": "string"
+                },
+                "fieldname_fr": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.LifeJourney": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "description_fr": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "lifejourney_details": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.FieldDetails"
+                    }
+                },
+                "related_benefits": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                },
+                "title_fr": {
+                    "type": "string"
+                }
+            }
+        },
+        "renderings.BenefitServiceError": {
+            "type": "object",
+            "properties": {
+                "error_code": {
+                    "type": "string"
+                }
+            }
+        },
+        "renderings.BenefitsResponse": {
+            "type": "object",
+            "properties": {
+                "benefits": {
+                    "description": "Life Journey ID",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Benefits"
+                    }
+                }
+            }
+        },
+        "renderings.LifeJourneyResponse": {
+            "type": "object",
+            "properties": {
+                "lifejourneys": {
+                    "description": "Life Journey ID",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.LifeJourney"
                     }
                 }
             }
@@ -54,7 +251,7 @@ type swaggerInfo struct {
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
 	Version:     "1.0",
-	Host:        "[TBD]",
+	Host:        "https://benefit-service-dev.dev.dts-stn.com",
 	BasePath:    "/",
 	Schemes:     []string{},
 	Title:       "Benefit Service",
