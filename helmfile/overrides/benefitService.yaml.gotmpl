@@ -13,7 +13,7 @@ ingress:
         - benefit-service.{{ requiredEnv "BASE_DOMAIN" }}
         - benefit-service.{{ .Environment.Name }}.{{ requiredEnv "BASE_DOMAIN" }}
       {{ else if (eq .Environment.Name "review") }}
-        - {{ requiredEnv "NAMESPACE" }}
+        - {{ requiredEnv "NAMESPACE" }}.{{ requiredEnv "BASE_DOMAIN_DEV" }}
       {{ else }}
         - benefit-service-{{ .Environment.Name }}.{{ requiredEnv "BASE_DOMAIN_DEV" }}
       {{ end }}
