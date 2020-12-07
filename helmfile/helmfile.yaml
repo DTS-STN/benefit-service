@@ -24,7 +24,7 @@ releases:
       category: dts
       app: benefit-service
       tier: server
-    {{ or (eq .Environment.Name "review") }}
+    {{ if (eq .Environment.Name "review") }}
     namespace: benefit-service-{{ .Environment.Name }}-{{ requiredEnv "PULL_REQUEST" }}
     {{ else }}
     namespace: benefit-service-{{ .Environment.Name }}
