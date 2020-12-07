@@ -15,7 +15,7 @@ environments:
 
 releases:
   # Benefit Service
-  - name: benefit-service-{{ .Environment.Name }}
+  - name: {{ requiredEnv "NAMESPACE" }}
     chart: ../helm/charts/benefit-service
     version: 0.0.1
     values:
