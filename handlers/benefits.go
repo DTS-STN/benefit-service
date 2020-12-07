@@ -1,12 +1,13 @@
 package handlers
 
 import (
+	"net/http"
+	"strings"
+
 	"github.com/DTS-STN/benefit-service/bindings"
 	"github.com/DTS-STN/benefit-service/renderings"
 	"github.com/DTS-STN/benefit-service/src/benefits"
 	"github.com/labstack/echo/v4"
-	"net/http"
-	"strings"
 )
 
 // Benefits
@@ -18,9 +19,7 @@ import (
 // @Failure 400 {object} renderings.BenefitServiceError
 // @Failure 404 {object} renderings.BenefitServiceError
 // @Failure 500 {object} renderings.BenefitServiceError
-// @Param Benefits body bindings.BenefitsRequest
 // @Router /benefits [get]
-
 func (h *Handler) Benefits(c echo.Context) error {
 	var benefitsResponse = new(renderings.BenefitsResponse)
 	benefitsRequest := new(bindings.BenefitsRequest)

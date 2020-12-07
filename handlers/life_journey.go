@@ -1,16 +1,17 @@
 package handlers
 
 import (
+	"net/http"
+
 	"github.com/DTS-STN/benefit-service/bindings"
 	"github.com/DTS-STN/benefit-service/renderings"
 	"github.com/DTS-STN/benefit-service/src/lifejourneys"
 	"github.com/labstack/echo/v4"
-	"net/http"
 )
 
 // LifeJourney
 // @Summary Request Info on Life Journey
-// @ID Life Journey
+// @ID life-journey
 // @Accept  json
 // @Produce json
 // @Success 200 {object} renderings.LifeJourneyResponse
@@ -18,7 +19,6 @@ import (
 // @Failure 404 {object} renderings.BenefitServiceError
 // @Failure 500 {object} renderings.BenefitServiceError
 // @Router /lifejourney [get]
-
 func (h *Handler) LifeJourney(c echo.Context) error {
 	var lifeJourneyResponse = new(renderings.LifeJourneyResponse)
 	lifeJourneyRequest := new(bindings.LifeJourneyRequest)
