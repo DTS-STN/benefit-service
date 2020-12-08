@@ -20,8 +20,8 @@ func Main(args []string) {
 }
 
 func setupJsonFilePath() {
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "life_journeys.json"}
-	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "benefit_info.json"}
+	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "life_journeys_en.json"}
+	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "benefit_info_en.json"}
 }
 
 func service() {
