@@ -30,23 +30,15 @@ func (h *Handler) LifeJourney(c echo.Context) error {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
 	}
-	ljList, err := lifejourneys.LifeJourneyService.LoadLifeJourneys()
+
+	var lifeJourneyList []models.LifeJourney
+	lifeJourneyList, err := getLifeJourneyBenefitIds(lifeJourneyRequest.Id)
 	if err != nil {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
 	}
 
-	if lifeJourneyRequest.Id != "" {
-		for _, lj := range ljList {
-			if lj.ID == lifeJourneyRequest.Id {
-				lifeJourneyResponse.LifeJourneyList = append(lifeJourneyResponse.LifeJourneyList, lj)
-				break
-			}
-
-		}
-	} else {
-		lifeJourneyResponse.LifeJourneyList = ljList
-	}
+	lifeJourneyResponse.LifeJourneyList = lifeJourneyList
 	return c.JSON(http.StatusOK, lifeJourneyResponse)
 }
 
