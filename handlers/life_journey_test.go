@@ -41,6 +41,8 @@ func TestLifeJourneyBenefits(t *testing.T) {
 	rec := httptest.NewRecorder()
 	// Create a new Echo Context
 	c := e.NewContext(req, rec)
+	c.SetParamNames("id")
+	c.SetParamValues("1")
 
 	// Assertions
 	if assert.NoError(t, HandlerService.LifeJourneyBenefits(c)) {
@@ -59,6 +61,8 @@ func TestLifeJourneyBenefits_One(t *testing.T) {
 	rec := httptest.NewRecorder()
 	// Create a new Echo Context
 	c := e.NewContext(req, rec)
+	c.SetParamNames("id")
+	c.SetParamValues("1")
 
 	// Assertions
 	if assert.NoError(t, HandlerService.LifeJourneyBenefits(c)) {
