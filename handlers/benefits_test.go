@@ -34,7 +34,7 @@ func TestBenefits_AllBenefits(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 	//Load Benefits Data File
-	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "../benefit_info.json"}
+	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "../benefit_info_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/benefits", nil)
 
@@ -46,7 +46,7 @@ func TestBenefits_AllBenefits(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, HandlerService.Benefits(c)) {
 		benefitResponse := new(renderings.BenefitsResponse)
-		json.NewDecoder(rec.Body).Decode(benefitResponse)
+		json.NewDecoder(rec.Body).Decode(&benefitResponse.BenefitsList)
 
 		assert.Equal(t, 5, len(benefitResponse.BenefitsList))
 	}
@@ -56,7 +56,7 @@ func TestBenefits_SingleBenefit(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 	//Load Benefits Data File
-	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "../benefit_info.json"}
+	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "../benefit_info_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/benefits", nil)
 	q := req.URL.Query()
@@ -71,7 +71,7 @@ func TestBenefits_SingleBenefit(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, HandlerService.Benefits(c)) {
 		benefitResponse := new(renderings.BenefitsResponse)
-		json.NewDecoder(rec.Body).Decode(benefitResponse)
+		json.NewDecoder(rec.Body).Decode(&benefitResponse.BenefitsList)
 
 		assert.Equal(t, 1, len(benefitResponse.BenefitsList))
 	}
@@ -81,7 +81,7 @@ func TestBenefits_MultipleBenefits(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 	//Load Benefits Data File
-	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "../benefit_info.json"}
+	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "../benefit_info_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/benefits", nil)
 	q := req.URL.Query()
@@ -96,7 +96,7 @@ func TestBenefits_MultipleBenefits(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, HandlerService.Benefits(c)) {
 		benefitResponse := new(renderings.BenefitsResponse)
-		json.NewDecoder(rec.Body).Decode(benefitResponse)
+		json.NewDecoder(rec.Body).Decode(&benefitResponse.BenefitsList)
 
 		assert.Equal(t, 3, len(benefitResponse.BenefitsList))
 	}

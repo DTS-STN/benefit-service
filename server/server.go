@@ -34,7 +34,9 @@ func service() {
 	echoService.GET("/swagger/*", echoSwagger.WrapHandler)
 	echoService.GET("/healthcheck", handlers.HandlerService.HealthCheck)
 	echoService.GET("/lifejourneys", handlers.HandlerService.LifeJourney)
+	echoService.GET("/lifejourneys/:id", handlers.HandlerService.LifeJourney)
 	echoService.GET("/benefits", handlers.HandlerService.Benefits)
+	echoService.GET("/benefits/:id", handlers.HandlerService.Benefits)
 	// Start server
 	echoService.Logger.Fatal(echoService.Start(":8080"))
 }
