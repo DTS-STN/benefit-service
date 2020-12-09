@@ -23,23 +23,23 @@ var Service OFInterface
 
 // SendRequest ...
 // OpenFisca interface method for sending requests to OpenFisca
-func (of OFService) SendRequest(QuestionsRequest *bindings.BenefitQuestionsRequest) (renderings.BenefitQuestionsResponse, error) {
+func (of OFService) SendRequest(OpenFiscaRequest map[string]interface{}) (OpenFiscaResponse map[string]interface{}, err error) {
 
 	//Modify QuestionsRequest if necessary
-	requestBody, err := json.Marshal(QuestionsRequest)
+	requestBody, err := json.Marshal(OpenFiscaRequest)
 	if err != nil {
-		return renderings.BenefitQuestionsResponse{}, err
+		return OpenFiscaResponse, err
 	}
 
 	//TODO: Put url in a config
-	resp, err := http.Post("https://fd7a43f1-b30f-4895-836d-5b52cede5318.mock.pstmn.io/trace", "application/json", bytes.NewBuffer(requestBody))
+	resp, err := http.Post("http://localhost:5000/trace", "application/json", bytes.NewBuffer(requestBody))
 	if err != nil {
-		return renderings.BenefitQuestionsResponse{}, err
+		return OpenFiscaResponse, err
 	}
 
 	// Defer the closing of the body
 	defer resp.Body.Close()
-	temp := &renderings.BenefitQuestionsResponse{}
+	temp := &OpenFiscaResponse
 	err = json.NewDecoder(resp.Body).Decode(temp)
 
 	return *temp, err

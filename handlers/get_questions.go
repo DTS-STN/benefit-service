@@ -1,17 +1,16 @@
 package handlers
 
 import (
+	"github.com/DTS-STN/benefit-service/src/openfisca"
 	"github.com/DTS-STN/benefit-service/bindings"
-	"github.com/DTS-STN/benefit-service/renderings"
+	// "github.com/DTS-STN/benefit-service/renderings"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"time"
-	"fmt"
-	"encoding/json"
 )
 
 type Persons struct {
-	Person interface{}
+	Person interface{} `json:"person"`
 }
 
 // GetQuestions ...
@@ -22,11 +21,11 @@ type Persons struct {
 // @Router /getquestions [get]
 func (h *Handler) GetQuestions(c echo.Context) error {
 	getQuestionsRequest := new(bindings.BenefitQuestionsRequest)
-	getQuestionsResponse := new(renderings.BenefitQuestionsResponse)
+	// getQuestionsResponse := new(renderings.BenefitQuestionsResponse)
 
 	if err := c.Bind(getQuestionsRequest); err != nil {
 		c.Logger().Error(err)
-		return c.JSON(http.StatusBadRequest, getQuestionsResponse)
+		return c.JSON(http.StatusBadRequest, err)
 	}
 
 	t := time.Unix(getQuestionsRequest.RequestDate, 0)
@@ -40,9 +39,13 @@ func (h *Handler) GetQuestions(c echo.Context) error {
 		p[benefit] = map[string]interface{}{}
 		p[benefit][tstring] = nil
 	}
-	persons["Persons"] = Persons{p}
-	benefitJSON, _ := json.Marshal(persons)
-	fmt.Println(string(benefitJSON))
+	persons["persons"] = Persons{p}
 
-	return nil
+	ofresponse, err := openfisca.OFService.SendRequest(openfisca.OFService{}, persons)
+	if err != nil {
+		c.Logger().Error(err)
+		return c.JSON(http.StatusBadRequest, err)
+	}
+
+	return c.JSON(http.StatusOK, ofresponse)
 }
