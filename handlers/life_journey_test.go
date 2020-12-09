@@ -16,9 +16,9 @@ func TestLifeJourney(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys.json"}
+	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
 	// Setup http request using httptest
-	req := httptest.NewRequest(http.MethodGet, "/lifejourney", nil)
+	req := httptest.NewRequest(http.MethodGet, "/lifejourneys", nil)
 	// Create a httptest record
 	rec := httptest.NewRecorder()
 	// Create a new Echo Context
@@ -34,9 +34,9 @@ func TestLifeJourney_AllLifeJourneys(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys.json"}
+	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
 	// Setup http request using httptest
-	req := httptest.NewRequest(http.MethodGet, "/lifejourney", nil)
+	req := httptest.NewRequest(http.MethodGet, "/lifejourneys", nil)
 	// Create a httptest record
 	rec := httptest.NewRecorder()
 	// Create a new Echo Context
@@ -45,7 +45,7 @@ func TestLifeJourney_AllLifeJourneys(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, HandlerService.LifeJourney(c)) {
 		lifeJourneyResponse := new(renderings.LifeJourneyResponse)
-		json.NewDecoder(rec.Body).Decode(lifeJourneyResponse)
+		json.NewDecoder(rec.Body).Decode(&lifeJourneyResponse.LifeJourneyList)
 
 		assert.Equal(t, 4, len(lifeJourneyResponse.LifeJourneyList))
 	}
@@ -55,9 +55,9 @@ func TestLifeJourney_SingleLifeJourney(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys.json"}
+	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
 	// Setup http request using httptest
-	req := httptest.NewRequest(http.MethodGet, "/lifejourney", nil)
+	req := httptest.NewRequest(http.MethodGet, "/lifejourneys", nil)
 	q := req.URL.Query()
 	q.Add("id", "1")
 	req.URL.RawQuery = q.Encode()
@@ -69,7 +69,7 @@ func TestLifeJourney_SingleLifeJourney(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, HandlerService.LifeJourney(c)) {
 		lifeJourneyResponse := new(renderings.LifeJourneyResponse)
-		json.NewDecoder(rec.Body).Decode(lifeJourneyResponse)
+		json.NewDecoder(rec.Body).Decode(&lifeJourneyResponse.LifeJourneyList)
 
 		assert.Equal(t, 1, len(lifeJourneyResponse.LifeJourneyList))
 	}

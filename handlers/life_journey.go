@@ -45,5 +45,5 @@ func (h *Handler) LifeJourney(c echo.Context) error {
 	} else {
 		lifeJourneyResponse.LifeJourneyList = ljList
 	}
-	return c.JSON(http.StatusOK, lifeJourneyResponse)
+	return c.JSON(http.StatusOK, lifeJourneyResponse.LifeJourneyList)
 }
