@@ -7,18 +7,11 @@ import (
 	"net/http"
 	"time"
 	"fmt"
+	"encoding/json"
 )
 
-// TraceRequest struct for sending the list of benefits to OpenFisca
-// to get dependencies
-type TraceRequest struct {
-	Persons struct {
-		Person struct {
-			Benefit struct {
-				RequestDate string
-			}
-		} `json:"person"`
-	} `json:"persons"`
+type Persons struct {
+	Person interface{}
 }
 
 // GetQuestions ...
@@ -39,15 +32,17 @@ func (h *Handler) GetQuestions(c echo.Context) error {
 	t := time.Unix(getQuestionsRequest.RequestDate, 0)
 	tstring := t.Format("2006-01-02")
 
-	traceRequest := new(TraceRequest)
-	benefits := new(Benefits)
+	persons := map[string]interface{}{}
 
-	for index, value := range getQuestionsRequest.BenefitList {
-		fmt.Println(index, value)
-		mapA := map[string]interface{value:{tstring:nil}}
+	p := map[string]map[string]interface{}{}
+
+	for _, benefit := range getQuestionsRequest.BenefitList {
+		p[benefit] = map[string]interface{}{}
+		p[benefit][tstring] = nil
 	}
-
-	fmt.Println(benefits)
+	persons["Persons"] = Persons{p}
+	benefitJSON, _ := json.Marshal(persons)
+	fmt.Println(string(benefitJSON))
 
 	return nil
 }
