@@ -32,7 +32,7 @@ func (h *Handler) LifeJourney(c echo.Context) error {
 	}
 
 	var lifeJourneyList []models.LifeJourney
-	lifeJourneyList, err := getLifeJourneyBenefitIds(lifeJourneyRequest.Id)
+	lifeJourneyList, err := getLifeJourneyBenefits(lifeJourneyRequest.Id)
 	if err != nil {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
@@ -67,7 +67,7 @@ func (h *Handler) LifeJourneyBenefits(c echo.Context) error {
 	}
 
 	var lifeJourneyList []models.LifeJourney
-	lifeJourneyList, err := getLifeJourneyBenefitIds(lifeJourneyBenefitsRequest.Id)
+	lifeJourneyList, err := getLifeJourneyBenefits(lifeJourneyBenefitsRequest.Id)
 	if err != nil {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
@@ -86,7 +86,7 @@ func (h *Handler) LifeJourneyBenefits(c echo.Context) error {
 	return c.JSON(http.StatusOK, lifeJourneyBenefitsResponse)
 }
 
-func getLifeJourneyBenefitIds(id string) (lifeJourneyList []models.LifeJourney, err error) {
+func getLifeJourneyBenefits(id string) (lifeJourneyList []models.LifeJourney, err error) {
 
 	ljList, err := lifejourneys.LifeJourneyService.LoadLifeJourneys()
 	if err != nil {

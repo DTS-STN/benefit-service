@@ -50,7 +50,7 @@ func TestLifeJourneyBenefits(t *testing.T) {
 	}
 }
 
-func TestLifeJourneyBenefits_One(t *testing.T) {
+func TestLifeJourneyBenefits_MultipleBenefits(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
@@ -71,4 +71,22 @@ func TestLifeJourneyBenefits_One(t *testing.T) {
 
 		assert.Equal(t, 3, len(*benefits))
 	}
+}
+
+func TestGetLifeJourneyBenefitIds(t *testing.T) {
+	lifeJourneyId := "1"
+	lifeJourneyList, err := getLifeJourneyBenefits(lifeJourneyId)
+	if err != nil {
+		assert.Fail(t, "Error occured when getting life journey list")
+	}
+	assert.Equal(t, 1, len(lifeJourneyList))
+}
+
+func TestGetBenefitsByIds(t *testing.T) {
+	benefitIds := []string{"1", "2"}
+	benefitList, err := getBenefitsByIds(benefitIds)
+	if err != nil {
+		assert.Fail(t, "Error occured when getting benefits by id")
+	}
+	assert.Equal(t, 2, len(benefitList))
 }
