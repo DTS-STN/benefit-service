@@ -2,18 +2,18 @@ package benefits
 
 import (
 	"encoding/json"
-	"github.com/DTS-STN/benefit-service/models"
-	"github.com/labstack/gommon/log"
 	"io"
 	"io/ioutil"
 	"os"
+
+	"github.com/DTS-STN/benefit-service/models"
+	"github.com/labstack/gommon/log"
 )
 
 var benefits []models.Benefits
 
-// The getter for questions.
-// If questions
-func (q BenefitsServiceStruct) Benefits() []models.Benefits {
+// Benefits is a getter for a list of benefits
+func (q *BenefitsServiceStruct) Benefits() []models.Benefits {
 	if benefits == nil || len(benefits) == 0 {
 		var err error
 		if benefits, err = BenefitsService.LoadBenefits(); err != nil {
@@ -27,9 +27,9 @@ func (q BenefitsServiceStruct) Benefits() []models.Benefits {
 // trust me, I'm a developer
 var osOpen = os.Open
 
-// Loads questions from an external source
+// LoadBenefits loads data from an external source
 // Returns a list of questions
-func (q BenefitsServiceStruct) LoadBenefits() (benefits []models.Benefits, err error) {
+func (q *BenefitsServiceStruct) LoadBenefits() (benefits []models.Benefits, err error) {
 	jsonFile, err := osOpen(q.Filename)
 
 	if err != nil {
@@ -56,4 +56,9 @@ func readFile(reader io.Reader) ([]byte, error) {
 		log.Fatal(err)
 	}
 	return lines, err
+}
+
+// SetFilePath sets the path to the file to read data from
+func (q *BenefitsServiceStruct) SetFilePath(path string) {
+	q.Filename = path
 }

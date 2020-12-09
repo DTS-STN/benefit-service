@@ -16,7 +16,7 @@ func TestLifeJourney(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
+	lifejourneys.LifeJourneyService = &lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/lifejourneys", nil)
 	// Create a httptest record
@@ -34,7 +34,7 @@ func TestLifeJourney_AllLifeJourneys(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
+	lifejourneys.LifeJourneyService = &lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/lifejourneys", nil)
 	// Create a httptest record
@@ -55,7 +55,7 @@ func TestLifeJourney_SingleLifeJourney(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
+	lifejourneys.LifeJourneyService = &lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/lifejourneys", nil)
 	q := req.URL.Query()

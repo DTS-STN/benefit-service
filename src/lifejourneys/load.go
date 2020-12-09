@@ -2,18 +2,18 @@ package lifejourneys
 
 import (
 	"encoding/json"
-	"github.com/DTS-STN/benefit-service/models"
-	"github.com/labstack/gommon/log"
 	"io"
 	"io/ioutil"
 	"os"
+
+	"github.com/DTS-STN/benefit-service/models"
+	"github.com/labstack/gommon/log"
 )
 
 var lifeJourneys []models.LifeJourney
 
-// The getter for questions.
-// If questions
-func (q LifeJourneyServiceStruct) LifeJourneys() []models.LifeJourney {
+// LifeJourneys is a getter for life journeys
+func (q *LifeJourneyServiceStruct) LifeJourneys() []models.LifeJourney {
 	if lifeJourneys == nil || len(lifeJourneys) == 0 {
 		var err error
 		if lifeJourneys, err = LifeJourneyService.LoadLifeJourneys(); err != nil {
@@ -27,9 +27,9 @@ func (q LifeJourneyServiceStruct) LifeJourneys() []models.LifeJourney {
 // trust me, I'm a developer
 var osOpen = os.Open
 
-// Loads questions from an external source
+// LoadLifeJourneys loads data from an external source
 // Returns a list of questions
-func (q LifeJourneyServiceStruct) LoadLifeJourneys() (lifeJourneys []models.LifeJourney, err error) {
+func (q *LifeJourneyServiceStruct) LoadLifeJourneys() (lifeJourneys []models.LifeJourney, err error) {
 	jsonFile, err := osOpen(q.Filename)
 
 	if err != nil {
@@ -56,4 +56,9 @@ func readFile(reader io.Reader) ([]byte, error) {
 		log.Fatal(err)
 	}
 	return lines, err
+}
+
+// SetFilePath sets the path to the file to read data from
+func (q *LifeJourneyServiceStruct) SetFilePath(path string) {
+	q.Filename = path
 }

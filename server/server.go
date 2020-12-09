@@ -2,8 +2,6 @@ package server
 
 import (
 	"github.com/DTS-STN/benefit-service/handlers"
-	"github.com/DTS-STN/benefit-service/src/benefits"
-	"github.com/DTS-STN/benefit-service/src/lifejourneys"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
@@ -12,18 +10,14 @@ import (
 
 var echoService *echo.Echo
 
+// Main sets up and launches the echo service
 func Main(args []string) {
-	setupJsonFilePath()
 	// Echo instance
 	echoService = echo.New()
 	service()
 }
 
-func setupJsonFilePath() {
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "life_journeys_en.json"}
-	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "benefit_info_en.json"}
-}
-
+// service will setup the echo instance and launch the service
 func service() {
 	echoService.Logger.SetLevel(log.DEBUG)
 

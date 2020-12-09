@@ -29,7 +29,10 @@ func (h *Handler) Benefits(c echo.Context) error {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, benefitsResponse)
 	}
+
+	setLanguage(c.Request().Header.Get("Content-Language"))
 	benList, err := benefits.BenefitsService.LoadBenefits()
+
 	if err != nil {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, benefitsResponse)

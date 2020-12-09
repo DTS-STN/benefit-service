@@ -28,7 +28,10 @@ func (h *Handler) LifeJourney(c echo.Context) error {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
 	}
+
+	setLanguage(c.Request().Header.Get("Content-Language"))
 	ljList, err := lifejourneys.LifeJourneyService.LoadLifeJourneys()
+
 	if err != nil {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, lifeJourneyResponse)

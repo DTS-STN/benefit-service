@@ -7,10 +7,11 @@ import (
 type BenefitsInterface interface {
 	Benefits() []models.Benefits
 	LoadBenefits() (Benefits []models.Benefits, err error)
+	SetFilePath(path string)
 }
 
 type BenefitsServiceStruct struct {
 	Filename string
 }
 
-var BenefitsService BenefitsInterface
+var BenefitsService BenefitsInterface = new(BenefitsServiceStruct)
