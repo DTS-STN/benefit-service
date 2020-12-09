@@ -4,6 +4,7 @@ import (
 	"github.com/DTS-STN/benefit-service/handlers"
 	"github.com/DTS-STN/benefit-service/src/benefits"
 	"github.com/DTS-STN/benefit-service/src/lifejourneys"
+	"github.com/DTS-STN/benefit-service/src/questions"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
@@ -14,15 +15,16 @@ var echoService *echo.Echo
 
 // Main function
 func Main(args []string) {
-	setupJsonFilePath()
+	setupJSONFilePath()
 	// Echo instance
 	echoService = echo.New()
 	service()
 }
 
-func setupJsonFilePath() {
+func setupJSONFilePath() {
 	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "life_journeys.json"}
 	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "benefit_info.json"}
+	questions.QuestionService = questions.QuestionServiceStruct{Filename: "questions.json"}
 }
 
 func service() {

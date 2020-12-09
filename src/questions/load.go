@@ -14,7 +14,7 @@ var questions []models.Question
 
 // Questions is the getter for questions.
 // If questions
-func (q *QuestionServiceStruct) Questions() []models.Question {
+func (q QuestionServiceStruct) Questions() []models.Question {
 	if questions == nil || len(questions) == 0 {
 		var err error
 		if questions, err = QuestionService.LoadQuestions(); err != nil {
@@ -30,7 +30,7 @@ var osOpen = os.Open
 
 // LoadQuestions loads questions from an external source
 // Returns a list of questions
-func (q *QuestionServiceStruct) LoadQuestions() (questions []models.Question, err error) {
+func (q QuestionServiceStruct) LoadQuestions() (questions []models.Question, err error) {
 	jsonFile, err := osOpen(q.Filename)
 
 	if err != nil {

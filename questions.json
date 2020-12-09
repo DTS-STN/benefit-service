@@ -1,0 +1,78 @@
+[
+  {
+    "id":"1",
+    "answer": "",
+    "description": "are you a resident of canada?",
+    "dependency_of": [],
+    "openfisca_ids": ["is_canadian_resident"]
+  },
+  {
+    "id":"2",
+    "answer": "",
+    "description": "are you a resident of ontario?",
+    "dependency_of": [],
+    "openfisca_ids": ["is_ontario_resident"]
+  },
+  {
+    "id":"3",
+    "answer": "",
+    "description": "what province do you live in?",
+    "dependency_of": [],
+    "openfisca_ids": ["1"]
+  },
+  {
+    "id":"4",
+    "answer": "",
+    "description": "what is your age?",
+    "dependency_of": [],
+    "openfisca_ids": ["age"]
+  },
+  {
+    "id":"5",
+    "answer": "",
+    "description": "what is your date of birth?",
+    "dependency_of": [],
+    "openfisca_ids": ["date_of_birth"]
+  },
+  {
+    "id":"9",
+    "answer": "",
+    "description": "have you completed a driver's license course?",
+    "dependency_of": [],
+    "openfisca_ids": ["has_completed_driver_training"]
+  },
+  {
+    "id":"10",
+    "description": "do you have parental approval?",
+    "dependency_of": [],
+    "openfisca_ids": ["has_parental_consent"]
+  },
+  {
+    "id":"11",
+    "answer": "",
+    "description": "are you able to work?",
+    "dependency_of": [],
+    "openfisca_ids": ["1"]
+  },
+  {
+    "id":"12",
+    "answer": "",
+    "description": "are you retired from work?",
+    "dependency_of": [],
+    "openfisca_ids": ["is_retired"]
+  },
+  {
+    "id":"6",
+    "answer": "",
+    "description": "do you have a medical certificate?",
+    "dependency_of": [],
+    "openfisca_ids": ["has_medical_certificate"]
+  },
+  {
+    "id":"13",
+    "answer": "",
+    "description": "do you have a valid medical insurance card?",
+    "dependency_of": [],
+    "openfisca_ids": ["medical_insurance_card__is_eligible"]
+  }
+]

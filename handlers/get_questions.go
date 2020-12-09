@@ -1,12 +1,14 @@
 package handlers
 
 import (
+	"github.com/DTS-STN/benefit-service/src/questions"
 	"github.com/DTS-STN/benefit-service/src/openfisca"
 	"github.com/DTS-STN/benefit-service/bindings"
 	// "github.com/DTS-STN/benefit-service/renderings"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"time"
+	"fmt"
 )
 
 type Persons struct {
@@ -41,11 +43,19 @@ func (h *Handler) GetQuestions(c echo.Context) error {
 	}
 	persons["persons"] = Persons{p}
 
-	ofresponse, err := openfisca.OFService.SendRequest(openfisca.OFService{}, persons)
+	ofResponse, err := openfisca.OFService.SendRequest(openfisca.OFService{}, persons)
 	if err != nil {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
-	return c.JSON(http.StatusOK, ofresponse)
+	questionList, err := questions.QuestionService.LoadQuestions()
+	if err != nil {
+		c.Logger().Error(err)
+		return c.JSON(http.StatusBadRequest, err)
+	}
+
+	fmt.Println(questionList)
+
+	return c.JSON(http.StatusOK, ofResponse)
 }
