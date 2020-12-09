@@ -9,6 +9,7 @@ context: EsDCDTSDevRG-K8S
 
 environments:
   dev:
+  review:
   prod-blue:
   prod-green:
 
@@ -23,7 +24,11 @@ releases:
       category: dts
       app: benefit-service
       tier: server
+    {{ if (eq .Environment.Name "review") }}
+    namespace: benefit-service-{{ .Environment.Name }}-{{ requiredEnv "PULL_REQUEST" }}
+    {{ else }}
     namespace: benefit-service-{{ .Environment.Name }}
+    {{ end }}
     installed: true
     wait: false
     force: false

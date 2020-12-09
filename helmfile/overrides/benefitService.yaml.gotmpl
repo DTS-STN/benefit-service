@@ -1,6 +1,6 @@
 image:
   repository: mtscontainers.azurecr.io/benefit-service
-{{ if or (eq .Environment.Name "prod-blue") (eq .Environment.Name "prod-green") (eq .Environment.Name "dev") }}
+{{ if or (eq .Environment.Name "prod-blue") (eq .Environment.Name "prod-green") (eq .Environment.Name "dev") (eq .Environment.Name "review") }}
   tag: "{{ requiredEnv "DOCKER_TAG" }}"
 {{ else }}
   tag: latest
@@ -12,6 +12,8 @@ ingress:
       {{ if or (eq .Environment.Name "prod-blue") (eq .Environment.Name "prod-green") }}
         - benefit-service.{{ requiredEnv "BASE_DOMAIN" }}
         - benefit-service.{{ .Environment.Name }}.{{ requiredEnv "BASE_DOMAIN" }}
+      {{ else if (eq .Environment.Name "review") }}
+        - benefit-service-{{ .Environment.Name }}-{{ requiredEnv "PULL_REQUEST" }}.{{ requiredEnv "BASE_DOMAIN_DEV" }}
       {{ else }}
         - benefit-service-{{ .Environment.Name }}.{{ requiredEnv "BASE_DOMAIN_DEV" }}
       {{ end }}
