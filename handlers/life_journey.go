@@ -69,7 +69,7 @@ func (h *Handler) LifeJourneyBenefits(c echo.Context) error {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
 	}
-	lifeJourneyBenefitsRequest.Id = "1"
+
 	if lifeJourneyBenefitsRequest.Id == "" {
 		return c.JSON(http.StatusUnprocessableEntity, lifeJourneyBenefitsResponse)
 	}
@@ -79,6 +79,10 @@ func (h *Handler) LifeJourneyBenefits(c echo.Context) error {
 	if err != nil {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
+	}
+
+	if len(lifeJourneyList) != 1 {
+		return c.JSON(http.StatusUnprocessableEntity, lifeJourneyBenefitsResponse)
 	}
 
 	lifeJourneyBenefitsResponse, err = getBenefitsByIds(lifeJourneyList[0].RelatedBenefits)
