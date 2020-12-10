@@ -34,6 +34,14 @@ var doc = `{
                 ],
                 "summary": "Request Info on Benefits",
                 "operationId": "benefits",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The language the response should be in. Defaults to English. English and French supported.",
+                        "name": "lang",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -87,6 +95,14 @@ var doc = `{
                 ],
                 "summary": "Request Info on Life Journey",
                 "operationId": "life-journey",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The language the response should be in. Defaults to English. English and French supported.",
+                        "name": "lang",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -129,9 +145,6 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
-                "description_fr": {
-                    "type": "string"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -143,9 +156,6 @@ var doc = `{
                 },
                 "title": {
                     "type": "string"
-                },
-                "title_fr": {
-                    "type": "string"
                 }
             }
         },
@@ -155,19 +165,10 @@ var doc = `{
                 "field_long_description": {
                     "type": "string"
                 },
-                "field_long_description_fr": {
-                    "type": "string"
-                },
                 "field_short_description": {
                     "type": "string"
                 },
-                "field_short_description_fr": {
-                    "type": "string"
-                },
                 "fieldname": {
-                    "type": "string"
-                },
-                "fieldname_fr": {
                     "type": "string"
                 }
             }
@@ -176,9 +177,6 @@ var doc = `{
             "type": "object",
             "properties": {
                 "description": {
-                    "type": "string"
-                },
-                "description_fr": {
                     "type": "string"
                 },
                 "id": {
@@ -197,9 +195,6 @@ var doc = `{
                     }
                 },
                 "title": {
-                    "type": "string"
-                },
-                "title_fr": {
                     "type": "string"
                 }
             }

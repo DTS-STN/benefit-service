@@ -19,6 +19,7 @@ import (
 // @Failure 400 {object} renderings.BenefitServiceError
 // @Failure 404 {object} renderings.BenefitServiceError
 // @Failure 500 {object} renderings.BenefitServiceError
+// @Param lang query string false "The language the response should be in. Defaults to English. English and French supported."
 // @Router /benefits [get]
 func (h *Handler) Benefits(c echo.Context) error {
 	var benefitsResponse = new(renderings.BenefitsResponse)

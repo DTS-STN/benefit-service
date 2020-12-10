@@ -18,6 +18,7 @@ import (
 // @Failure 400 {object} renderings.BenefitServiceError
 // @Failure 404 {object} renderings.BenefitServiceError
 // @Failure 500 {object} renderings.BenefitServiceError
+// @Param lang query string false "The language the response should be in. Defaults to English. English and French supported."
 // @Router /lifejourney [get]
 func (h *Handler) LifeJourney(c echo.Context) error {
 	var lifeJourneyResponse = new(renderings.LifeJourneyResponse)
