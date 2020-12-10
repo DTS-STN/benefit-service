@@ -70,11 +70,6 @@ func (h *Handler) LifeJourneyBenefits(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
 	}
 
-	if lifeJourneyBenefitsRequest.Id == "" {
-		c.Logger().Error("Life Journey Id missing")
-		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
-	}
-
 	lifeJourney, err := getLifeJourneyBenefitById(lifeJourneyBenefitsRequest.Id)
 	if err != nil {
 		c.Logger().Error(err)
