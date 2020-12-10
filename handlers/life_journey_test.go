@@ -75,18 +75,18 @@ func TestLifeJourneyBenefits_MultipleBenefits(t *testing.T) {
 
 func TestGetLifeJourneyBenefitIds(t *testing.T) {
 	lifeJourneyId := "1"
-	lifeJourneyList, err := getLifeJourneyBenefits(lifeJourneyId)
+	lifeJourney, err := getLifeJourneyBenefitById(lifeJourneyId)
 	if err != nil {
 		assert.Fail(t, "Error occured when getting life journey list")
 	}
-	assert.Equal(t, 1, len(lifeJourneyList))
+	assert.Equal(t, lifeJourneyId, lifeJourney.ID)
 }
 
 func TestGetBenefitsByIds(t *testing.T) {
-	benefitIds := []string{"1", "2"}
-	benefitList, err := getBenefitsByIds(benefitIds)
+	benefitId := "1"
+	benefit, err := getBenefitById(benefitId)
 	if err != nil {
 		assert.Fail(t, "Error occured when getting benefits by id")
 	}
-	assert.Equal(t, 2, len(benefitList))
+	assert.Equal(t, benefitId, benefit.ID)
 }
