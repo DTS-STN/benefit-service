@@ -9,6 +9,7 @@ import (
 type HandlerServiceInterface interface {
 	HealthCheck(c echo.Context) error
 	LifeJourney(c echo.Context) error
+	LifeJourneyBenefits(c echo.Context) error
 	Benefits(c echo.Context) error
 }
 

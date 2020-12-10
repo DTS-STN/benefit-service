@@ -146,6 +146,12 @@ var doc = `{
                     "type": "string"
                 },
                 "id": {
+<<<<<<< HEAD
+=======
+                    "type": "string"
+                },
+                "long_description": {
+>>>>>>> development
                     "type": "string"
                 },
                 "related_benefits": {
