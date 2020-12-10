@@ -31,15 +31,23 @@ func (h *Handler) LifeJourney(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
 	}
 
-	var lifeJourneyList []models.LifeJourney
-	lifeJourneyList, err := getLifeJourneyBenefits(lifeJourneyRequest.Id)
-	if err != nil {
-		c.Logger().Error(err)
-		return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
+	if lifeJourneyRequest.Id == "" {
+		lifeJourneyList, err := getAllLifeJourneyBenefits()
+		if err != nil {
+			c.Logger().Error(err)
+			return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
+		}
+		lifeJourneyResponse.LifeJourneyList = lifeJourneyList
+		return c.JSON(http.StatusOK, lifeJourneyResponse)
+	} else {
+		lifeJourneyList, err := getLifeJourneyBenefitById(lifeJourneyRequest.Id)
+		if err != nil {
+			c.Logger().Error(err)
+			return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
+		}
+		lifeJourneyResponse.LifeJourneyList = append(lifeJourneyResponse.LifeJourneyList, lifeJourneyList)
+		return c.JSON(http.StatusOK, lifeJourneyResponse)
 	}
-
-	lifeJourneyResponse.LifeJourneyList = lifeJourneyList
-	return c.JSON(http.StatusOK, lifeJourneyResponse)
 }
 
 // LifeJourneyBenefits
@@ -63,64 +71,67 @@ func (h *Handler) LifeJourneyBenefits(c echo.Context) error {
 	}
 
 	if lifeJourneyBenefitsRequest.Id == "" {
+		c.Logger().Error("Life Journey Id missing")
 		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
 	}
 
-	var lifeJourneyList []models.LifeJourney
-	lifeJourneyList, err := getLifeJourneyBenefits(lifeJourneyBenefitsRequest.Id)
+	lifeJourney, err := getLifeJourneyBenefitById(lifeJourneyBenefitsRequest.Id)
 	if err != nil {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
 	}
 
-	if len(lifeJourneyList) != 1 {
-		return c.JSON(http.StatusInternalServerError, lifeJourneyBenefitsResponse)
-	}
-
-	lifeJourneyBenefitsResponse, err = getBenefitsByIds(lifeJourneyList[0].RelatedBenefits)
-	if err != nil {
-		c.Logger().Error(err)
-		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
+	for _, benId := range lifeJourney.RelatedBenefits {
+		benefit, err := getBenefitById(benId)
+		if err != nil {
+			c.Logger().Error(err)
+			return c.JSON(http.StatusInternalServerError, lifeJourneyBenefitsResponse)
+		}
+		lifeJourneyBenefitsResponse = append(lifeJourneyBenefitsResponse, benefit)
 	}
 
 	return c.JSON(http.StatusOK, lifeJourneyBenefitsResponse)
 }
 
-func getLifeJourneyBenefits(id string) (lifeJourneyList []models.LifeJourney, err error) {
+func getLifeJourneyBenefitById(id string) (lifeJourney models.LifeJourney, err error) {
+
+	ljList, err := lifejourneys.LifeJourneyService.LoadLifeJourneys()
+	if err != nil {
+		return lifeJourney, err
+	}
+
+	for _, lj := range ljList {
+		if lj.ID == id {
+			lifeJourney = lj
+			break
+		}
+	}
+
+	return lifeJourney, nil
+}
+
+func getAllLifeJourneyBenefits() (lifeJourneyList []models.LifeJourney, err error) {
 
 	ljList, err := lifejourneys.LifeJourneyService.LoadLifeJourneys()
 	if err != nil {
 		return lifeJourneyList, err
 	}
 
-	if id != "" {
-		for _, lj := range ljList {
-			if lj.ID == id {
-				lifeJourneyList = append(lifeJourneyList, lj)
-				break
-			}
-
-		}
-	} else {
-		lifeJourneyList = ljList
-	}
-	return lifeJourneyList, nil
+	return ljList, nil
 }
 
-func getBenefitsByIds(benefitIds []string) (benefitsList []models.Benefits, err error) {
+func getBenefitById(benefitId string) (benefit models.Benefits, err error) {
 
 	benList, err := benefits.BenefitsService.LoadBenefits()
 	if err != nil {
-		return benefitsList, err
+		return benefit, err
 	}
 
-	for _, benId := range benefitIds {
-		for _, ben := range benList {
-			if ben.ID == benId {
-				benefitsList = append(benefitsList, ben)
-				break
-			}
+	for _, ben := range benList {
+		if ben.ID == benefitId {
+			benefit = ben
 		}
 	}
-	return benefitsList, nil
+
+	return benefit, nil
 }
