@@ -29,7 +29,7 @@ func (h *Handler) LifeJourney(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
 	}
 
-	setLanguage(c.Request().Header.Get("Content-Language"))
+	setLanguage(lifeJourneyRequest.Lang)
 	ljList, err := lifejourneys.LifeJourneyService.LoadLifeJourneys()
 
 	if err != nil {
