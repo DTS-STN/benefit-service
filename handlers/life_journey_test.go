@@ -16,14 +16,15 @@ func TestLifeJourney(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys.json"}
+	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/lifejourneys", nil)
 	// Create a httptest record
 	rec := httptest.NewRecorder()
 	// Create a new Echo Context
 	c := e.NewContext(req, rec)
-
+	q := req.URL.Query()
+	q.Add("id", "1")
 	// Assertions
 	if assert.NoError(t, HandlerService.LifeJourney(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
@@ -34,7 +35,7 @@ func TestLifeJourneyBenefits(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys.json"}
+	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/lifejourneys/1/benefits", nil)
 	// Create a httptest record
@@ -54,7 +55,7 @@ func TestLifeJourneyBenefits_MultipleBenefits(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys.json"}
+	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/lifejourneys/1/benefits", nil)
 	// Create a httptest record
