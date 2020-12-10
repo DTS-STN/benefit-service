@@ -63,7 +63,7 @@ func (h *Handler) LifeJourneyBenefits(c echo.Context) error {
 	}
 
 	if lifeJourneyBenefitsRequest.Id == "" {
-		return c.JSON(http.StatusUnprocessableEntity, lifeJourneyBenefitsResponse)
+		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
 	}
 
 	var lifeJourneyList []models.LifeJourney
@@ -74,7 +74,7 @@ func (h *Handler) LifeJourneyBenefits(c echo.Context) error {
 	}
 
 	if len(lifeJourneyList) != 1 {
-		return c.JSON(http.StatusUnprocessableEntity, lifeJourneyBenefitsResponse)
+		return c.JSON(http.StatusInternalServerError, lifeJourneyBenefitsResponse)
 	}
 
 	lifeJourneyBenefitsResponse, err = getBenefitsByIds(lifeJourneyList[0].RelatedBenefits)
