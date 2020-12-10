@@ -8,6 +8,5 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o service .
 
 FROM scratch
 COPY --from=builder /go/src/github.com/DTS-STN/benefit-service/service .
-ADD benefit_info.json ./benefit_info.json
-ADD life_journeys.json ./life_journeys.json
+ADD *.json ./
 ENTRYPOINT ["./service"]

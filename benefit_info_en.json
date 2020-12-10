@@ -1,0 +1,253 @@
+[
+  {
+    "id": "1",
+    "title": "Driver's License",
+    "description": "License for Driver's",
+    "long_description": "# Driver's License Benefit Details \nBrief description of the Driver's License Benefit \n## Overview \nShort Overview of Driver's License Process \n## Important Information \nImportant Information cli8ents need to know for the Driver's License benefit. \n## Eligibility criteria \nDescription of Driver's License Eligibility Criteria and how to qualify for the benefit. \n- Must be 16 years of age or older \n- Must be a resident of Canada \n- Must have completed a Driver Training Program \n- For client's under the age of 18, you must have parental consent \n### Examples \nDescription of different scenario's to provide examples to clients \n## Eligibility period \nDescription of Eligibility periods for a Driver's License. \n## How to apply \nDescription of How to apply for a Driver's License and what information is required. \n## Contact Information \nFor further Information on Driver's License and related Benefits contact 1-800-Drivers. \n## Payment Information \nDescription of Payment Information for a Driver's License.",
+    "related_benefits": ["5"],
+    "benefit_details": [{
+      "fieldname": "Overview",
+      "field_short_description": "Short Overview of Driver's License Process",
+      "field_long_description": "Long Overview of Driver's License Process"
+    },{
+      "fieldname": "Eligibility criteria",
+      "field_short_description": "Short description of Driver's License Eligibility Criteria",
+      "field_long_description": "Long description of Driver's License Eligibility Criteria"
+    },{
+      "fieldname": "Eligibility period",
+      "field_short_description": "Short description of Eligibility periods for a Driver's License",
+      "field_long_description": "Long description of Eligibility periods for a Driver's License"
+    },
+      {
+        "fieldname": "Important Information",
+        "field_short_description": "Short description of Important Information for a Driver's License",
+        "field_long_description": "Long description of Important Information for a Driver's License"
+      },
+      {
+        "fieldname": "How to apply",
+        "field_short_description": "Short description of How to apply for a Driver's License",
+        "field_long_description": "Long description of How to apply for a Driver's License"
+      },
+      {
+        "fieldname": "Contact Information",
+        "field_short_description": "Short description of Contact Information for a Driver's License",
+        "field_long_description": "Long description of Contact Information for a Driver's License"
+      },
+      {
+        "fieldname": "Examples",
+        "field_short_description": "Short description of examples for a Driver's License",
+        "field_long_description": "Long description of examples for a Driver's License"
+      },
+      {
+        "fieldname": "Payment Information",
+        "field_short_description": "Short description of Payment Information for a Driver's License",
+        "field_long_description": "Long description of Payment Information for a Driver's License"
+      },
+      {
+        "fieldname": "Repayment Information",
+        "field_short_description": "Short description of Repayment Information for a Driver's License",
+        "field_long_description": "Long description of Repayment Information for a Driver's License"
+      }]
+  },
+  {
+    "id": "2",
+    "title": "Student Card",
+    "description": "Student Card Benefit",
+    "long_description": "# Student Card Benefit Details \nBrief description of the Student Card Benefit \n## Overview \nShort Overview of Student Card Process \n## Important Information \nImportant Information cli8ents need to know for the Student Card benefit. \n## Eligibility criteria \nDescription of Student Card Eligibility Criteria and how to qualify for the benefit. \n- Must be under 18 years of age \n- Must be a resident of Canada \n- Must have parental consent \n### Examples \nDescription of different scenario's to provide examples to clients \n## Eligibility period \nDescription of Eligibility periods for a Student Card. \n## How to apply \nDescription of How to apply for a Student Card and what information is required. \n## Contact Information \nFor further Information on Student Card and related Benefits contact 1-800-student. \n## Payment Information \nDescription of Payment Information for a Student Card.",
+    "related_benefits": ["1","5"],
+    "benefit_details": [{
+      "fieldname": "Overview",
+      "field_short_description": "Short Overview of Student Card Process",
+      "field_long_description": "Long Overview of Student Card Process"
+    },{
+      "fieldname": "Eligibility criteria",
+      "field_short_description": "Short description of Student Card Eligibility Criteria",
+      "field_long_description": "Long description of Student Card Eligibility Criteria"
+    },{
+      "fieldname": "Eligibility period",
+      "field_short_description": "Short description of Eligibility periods for a Student Card",
+      "field_long_description": "Long description of Eligibility periods for a Student Card"
+    },
+      {
+        "fieldname": "Important Information",
+        "field_short_description": "Short description of Important Information for a Student Card",
+        "field_long_description": "Long description of Important Information for a Student Card"
+      },
+      {
+        "fieldname": "How to apply",
+        "field_short_description": "Short description of How to apply for a Student Card",
+        "field_long_description": "Long description of How to apply for a Student Card"
+      },
+      {
+        "fieldname": "Contact Information",
+        "field_short_description": "Short description of Contact Information for a Student Card",
+        "field_long_description": "Long description of Contact Information for a Student Card"
+      },
+      {
+        "fieldname": "Examples",
+        "field_short_description": "Short description of examples for a Student Card",
+        "field_long_description": "Long description of examples for a Student Card"
+      },
+      {
+        "fieldname": "Payment Information",
+        "field_short_description": "Short description of Payment Information for a Student Card",
+        "field_long_description": "Long description of Payment Information for a Student Card"
+      },
+      {
+        "fieldname": "Repayment Information",
+        "field_short_description": "Short description of Repayment Information for a Student Card",
+        "field_long_description": "Long description of Repayment Information for a Student Card"
+      }]
+  },
+  {
+    "id": "3",
+    "title": "Senior's Card",
+    "description": "Senior card benefit",
+    "long_description": "# Senior card Benefit Details \nBrief description of the Senior card Benefit \n## Overview \nShort Overview of Senior card Process \n## Important Information \nImportant Information cli8ents need to know for the Senior card benefit. \n## Eligibility criteria \nDescription of Senior card Eligibility Criteria and how to qualify for the benefit. \n- Must be over 55 years of age \n- Must be a resident of Canada \n- Must be retired \n### Examples \nDescription of different scenario's to provide examples to clients \n## Eligibility period \nDescription of Eligibility periods for a Senior card. \n## How to apply \nDescription of How to apply for a Senior card and what information is required. \n## Contact Information \nFor further Information on Senior card and related Benefits contact 1-800-seniors. \n## Payment Information \nDescription of Payment Information for a Senior card.",
+    "related_benefits": ["1","4", "5"],
+    "benefit_details": [{
+      "fieldname": "Overview",
+      "field_short_description": "Short Overview of Senior's Card Process",
+      "field_long_description": "Long Overview of Senior's Card Process"
+    },{
+      "fieldname": "Eligibility criteria",
+      "field_short_description": "Short description of Senior's Card Eligibility Criteria",
+      "field_long_description": "Long description of Senior's Card Eligibility Criteria"
+    },{
+      "fieldname": "Eligibility period",
+      "field_short_description": "Short description of Eligibility periods for a Senior's Card",
+      "field_long_description": "Long description of Eligibility periods for a Senior's Card"
+    },
+      {
+        "fieldname": "Important Information",
+        "field_short_description": "Short description of Important Information for a Senior's Card",
+        "field_long_description": "Long description of Important Information for a Senior's Card"
+      },
+      {
+        "fieldname": "How to apply",
+        "field_short_description": "Short description of How to apply for a Senior's Card",
+        "field_long_description": "Long description of How to apply for a Senior's Card"
+      },
+      {
+        "fieldname": "Contact Information",
+        "field_short_description": "Short description of Contact Information for a Senior's Card",
+        "field_long_description": "Long description of Contact Information for a Senior's Card"
+      },
+      {
+        "fieldname": "Examples",
+        "field_short_description": "Short description of examples for a Senior's Card",
+        "field_long_description": "Long description of examples for a Senior's Card"
+      },
+      {
+        "fieldname": "Payment Information",
+        "field_short_description": "Short description of Payment Information for a Senior's Card",
+        "field_long_description": "Long description of Payment Information for a Senior's Card"
+      },
+      {
+        "fieldname": "Repayment Information",
+        "field_short_description": "Short description of Repayment Information for a Senior's Card",
+        "field_long_description": "Long description of Repayment Information for a Senior's Card"
+      }]
+  },
+  {
+    "id": "4",
+    "title": "Disability Card",
+    "description": "Disability card is a benefit for peoples with a disability",
+    "long_description": "# Disability card Benefit Details \nBrief description of the Disability card Benefit \n## Overview \nShort Overview of Disability card Process \n## Important Information \nImportant Information clients need to know for the Disability card benefit. \n## Eligibility criteria \nDescription of Disability card Eligibility Criteria and how to qualify for the benefit. \n- Must have a valid medical Card \n- Must be a resident of Canada \n- Must have a medical Certificate \n### Examples \nDescription of different scenario's to provide examples to clients \n## Eligibility period \nDescription of Eligibility periods for a Disability card. \n## How to apply \nDescription of How to apply for a Disability card and what information is required. \n## Contact Information \nFor further Information on Disability card and related Benefits contact 1-800-OCANADA. \n## Payment Information \nDescription of Payment Information for a Disability card.",
+    "related_benefits": ["5"],
+    "benefit_details": [{
+      "fieldname": "Overview",
+      "field_short_description": "Short Overview of Disability Card Process",
+      "field_long_description": "Long Overview of Disability Card Process"
+    },{
+      "fieldname": "Eligibility criteria",
+      "field_short_description": "Short description of Disability Card Eligibility Criteria",
+      "field_long_description": "Long description of Disability Card Eligibility Criteria"
+    },{
+      "fieldname": "Eligibility period",
+      "field_short_description": "Short description of Eligibility periods for a Disability Card",
+      "field_long_description": "Long description of Eligibility periods for a Disability Card"
+    },
+      {
+        "fieldname": "Important Information",
+        "field_short_description": "Short description of Important Information for a Disability Card",
+        "field_long_description": "Long description of Important Information for a Disability Card"
+      },
+      {
+        "fieldname": "How to apply",
+        "field_short_description": "Short description of How to apply for a Disability Card",
+        "field_long_description": "Long description of How to apply for a Disability Card"
+      },
+      {
+        "fieldname": "Contact Information",
+        "field_short_description": "Short description of Contact Information for a Disability Card",
+        "field_long_description": "Long description of Contact Information for a Disability Card"
+      },
+      {
+        "fieldname": "Examples",
+        "field_short_description": "Short description of examples for a Disability Card",
+        "field_long_description": "Long description of examples for a Disability Card"
+      },
+      {
+        "fieldname": "Payment Information",
+        "field_short_description": "Short description of Payment Information for a Disability Card",
+        "field_long_description": "Long description of Payment Information for a Disability Card"
+      },
+      {
+        "fieldname": "Repayment Information",
+        "field_short_description": "Short description of Repayment Information for a Disability Card",
+        "field_long_description": "Long description of Repayment Information for a Disability Card"
+      }]
+  },
+  {
+    "id": "5",
+    "title": "Medical Insurance Card",
+    "description": "Medical Insurance card is a benefit for Canadian's",
+    "long_description": "# Medical Insurance card Benefit Details \nBrief description of the Medical Insurance card Benefit \n## Overview \nShort Overview of Medical Insurance card Process \n## Important Information \nImportant Information clients need to know for the Medical Insurance card benefit. \n## Eligibility criteria \nDescription of Medical Insurance card Eligibility Criteria and how to qualify for the benefit. \n- Must have a permanant address \n- Must be a resident of Canada \n- Must be a Canadian Citizen \n### Examples \nDescription of different scenario's to provide examples to clients \n## Eligibility period \nDescription of Eligibility periods for a Medical Insurance card. \n## How to apply \nDescription of How to apply for a Medical Insurance card and what information is required. \n## Contact Information \nFor further Information on Medical Insurance card and related Benefits contact 1-800-OCANADA. \n## Payment Information \nDescription of Payment Information for a Medical Insurance card.",
+    "related_benefits": ["4"],
+    "benefit_details": [{
+      "fieldname": "Overview",
+      "field_short_description": "Short Overview of Medical Card Process",
+      "field_long_description": "Long Overview of Medical Card Process"
+    },{
+      "fieldname": "Eligibility criteria",
+      "field_short_description": "Short description of Medical Card Eligibility Criteria",
+      "field_long_description": "Long description of Medical Card Eligibility Criteria"
+    },{
+      "fieldname": "Eligibility period",
+      "field_short_description": "Short description of Eligibility periods for a Medical Card",
+      "field_long_description": "Long description of Eligibility periods for a Medical Card"
+    },
+      {
+        "fieldname": "Important Information",
+        "field_short_description": "Short description of Important Information for a Medical Card",
+        "field_long_description": "Long description of Important Information for a Medical Card"
+      },
+      {
+        "fieldname": "How to apply",
+        "field_short_description": "Short description of How to apply for a Medical Card",
+        "field_long_description": "Long description of How to apply for a Medical Card"
+      },
+      {
+        "fieldname": "Contact Information",
+        "field_short_description": "Short description of Contact Information for a Medical Card",
+        "field_long_description": "Long description of Contact Information for a Medical Card"
+      },
+      {
+        "fieldname": "Examples",
+        "field_short_description": "Short description of examples for a Medical Card",
+        "field_long_description": "Long description of examples for a Medical Card"
+      },
+      {
+        "fieldname": "Payment Information",
+        "field_short_description": "Short description of Payment Information for a Medical Card",
+        "field_long_description": "Long description of Payment Information for a Medical Card"
+      },
+      {
+        "fieldname": "Repayment Information",
+        "field_short_description": "Short description of Repayment Information for a Medical Card",
+        "field_long_description": "Long description of Repayment Information for a Medical Card"
+      }]
+
+  }
+]

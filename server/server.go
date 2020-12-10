@@ -20,8 +20,8 @@ func Main(args []string) {
 }
 
 func setupJsonFilePath() {
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "life_journeys.json"}
-	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "benefit_info.json"}
+	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "life_journeys_en.json"}
+	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "benefit_info_en.json"}
 }
 
 func service() {
@@ -33,9 +33,11 @@ func service() {
 	// Routes
 	echoService.GET("/swagger/*", echoSwagger.WrapHandler)
 	echoService.GET("/healthcheck", handlers.HandlerService.HealthCheck)
-	echoService.GET("/lifejourneys", handlers.HandlerService.LifeJourney)
+  echoService.GET("/lifejourneys", handlers.HandlerService.LifeJourney)
 	echoService.GET("/lifejourneys/:id/benefits", handlers.HandlerService.LifeJourneyBenefits)
+	echoService.GET("/lifejourneys/:id", handlers.HandlerService.LifeJourney)
 	echoService.GET("/benefits", handlers.HandlerService.Benefits)
+	echoService.GET("/benefits/:id", handlers.HandlerService.Benefits)
 	// Start server
 	echoService.Logger.Fatal(echoService.Start(":8080"))
 }
