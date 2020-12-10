@@ -56,5 +56,5 @@ func (h *Handler) Benefits(c echo.Context) error {
 	} else {
 		benefitsResponse.BenefitsList = benList
 	}
-	return c.JSON(http.StatusOK, benefitsResponse)
+	return c.JSON(http.StatusOK, benefitsResponse.BenefitsList)
 }

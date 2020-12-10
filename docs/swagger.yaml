@@ -8,9 +8,9 @@ definitions:
         type: array
       description:
         type: string
-      description_fr:
-        type: string
       id:
+        type: string
+      long_description:
         type: string
       related_benefits:
         items:
@@ -18,29 +18,19 @@ definitions:
         type: array
       title:
         type: string
-      title_fr:
-        type: string
     type: object
   models.FieldDetails:
     properties:
       field_long_description:
         type: string
-      field_long_description_fr:
-        type: string
       field_short_description:
         type: string
-      field_short_description_fr:
-        type: string
       fieldname:
-        type: string
-      fieldname_fr:
         type: string
     type: object
   models.LifeJourney:
     properties:
       description:
-        type: string
-      description_fr:
         type: string
       id:
         type: string
@@ -53,8 +43,6 @@ definitions:
           type: string
         type: array
       title:
-        type: string
-      title_fr:
         type: string
     type: object
   renderings.BenefitServiceError:

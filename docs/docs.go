@@ -129,10 +129,10 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
-                "description_fr": {
+                "id": {
                     "type": "string"
                 },
-                "id": {
+                "long_description": {
                     "type": "string"
                 },
                 "related_benefits": {
@@ -143,9 +143,6 @@ var doc = `{
                 },
                 "title": {
                     "type": "string"
-                },
-                "title_fr": {
-                    "type": "string"
                 }
             }
         },
@@ -155,19 +152,10 @@ var doc = `{
                 "field_long_description": {
                     "type": "string"
                 },
-                "field_long_description_fr": {
-                    "type": "string"
-                },
                 "field_short_description": {
                     "type": "string"
                 },
-                "field_short_description_fr": {
-                    "type": "string"
-                },
                 "fieldname": {
-                    "type": "string"
-                },
-                "fieldname_fr": {
                     "type": "string"
                 }
             }
@@ -176,9 +164,6 @@ var doc = `{
             "type": "object",
             "properties": {
                 "description": {
-                    "type": "string"
-                },
-                "description_fr": {
                     "type": "string"
                 },
                 "id": {
@@ -197,9 +182,6 @@ var doc = `{
                     }
                 },
                 "title": {
-                    "type": "string"
-                },
-                "title_fr": {
                     "type": "string"
                 }
             }

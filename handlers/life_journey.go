@@ -46,7 +46,7 @@ func (h *Handler) LifeJourney(c echo.Context) error {
 			return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
 		}
 		lifeJourneyResponse.LifeJourneyList = append(lifeJourneyResponse.LifeJourneyList, lifeJourneyList)
-		return c.JSON(http.StatusOK, lifeJourneyResponse)
+		return c.JSON(http.StatusOK, lifeJourneyResponse.LifeJourneyList)
 	}
 }
 
@@ -127,6 +127,5 @@ func getBenefitById(benefitId string) (benefit models.Benefits, err error) {
 			benefit = ben
 		}
 	}
-
 	return benefit, nil
 }
