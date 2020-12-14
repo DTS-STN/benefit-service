@@ -85,7 +85,7 @@ var doc = `{
                 }
             }
         },
-        "/lifejourney": {
+        "/lifejourneys": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -130,6 +130,47 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/lifejourneys/:id/benefits": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Request Info on Life Journey Related Benefits",
+                "operationId": "life-journey-benefits",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Benefits"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -146,12 +187,9 @@ var doc = `{
                     "type": "string"
                 },
                 "id": {
-<<<<<<< HEAD
-=======
                     "type": "string"
                 },
                 "long_description": {
->>>>>>> development
                     "type": "string"
                 },
                 "related_benefits": {
