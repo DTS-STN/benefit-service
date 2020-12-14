@@ -15,3 +15,12 @@ func TestGetLifeJourneyBenefitIds(t *testing.T) {
 	}
 	assert.Equal(t, lifeJourneyId, lifeJourney.ID)
 }
+
+func TestGetAllLifeJourneyBenefits(t *testing.T) {
+	LifeJourneyService = LifeJourneyServiceStruct{Filename: "../../life_journeys_en.json"}
+	lifeJourney, err := LifeJourneyService.GetAllLifeJourneyBenefits()
+	if err != nil {
+		assert.Fail(t, "Error occured when getting life journey list")
+	}
+	assert.Equal(t, 4, len(lifeJourney))
+}
