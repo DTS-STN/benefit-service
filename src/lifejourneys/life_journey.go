@@ -6,7 +6,9 @@ import (
 
 type LifeJourneyInterface interface {
 	LifeJourneys() []models.LifeJourney
+	LifeJourney(id string) (models.LifeJourney, error)
 	LoadLifeJourneys() (lifeJourneys []models.LifeJourney, err error)
+	ClearLifeJourneys()
 	SetFilePath(path string)
 }
 

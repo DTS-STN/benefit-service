@@ -20,37 +20,36 @@ import (
 // @Failure 400 {object} renderings.BenefitServiceError
 // @Failure 404 {object} renderings.BenefitServiceError
 // @Failure 500 {object} renderings.BenefitServiceError
-// @Param lang query string false "The language the response should be in. Defaults to English. English and French supported."
-// @Router /lifejourneys [get]
+// @Router /lifejourney [get]
 func (h *Handler) LifeJourney(c echo.Context) error {
 	var lifeJourneyResponse = new(renderings.LifeJourneyResponse)
 	lifeJourneyRequest := new(bindings.LifeJourneyRequest)
+	var err error
 
 	// Bind the request into our request struct
-	if err := c.Bind(lifeJourneyRequest); err != nil {
+	if err = c.Bind(lifeJourneyRequest); err != nil {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
 	}
 
-	setLanguage(lifeJourneyRequest.Lang)
+	if lifeJourneyRequest.Lang != h.GetLanguage() {
+		h.SetLanguage(lifeJourneyRequest.Lang)
+		lifejourneys.LifeJourneyService.ClearLifeJourneys()
+	}
 
+	// if request doesn not contain an ID, return all Life Journeys
 	if lifeJourneyRequest.Id == "" {
-		lifeJourneyList, err := getAllLifeJourneyBenefits()
-		if err != nil {
-			c.Logger().Error(err)
-			return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
-		}
-		lifeJourneyResponse.LifeJourneyList = lifeJourneyList
-		return c.JSON(http.StatusOK, lifeJourneyResponse)
-	} else {
-		lifeJourneyList, err := getLifeJourneyBenefitById(lifeJourneyRequest.Id)
-		if err != nil {
-			c.Logger().Error(err)
-			return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
-		}
-		lifeJourneyResponse.LifeJourneyList = append(lifeJourneyResponse.LifeJourneyList, lifeJourneyList)
+		lifeJourneyResponse.LifeJourneyList = lifejourneys.LifeJourneyService.LifeJourneys()
 		return c.JSON(http.StatusOK, lifeJourneyResponse.LifeJourneyList)
 	}
+
+	// otherwise get the Life Journey based on the ID passed in
+	if lifeJourneyResponse.LifeJourney, err = lifejourneys.LifeJourneyService.LifeJourney(lifeJourneyRequest.Id); err != nil {
+		c.Logger().Error(err)
+		return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
+	}
+
+	return c.JSON(http.StatusOK, lifeJourneyResponse.LifeJourney)
 }
 
 // LifeJourneyBenefits

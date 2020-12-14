@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/DTS-STN/benefit-service/bindings"
+	"github.com/DTS-STN/benefit-service/models"
 	"github.com/DTS-STN/benefit-service/renderings"
 	"github.com/DTS-STN/benefit-service/src/benefits"
 	"github.com/labstack/echo/v4"
@@ -24,41 +25,41 @@ import (
 func (h *Handler) Benefits(c echo.Context) error {
 	var benefitsResponse = new(renderings.BenefitsResponse)
 	benefitsRequest := new(bindings.BenefitsRequest)
+	var err error
 
 	// Bind the request into our request struct
-	if err := c.Bind(benefitsRequest); err != nil {
+	if err = c.Bind(benefitsRequest); err != nil {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, benefitsResponse)
 	}
 
-	setLanguage(benefitsRequest.Lang)
-	benList, err := benefits.BenefitsService.LoadBenefits()
-
-	if err != nil {
-		c.Logger().Error(err)
-		return c.JSON(http.StatusBadRequest, benefitsResponse)
+	if benefitsRequest.Lang != h.GetLanguage() {
+		h.SetLanguage(benefitsRequest.Lang)
+		benefits.BenefitsService.ClearBenefits()
 	}
 
-	if benefitsRequest.Id != "" {
-		for _, ben := range benList {
-			if ben.ID == benefitsRequest.Id {
-				benefitsResponse.BenefitsList = append(benefitsResponse.BenefitsList, ben)
-				break
-			}
+	if benefitsRequest.Id == "" {
+		benefitsResponse.BenefitsList = benefits.BenefitsService.Benefits()
+		return c.JSON(http.StatusOK, benefitsResponse.BenefitsList)
+	}
 
-		}
-	} else if benefitsRequest.IdList != "" {
+	if benefitsRequest.IdList != "" {
 		Ids := strings.Split(benefitsRequest.IdList, ",")
+		var benefit models.Benefits
 		for _, benId := range Ids {
-			for _, ben := range benList {
-				if ben.ID == benId {
-					benefitsResponse.BenefitsList = append(benefitsResponse.BenefitsList, ben)
-					break
-				}
+			if benefit, err = benefits.BenefitsService.Benefit(benId); err == nil {
+				c.Logger().Error(err)
+				continue
 			}
+			benefitsResponse.BenefitsList = append(benefitsResponse.BenefitsList, benefit)
 		}
-	} else {
-		benefitsResponse.BenefitsList = benList
+		return c.JSON(http.StatusOK, benefitsResponse.BenefitsList)
 	}
-	return c.JSON(http.StatusOK, benefitsResponse.BenefitsList)
+
+	if benefitsResponse.Benefit, err = benefits.BenefitsService.Benefit(benefitsRequest.Id); err != nil {
+		c.Logger().Error(err)
+		return c.JSON(http.StatusBadRequest, benefitsResponse)
+	}
+
+	return c.JSON(http.StatusOK, benefitsResponse.Benefit)
 }

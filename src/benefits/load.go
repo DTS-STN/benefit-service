@@ -2,6 +2,7 @@ package benefits
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
@@ -21,6 +22,16 @@ func (q *BenefitsServiceStruct) Benefits() []models.Benefits {
 		}
 	}
 	return benefits
+}
+
+// Benefit returns a Benefit from an ID
+func (q *BenefitsServiceStruct) Benefit(id string) (models.Benefits, error) {
+	for _, benefit := range q.Benefits() {
+		if benefit.ID == id {
+			return benefit, nil
+		}
+	}
+	return models.Benefits{}, fmt.Errorf("Cannot find Benefit with ID: %s", id)
 }
 
 // to make following more testable, we need to do this
@@ -61,4 +72,9 @@ func readFile(reader io.Reader) ([]byte, error) {
 // SetFilePath sets the path to the file to read data from
 func (q *BenefitsServiceStruct) SetFilePath(path string) {
 	q.Filename = path
+}
+
+// ClearBenefits clears the underlying benefits list
+func (q *BenefitsServiceStruct) ClearBenefits() {
+	benefits = nil
 }

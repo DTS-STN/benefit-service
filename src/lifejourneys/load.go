@@ -2,6 +2,7 @@ package lifejourneys
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
@@ -12,23 +13,33 @@ import (
 
 var lifeJourneys []models.LifeJourney
 
-// LifeJourneys is a getter for life journeys
+// LifeJourneys returns all Life Journeys
 func (q *LifeJourneyServiceStruct) LifeJourneys() []models.LifeJourney {
 	if lifeJourneys == nil || len(lifeJourneys) == 0 {
 		var err error
-		if lifeJourneys, err = LifeJourneyService.LoadLifeJourneys(); err != nil {
+		if lifeJourneys, err = q.LoadLifeJourneys(); err != nil {
 			log.Error(err)
 		}
 	}
 	return lifeJourneys
 }
 
+// LifeJourney returns a Life Journey from an ID
+func (q *LifeJourneyServiceStruct) LifeJourney(id string) (models.LifeJourney, error) {
+	for _, lifeJourney := range q.LifeJourneys() {
+		if lifeJourney.ID == id {
+			return lifeJourney, nil
+		}
+	}
+	return models.LifeJourney{}, fmt.Errorf("Cannot find Life Journey with ID: %s", id)
+}
+
 // to make following more testable, we need to do this
 // trust me, I'm a developer
 var osOpen = os.Open
 
-// LoadLifeJourneys loads data from an external source
-// Returns a list of questions
+// LoadLifeJourneys will get Life Journeys from an external source
+// returns a list of Life Journeys
 func (q *LifeJourneyServiceStruct) LoadLifeJourneys() (lifeJourneys []models.LifeJourney, err error) {
 	jsonFile, err := osOpen(q.Filename)
 
@@ -48,7 +59,7 @@ func (q *LifeJourneyServiceStruct) LoadLifeJourneys() (lifeJourneys []models.Lif
 	return
 }
 
-// This functions reads and returns the data from the file opened in LoadQuestions
+// readFile reads and returns the data from the file opened in LoadQuestions
 // Accepts a reader and returns a byte array
 func readFile(reader io.Reader) ([]byte, error) {
 	lines, err := ioutil.ReadAll(reader)
@@ -61,4 +72,9 @@ func readFile(reader io.Reader) ([]byte, error) {
 // SetFilePath sets the path to the file to read data from
 func (q *LifeJourneyServiceStruct) SetFilePath(path string) {
 	q.Filename = path
+}
+
+// ClearLifeJourneys clears the underlying list
+func (q *LifeJourneyServiceStruct) ClearLifeJourneys() {
+	lifeJourneys = nil
 }
