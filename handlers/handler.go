@@ -21,10 +21,10 @@ var HandlerService HandlerServiceInterface = new(Handler)
 // setLanguage will set the filepath to the correct file for the language requested
 func setLanguage(lang string) {
 	if lang == "fr" {
-		benefits.BenefitsService.SetFilePath("benefit_info_fr.json")
-		lifejourneys.LifeJourneyService.SetFilePath("life_journeys_fr.json")
+		benefits.BenefitsService.SetFilePath("../benefit_info_fr.json")
+		lifejourneys.LifeJourneyService.SetFilePath("../life_journeys_fr.json")
 	} else {
-		benefits.BenefitsService.SetFilePath("benefit_info_en.json")
-		lifejourneys.LifeJourneyService.SetFilePath("life_journeys_en.json")
+		benefits.BenefitsService.SetFilePath("../benefit_info_en.json")
+		lifejourneys.LifeJourneyService.SetFilePath("../life_journeys_en.json")
 	}
 }

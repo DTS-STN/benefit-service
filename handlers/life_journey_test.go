@@ -25,6 +25,7 @@ func TestLifeJourney(t *testing.T) {
 	c := e.NewContext(req, rec)
 	q := req.URL.Query()
 	q.Add("id", "1")
+	q.Add("lang", "en")
 	// Assertions
 	if assert.NoError(t, HandlerService.LifeJourney(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)

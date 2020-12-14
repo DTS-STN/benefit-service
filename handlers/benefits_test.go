@@ -61,6 +61,7 @@ func TestBenefits_SingleBenefit(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/benefits", nil)
 	q := req.URL.Query()
 	q.Add("id", "1")
+	q.Add("lang", "en")
 	req.URL.RawQuery = q.Encode()
 
 	// Create a httptest record
@@ -86,6 +87,7 @@ func TestBenefits_MultipleBenefits(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/benefits", nil)
 	q := req.URL.Query()
 	q.Add("idList", "1,2,3")
+	q.Add("lang", "en")
 	req.URL.RawQuery = q.Encode()
 
 	// Create a httptest record
