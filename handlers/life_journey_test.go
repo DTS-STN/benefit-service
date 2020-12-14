@@ -10,13 +10,39 @@ import (
 	"github.com/DTS-STN/benefit-service/src/lifejourneys"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
+
+type LifeJourneyServiceMock struct {
+	mock.Mock
+}
+
+func (q *LifeJourneyServiceMock) LifeJourneys() (lifeJourneys []models.LifeJourney) {
+	return lifeJourneys
+}
+
+func (q *LifeJourneyServiceMock) LoadLifeJourneys() (lifeJourneys []models.LifeJourney, err error) {
+	return lifeJourneys, nil
+}
+
+func (q *LifeJourneyServiceMock) GetLifeJourneyBenefitById(id string) (lifeJourney models.LifeJourney, err error) {
+	lifeJourney.ID = "2"
+	lifeJourney.RelatedBenefits = []string{"1", "2", "3"}
+	return lifeJourney, nil
+}
+
+func (q *LifeJourneyServiceMock) GetAllLifeJourneyBenefits() (lifeJourneyList []models.LifeJourney, err error) {
+	lifeJourney := new(models.LifeJourney)
+	lifeJourney.ID = "1"
+	lifeJourneyList = append(lifeJourneyList, *lifeJourney)
+	return lifeJourneyList, nil
+}
 
 func TestLifeJourney(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
+	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyInterface(new(LifeJourneyServiceMock))
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/lifejourneys", nil)
 	// Create a httptest record
@@ -35,7 +61,7 @@ func TestLifeJourneyBenefits(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
+	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyInterface(new(LifeJourneyServiceMock))
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/lifejourneys/1/benefits", nil)
 	// Create a httptest record
@@ -55,7 +81,7 @@ func TestLifeJourneyBenefits_MultipleBenefits(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
+	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyInterface(new(LifeJourneyServiceMock))
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/lifejourneys/1/benefits", nil)
 	// Create a httptest record
