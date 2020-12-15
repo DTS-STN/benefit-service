@@ -32,7 +32,7 @@ func (h *Handler) LifeJourney(c echo.Context) error {
 	}
 
 	if lifeJourneyRequest.Id == "" {
-		lifeJourneyList, err := lifejourneys.LifeJourneyService.GetAllLifeJourneyBenefits()
+		lifeJourneyList, err := lifejourneys.Service.GetAllBenefits()
 		if err != nil {
 			c.Logger().Error(err)
 			return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
@@ -40,7 +40,7 @@ func (h *Handler) LifeJourney(c echo.Context) error {
 		lifeJourneyResponse.LifeJourneyList = lifeJourneyList
 		return c.JSON(http.StatusOK, lifeJourneyResponse)
 	} else {
-		lifeJourneyList, err := lifejourneys.LifeJourneyService.GetLifeJourneyBenefitById(lifeJourneyRequest.Id)
+		lifeJourneyList, err := lifejourneys.Service.GetBenefitById(lifeJourneyRequest.Id)
 		if err != nil {
 			c.Logger().Error(err)
 			return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
@@ -70,14 +70,14 @@ func (h *Handler) LifeJourneyBenefits(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
 	}
 
-	lifeJourney, err := lifejourneys.LifeJourneyService.GetLifeJourneyBenefitById(lifeJourneyBenefitsRequest.Id)
+	lifeJourney, err := lifejourneys.Service.GetBenefitById(lifeJourneyBenefitsRequest.Id)
 	if err != nil {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
 	}
 
 	for _, benId := range lifeJourney.RelatedBenefits {
-		benefit, err := benefits.BenefitsService.GetBenefitById(benId)
+		benefit, err := benefits.Service.GetBenefitById(benId)
 		if err != nil {
 			c.Logger().Error(err)
 			return c.JSON(http.StatusInternalServerError, lifeJourneyBenefitsResponse)

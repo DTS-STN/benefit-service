@@ -2,21 +2,22 @@ package benefits
 
 import (
 	"encoding/json"
-	"github.com/DTS-STN/benefit-service/models"
-	"github.com/labstack/gommon/log"
 	"io"
 	"io/ioutil"
 	"os"
+
+	"github.com/DTS-STN/benefit-service/models"
+	"github.com/labstack/gommon/log"
 )
 
 var benefits []models.Benefits
 
 // The getter for questions.
 // If questions
-func (q BenefitsServiceStruct) Benefits() []models.Benefits {
+func (q ServiceStruct) Benefits() []models.Benefits {
 	if benefits == nil || len(benefits) == 0 {
 		var err error
-		if benefits, err = BenefitsService.LoadBenefits(); err != nil {
+		if benefits, err = Service.LoadBenefits(); err != nil {
 			log.Error(err)
 		}
 	}
@@ -29,7 +30,7 @@ var osOpen = os.Open
 
 // Loads questions from an external source
 // Returns a list of questions
-func (q BenefitsServiceStruct) LoadBenefits() (benefits []models.Benefits, err error) {
+func (q ServiceStruct) LoadBenefits() (benefits []models.Benefits, err error) {
 	jsonFile, err := osOpen(q.Filename)
 
 	if err != nil {
