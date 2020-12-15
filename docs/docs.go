@@ -73,6 +73,17 @@ var doc = `{
                 ],
                 "summary": "Returns question dependencies for requested benefits",
                 "operationId": "GetBenefitQuestions",
+                "parameters": [
+                    {
+                        "description": "Benefits List",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/bindings.BenefitQuestionsRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -197,6 +208,34 @@ var doc = `{
         }
     },
     "definitions": {
+        "bindings.BenefitQuestionsRequest": {
+            "type": "object",
+            "properties": {
+                "benefit_list": {
+                    "description": "Array of specific benefits for which to get the questions.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "seniors_card__is_eligible",
+                        " student_card__is_eligible"
+                    ]
+                },
+                "life_journeys": {
+                    "description": "Array of life journeys, which represent a subset of benefits.\nQuestions for the benefits under the life journey will be returned.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "request_date": {
+                    "description": "Date period for request in ms since epoch",
+                    "type": "integer",
+                    "example": 1608054805
+                }
+            }
+        },
         "models.Benefits": {
             "type": "object",
             "properties": {

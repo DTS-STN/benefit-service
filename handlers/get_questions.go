@@ -32,6 +32,7 @@ func contains(s []string, str string) bool {
 // @ID GetBenefitQuestions
 // @Accept  json
 // @Produce json
+// @Param body body bindings.BenefitQuestionsRequest true "Benefits List"
 // @Success 200 {object} renderings.BenefitQuestionsResponse
 // @Failure 400 {object} renderings.BenefitServiceError
 // @Failure 404 {object} renderings.BenefitServiceError

@@ -1,5 +1,27 @@
 basePath: /
 definitions:
+  bindings.BenefitQuestionsRequest:
+    properties:
+      benefit_list:
+        description: Array of specific benefits for which to get the questions.
+        example:
+        - seniors_card__is_eligible
+        - ' student_card__is_eligible'
+        items:
+          type: string
+        type: array
+      life_journeys:
+        description: |-
+          Array of life journeys, which represent a subset of benefits.
+          Questions for the benefits under the life journey will be returned.
+        items:
+          type: string
+        type: array
+      request_date:
+        description: Date period for request in ms since epoch
+        example: 1608054805
+        type: integer
+    type: object
   models.Benefits:
     properties:
       benefit_details:
@@ -144,6 +166,13 @@ paths:
       - application/json
       description: Returns question dependencies for requested benefits
       operationId: GetBenefitQuestions
+      parameters:
+      - description: Benefits List
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/bindings.BenefitQuestionsRequest'
       produces:
       - application/json
       responses:
