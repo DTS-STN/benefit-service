@@ -7,10 +7,26 @@ import (
 type BenefitsInterface interface {
 	Benefits() []models.Benefits
 	LoadBenefits() (Benefits []models.Benefits, err error)
+	GetBenefitById(benefitId string) (benefit models.Benefits, err error)
 }
 
-type BenefitsServiceStruct struct {
+type ServiceStruct struct {
 	Filename string
 }
 
-var BenefitsService BenefitsInterface
+var Service BenefitsInterface
+
+func (q ServiceStruct) GetBenefitById(benefitId string) (benefit models.Benefits, err error) {
+
+	benList, err := Service.LoadBenefits()
+	if err != nil {
+		return benefit, err
+	}
+
+	for _, ben := range benList {
+		if ben.ID == benefitId {
+			benefit = ben
+		}
+	}
+	return benefit, nil
+}

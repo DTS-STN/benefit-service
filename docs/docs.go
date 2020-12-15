@@ -153,6 +153,47 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/lifejourneys/:id/benefits": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Request Info on Life Journey Related Benefits",
+                "operationId": "life-journey-benefits",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Benefits"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -168,10 +209,10 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
-                "description_fr": {
+                "id": {
                     "type": "string"
                 },
-                "id": {
+                "long_description": {
                     "type": "string"
                 },
                 "related_benefits": {
@@ -182,9 +223,6 @@ var doc = `{
                 },
                 "title": {
                     "type": "string"
-                },
-                "title_fr": {
-                    "type": "string"
                 }
             }
         },
@@ -194,19 +232,10 @@ var doc = `{
                 "field_long_description": {
                     "type": "string"
                 },
-                "field_long_description_fr": {
-                    "type": "string"
-                },
                 "field_short_description": {
                     "type": "string"
                 },
-                "field_short_description_fr": {
-                    "type": "string"
-                },
                 "fieldname": {
-                    "type": "string"
-                },
-                "fieldname_fr": {
                     "type": "string"
                 }
             }
@@ -215,9 +244,6 @@ var doc = `{
             "type": "object",
             "properties": {
                 "description": {
-                    "type": "string"
-                },
-                "description_fr": {
                     "type": "string"
                 },
                 "id": {
@@ -236,9 +262,6 @@ var doc = `{
                     }
                 },
                 "title": {
-                    "type": "string"
-                },
-                "title_fr": {
                     "type": "string"
                 }
             }

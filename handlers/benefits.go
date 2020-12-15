@@ -29,7 +29,7 @@ func (h *Handler) Benefits(c echo.Context) error {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, benefitsResponse)
 	}
-	benList, err := benefits.BenefitsService.LoadBenefits()
+	benList, err := benefits.Service.LoadBenefits()
 	if err != nil {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, benefitsResponse)
@@ -56,5 +56,5 @@ func (h *Handler) Benefits(c echo.Context) error {
 	} else {
 		benefitsResponse.BenefitsList = benList
 	}
-	return c.JSON(http.StatusOK, benefitsResponse)
+	return c.JSON(http.StatusOK, benefitsResponse.BenefitsList)
 }

@@ -2,21 +2,22 @@ package lifejourneys
 
 import (
 	"encoding/json"
-	"github.com/DTS-STN/benefit-service/models"
-	"github.com/labstack/gommon/log"
 	"io"
 	"io/ioutil"
 	"os"
+
+	"github.com/DTS-STN/benefit-service/models"
+	"github.com/labstack/gommon/log"
 )
 
 var lifeJourneys []models.LifeJourney
 
 // The getter for questions.
 // If questions
-func (q LifeJourneyServiceStruct) LifeJourneys() []models.LifeJourney {
+func (q ServiceStruct) LifeJourneys() []models.LifeJourney {
 	if lifeJourneys == nil || len(lifeJourneys) == 0 {
 		var err error
-		if lifeJourneys, err = LifeJourneyService.LoadLifeJourneys(); err != nil {
+		if lifeJourneys, err = Service.LoadLifeJourneys(); err != nil {
 			log.Error(err)
 		}
 	}
@@ -29,7 +30,7 @@ var osOpen = os.Open
 
 // Loads questions from an external source
 // Returns a list of questions
-func (q LifeJourneyServiceStruct) LoadLifeJourneys() (lifeJourneys []models.LifeJourney, err error) {
+func (q ServiceStruct) LoadLifeJourneys() (lifeJourneys []models.LifeJourney, err error) {
 	jsonFile, err := osOpen(q.Filename)
 
 	if err != nil {

@@ -11,9 +11,9 @@ type QuestionInterface interface {
 }
 
 // QuestionServiceStruct is a struct used for passing in the questions file
-type QuestionServiceStruct struct {
+type ServiceStruct struct {
 	Filename string
 }
 
 // QuestionService is an instance of QuestionInterface
-var QuestionService QuestionInterface
+var Service QuestionInterface
