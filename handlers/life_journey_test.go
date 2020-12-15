@@ -10,13 +10,39 @@ import (
 	"github.com/DTS-STN/benefit-service/src/lifejourneys"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
+
+type LifeJourneyServiceMock struct {
+	mock.Mock
+}
+
+func (q *LifeJourneyServiceMock) LifeJourneys() (lifeJourneys []models.LifeJourney) {
+	return lifeJourneys
+}
+
+func (q *LifeJourneyServiceMock) LoadLifeJourneys() (lifeJourneys []models.LifeJourney, err error) {
+	return lifeJourneys, nil
+}
+
+func (q *LifeJourneyServiceMock) GetById(id string) (lifeJourney models.LifeJourney, err error) {
+	lifeJourney.ID = "2"
+	lifeJourney.RelatedBenefits = []string{"1", "2", "3"}
+	return lifeJourney, nil
+}
+
+func (q *LifeJourneyServiceMock) GetAllBenefits() (lifeJourneyList []models.LifeJourney, err error) {
+	lifeJourney := new(models.LifeJourney)
+	lifeJourney.ID = "1"
+	lifeJourneyList = append(lifeJourneyList, *lifeJourney)
+	return lifeJourneyList, nil
+}
 
 func TestLifeJourney(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
+	lifejourneys.Service = lifejourneys.LifeJourneyInterface(new(LifeJourneyServiceMock))
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/lifejourneys", nil)
 	// Create a httptest record
@@ -35,7 +61,7 @@ func TestLifeJourneyBenefits(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
+	lifejourneys.Service = lifejourneys.LifeJourneyInterface(new(LifeJourneyServiceMock))
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/lifejourneys/1/benefits", nil)
 	// Create a httptest record
@@ -55,7 +81,7 @@ func TestLifeJourneyBenefits_MultipleBenefits(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
+	lifejourneys.Service = lifejourneys.LifeJourneyInterface(new(LifeJourneyServiceMock))
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/lifejourneys/1/benefits", nil)
 	// Create a httptest record
@@ -72,22 +98,4 @@ func TestLifeJourneyBenefits_MultipleBenefits(t *testing.T) {
 
 		assert.Equal(t, 3, len(*benefits))
 	}
-}
-
-func TestGetLifeJourneyBenefitIds(t *testing.T) {
-	lifeJourneyId := "1"
-	lifeJourney, err := getLifeJourneyBenefitById(lifeJourneyId)
-	if err != nil {
-		assert.Fail(t, "Error occured when getting life journey list")
-	}
-	assert.Equal(t, lifeJourneyId, lifeJourney.ID)
-}
-
-func TestGetBenefitsByIds(t *testing.T) {
-	benefitId := "1"
-	benefit, err := getBenefitById(benefitId)
-	if err != nil {
-		assert.Fail(t, "Error occured when getting benefits by id")
-	}
-	assert.Equal(t, benefitId, benefit.ID)
 }

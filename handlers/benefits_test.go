@@ -16,7 +16,7 @@ func TestBenefits(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 	//Load Benefits Data File
-	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "../benefit_info_en.json"}
+	benefits.Service = benefits.ServiceStruct{Filename: "../benefit_info_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/benefits", nil)
 	// Create a httptest record
@@ -34,7 +34,7 @@ func TestBenefits_AllBenefits(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 	//Load Benefits Data File
-	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "../benefit_info_en.json"}
+	benefits.Service = benefits.ServiceStruct{Filename: "../benefit_info_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/benefits", nil)
 
@@ -56,7 +56,7 @@ func TestBenefits_SingleBenefit(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 	//Load Benefits Data File
-	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "../benefit_info_en.json"}
+	benefits.Service = benefits.ServiceStruct{Filename: "../benefit_info_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/benefits", nil)
 	q := req.URL.Query()
@@ -81,7 +81,7 @@ func TestBenefits_MultipleBenefits(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 	//Load Benefits Data File
-	benefits.BenefitsService = benefits.BenefitsServiceStruct{Filename: "../benefit_info_en.json"}
+	benefits.Service = benefits.ServiceStruct{Filename: "../benefit_info_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/benefits", nil)
 	q := req.URL.Query()

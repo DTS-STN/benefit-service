@@ -3,11 +3,12 @@ package questions
 import (
 	"bytes"
 	"errors"
+	"os"
+	"testing"
+
 	"github.com/DTS-STN/benefit-service/models"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"os"
-	"testing"
 )
 
 type QuestionServiceMock struct {
@@ -32,13 +33,13 @@ func osOpenMock(path string) (*os.File, error) {
 func setupTests() {
 	osOpen = os.Open
 	questions = nil
-	QuestionService = new(QuestionServiceStruct)
+	Service = new(ServiceStruct)
 }
 
 func TestQuestions(t *testing.T) {
 	setupTests()
 
-	var realQuestionService = QuestionServiceStruct{Filename: ""}
+	var realQuestionService = ServiceStruct{Filename: ""}
 
 	// Expected result data
 	expectedResult := []models.Question{{ID: "1", Description: "are you a resident of canada?", Answer: "", OpenFiscaIds: []string{"is_canadian_resident"}}}
@@ -49,7 +50,7 @@ func TestQuestions(t *testing.T) {
 	qsMock.On("LoadQuestions").
 		Return(expectedResult, nil)
 	// Set the mock to be used by the code
-	QuestionService = QuestionInterface(qsMock)
+	Service = QuestionInterface(qsMock)
 
 	// redirect to test data
 	osOpen = osOpenMock
@@ -64,7 +65,7 @@ func TestQuestions(t *testing.T) {
 func TestQuestionsNotEqual(t *testing.T) {
 	setupTests()
 
-	var realQuestionService = QuestionServiceStruct{Filename: ""}
+	var realQuestionService = ServiceStruct{Filename: ""}
 
 	// Expected result data
 	expectedResult := []models.Question{{ID: "1", Description: "are you a resident of canada?", Answer: "", OpenFiscaIds: []string{"is_canadian_resident"}}}
@@ -75,7 +76,7 @@ func TestQuestionsNotEqual(t *testing.T) {
 	qsMock.On("LoadQuestions").
 		Return([]models.Question{{ID: "2", Description: "are you a resident of canada?", Answer: "", OpenFiscaIds: []string{"2"}}}, nil)
 	// Set the mock to be used by the code
-	QuestionService = QuestionInterface(qsMock)
+	Service = QuestionInterface(qsMock)
 
 	// redirect to test data
 	osOpen = osOpenMock
@@ -90,7 +91,7 @@ func TestQuestionsNotEqual(t *testing.T) {
 func TestPrefilledQuestions(t *testing.T) {
 	setupTests()
 
-	var realQuestionService = QuestionServiceStruct{Filename: ""}
+	var realQuestionService = ServiceStruct{Filename: ""}
 
 	// Expected result data
 	expectedResult := []models.Question{{ID: "2", Description: "are you a resident of canada?", Answer: "", OpenFiscaIds: []string{"2"}}}
@@ -104,7 +105,7 @@ func TestPrefilledQuestions(t *testing.T) {
 	qsMock.On("LoadQuestions").
 		Return([]models.Question{{ID: "1", Description: "are you a resident of canada?", Answer: "", OpenFiscaIds: []string{"1"}}}, nil)
 	// Set the mock to be used by the code
-	QuestionService = QuestionInterface(qsMock)
+	Service = QuestionInterface(qsMock)
 
 	// redirect to test data
 	osOpen = osOpenMock
@@ -144,7 +145,7 @@ func TestLoadQuestions(t *testing.T) {
 	expectedResult := []models.Question{{ID: "1", Description: "are you a resident?", Answer: "", OpenFiscaIds: []string{"is_canadian_resident"}}}
 
 	// Actual result data
-	actual, err := QuestionService.LoadQuestions()
+	actual, err := Service.LoadQuestions()
 
 	// Assertions
 	assert.NoError(t, err)
@@ -162,7 +163,7 @@ func TestLoadQuestionsError(t *testing.T) {
 	}
 
 	// Actual result data
-	results, err := QuestionService.LoadQuestions()
+	results, err := Service.LoadQuestions()
 
 	// Assertions
 	assert.Error(t, err)
