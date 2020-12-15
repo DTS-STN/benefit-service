@@ -6,11 +6,11 @@ import (
 
 type LifeJourneyInterface interface {
 	LifeJourneys(lang string) []models.LifeJourney
-	LifeJourney(lang, id string) (models.LifeJourney, error)
-	LoadLifeJourneys(lang string) (lifeJourneys []models.LifeJourney, err error)
+	GetById(lang, id string) (models.LifeJourney, error)
+	LoadLifeJourneys(lang string) ([]models.LifeJourney, error)
 }
 
-type LifeJourneyServiceStruct struct {
+type ServiceStruct struct {
 }
 
-var LifeJourneyService LifeJourneyInterface = new(LifeJourneyServiceStruct)
+var Service LifeJourneyInterface = new(ServiceStruct)

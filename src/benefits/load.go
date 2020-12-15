@@ -20,11 +20,11 @@ var Files = map[string]string{
 }
 
 // Benefits is a getter for a list of benefits
-func (q *BenefitsServiceStruct) Benefits(lang string) []models.Benefits {
+func (q *ServiceStruct) Benefits(lang string) []models.Benefits {
 	if lang == "fr" {
 		if benefitsFR == nil || len(benefitsFR) == 0 {
 			var err error
-			if benefitsFR, err = BenefitsService.LoadBenefits(lang); err != nil {
+			if benefitsFR, err = q.LoadBenefits(lang); err != nil {
 				log.Error(err)
 			}
 		}
@@ -34,21 +34,21 @@ func (q *BenefitsServiceStruct) Benefits(lang string) []models.Benefits {
 	// default to english if no lang is specified
 	if benefitsEN == nil || len(benefitsEN) == 0 {
 		var err error
-		if benefitsEN, err = BenefitsService.LoadBenefits(lang); err != nil {
+		if benefitsEN, err = q.LoadBenefits(lang); err != nil {
 			log.Error(err)
 		}
 	}
 	return benefitsEN
 }
 
-// Benefit returns a Benefit from an ID
-func (q *BenefitsServiceStruct) Benefit(lang, id string) (models.Benefits, error) {
+// GetBenefitById returns a Benefit from an ID
+func (q *ServiceStruct) GetBenefitById(lang, benefitId string) (models.Benefits, error) {
 	for _, benefit := range q.Benefits(lang) {
-		if benefit.ID == id {
+		if benefit.ID == benefitId {
 			return benefit, nil
 		}
 	}
-	return models.Benefits{}, fmt.Errorf("Cannot find Benefit with ID: %s", id)
+	return models.Benefits{}, fmt.Errorf("Cannot find Benefit with ID: %s", benefitId)
 }
 
 // to make following more testable, we need to do this
@@ -57,7 +57,7 @@ var osOpen = os.Open
 
 // LoadBenefits loads data from an external source
 // Returns a list of questions
-func (q *BenefitsServiceStruct) LoadBenefits(lang string) (benefits []models.Benefits, err error) {
+func (q *ServiceStruct) LoadBenefits(lang string) (benefits []models.Benefits, err error) {
 	file := Files[lang]
 	if file == "" {
 		file = Files["en"]

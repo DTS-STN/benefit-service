@@ -6,11 +6,11 @@ import (
 
 type BenefitsInterface interface {
 	Benefits(lang string) []models.Benefits
-	Benefit(lang, id string) (models.Benefits, error)
-	LoadBenefits(lang string) (Benefits []models.Benefits, err error)
+	LoadBenefits(lang string) ([]models.Benefits, error)
+	GetBenefitById(lang, benefitId string) (models.Benefits, error)
 }
 
-type BenefitsServiceStruct struct {
+type ServiceStruct struct {
 }
 
-var BenefitsService BenefitsInterface = new(BenefitsServiceStruct)
+var Service BenefitsInterface = new(ServiceStruct)

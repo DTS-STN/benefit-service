@@ -20,7 +20,7 @@ var Files = map[string]string{
 }
 
 // LifeJourneys returns all Life Journeys
-func (q *LifeJourneyServiceStruct) LifeJourneys(lang string) []models.LifeJourney {
+func (q *ServiceStruct) LifeJourneys(lang string) []models.LifeJourney {
 	if lang == "fr" {
 		if lifeJourneysFR == nil || len(lifeJourneysFR) == 0 {
 			var err error
@@ -41,8 +41,8 @@ func (q *LifeJourneyServiceStruct) LifeJourneys(lang string) []models.LifeJourne
 	return lifeJourneysEN
 }
 
-// LifeJourney returns a Life Journey from an ID
-func (q *LifeJourneyServiceStruct) LifeJourney(lang, id string) (models.LifeJourney, error) {
+// GetById returns a Life Journey from an ID
+func (q *ServiceStruct) GetById(lang, id string) (models.LifeJourney, error) {
 	for _, lifeJourney := range q.LifeJourneys(lang) {
 		if lifeJourney.ID == id {
 			return lifeJourney, nil
@@ -57,7 +57,7 @@ var osOpen = os.Open
 
 // LoadLifeJourneys will get Life Journeys from an external source
 // returns a list of Life Journeys
-func (q *LifeJourneyServiceStruct) LoadLifeJourneys(lang string) (lifeJourneys []models.LifeJourney, err error) {
+func (q *ServiceStruct) LoadLifeJourneys(lang string) (lifeJourneys []models.LifeJourney, err error) {
 	file := Files[lang]
 	if file == "" {
 		file = Files["en"]
