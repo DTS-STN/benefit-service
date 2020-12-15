@@ -7,7 +7,7 @@ import (
 type LifeJourneyInterface interface {
 	LifeJourneys() []models.LifeJourney
 	LoadLifeJourneys() (lifeJourneys []models.LifeJourney, err error)
-	GetBenefitById(id string) (lifeJourney models.LifeJourney, err error)
+	GetById(id string) (lifeJourney models.LifeJourney, err error)
 	GetAllBenefits() (lifeJourneyList []models.LifeJourney, err error)
 }
 
@@ -17,7 +17,7 @@ type ServiceStruct struct {
 
 var Service LifeJourneyInterface
 
-func (q ServiceStruct) GetBenefitById(id string) (lifeJourney models.LifeJourney, err error) {
+func (q ServiceStruct) GetById(id string) (lifeJourney models.LifeJourney, err error) {
 
 	ljList, err := Service.LoadLifeJourneys()
 	if err != nil {

@@ -40,7 +40,7 @@ func (h *Handler) LifeJourney(c echo.Context) error {
 		lifeJourneyResponse.LifeJourneyList = lifeJourneyList
 		return c.JSON(http.StatusOK, lifeJourneyResponse)
 	} else {
-		lifeJourneyList, err := lifejourneys.Service.GetBenefitById(lifeJourneyRequest.Id)
+		lifeJourneyList, err := lifejourneys.Service.GetById(lifeJourneyRequest.Id)
 		if err != nil {
 			c.Logger().Error(err)
 			return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
@@ -70,7 +70,7 @@ func (h *Handler) LifeJourneyBenefits(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
 	}
 
-	lifeJourney, err := lifejourneys.Service.GetBenefitById(lifeJourneyBenefitsRequest.Id)
+	lifeJourney, err := lifejourneys.Service.GetById(lifeJourneyBenefitsRequest.Id)
 	if err != nil {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)

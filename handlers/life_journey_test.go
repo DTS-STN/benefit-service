@@ -25,7 +25,7 @@ func (q *LifeJourneyServiceMock) LoadLifeJourneys() (lifeJourneys []models.LifeJ
 	return lifeJourneys, nil
 }
 
-func (q *LifeJourneyServiceMock) GetBenefitById(id string) (lifeJourney models.LifeJourney, err error) {
+func (q *LifeJourneyServiceMock) GetById(id string) (lifeJourney models.LifeJourney, err error) {
 	lifeJourney.ID = "2"
 	lifeJourney.RelatedBenefits = []string{"1", "2", "3"}
 	return lifeJourney, nil

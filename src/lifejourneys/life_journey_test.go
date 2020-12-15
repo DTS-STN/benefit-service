@@ -9,7 +9,7 @@ import (
 func TestGetBenefitIds(t *testing.T) {
 	Service = ServiceStruct{Filename: "../../life_journeys_en.json"}
 	lifeJourneyId := "1"
-	lifeJourney, err := Service.GetBenefitById(lifeJourneyId)
+	lifeJourney, err := Service.GetById(lifeJourneyId)
 	if err != nil {
 		assert.Fail(t, "Error occured when getting life journey list")
 	}
