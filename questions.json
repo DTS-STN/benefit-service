@@ -18,7 +18,7 @@
     "answer": "",
     "description": "what province do you live in?",
     "dependency_of": [],
-    "openfisca_ids": ["1"]
+    "openfisca_ids": ["province_of_residence"]
   },
   {
     "id":"4",
