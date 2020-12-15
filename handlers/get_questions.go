@@ -81,7 +81,7 @@ func (h *Handler) GetQuestions(c echo.Context) error {
 	trace := ofResponse["trace"].(map[string]interface{})
 
 	// Load questions from local file
-	questionList, err := questions.QuestionService.LoadQuestions()
+	questionList, err := questions.Service.LoadQuestions()
 	if err != nil {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, err)
