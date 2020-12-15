@@ -11,22 +11,39 @@ import (
 	"github.com/labstack/gommon/log"
 )
 
-var lifeJourneys []models.LifeJourney
+var lifeJourneysEN []models.LifeJourney
+var lifeJourneysFR []models.LifeJourney
+
+var files = map[string]string{
+	"en": "life_journeys_en.json",
+	"fr": "life_journeys_fr.json",
+}
 
 // LifeJourneys returns all Life Journeys
-func (q *LifeJourneyServiceStruct) LifeJourneys() []models.LifeJourney {
-	if lifeJourneys == nil || len(lifeJourneys) == 0 {
+func (q *LifeJourneyServiceStruct) LifeJourneys(lang string) []models.LifeJourney {
+	if lang == "fr" {
+		if lifeJourneysFR == nil || len(lifeJourneysFR) == 0 {
+			var err error
+			if lifeJourneysFR, err = q.LoadLifeJourneys(lang); err != nil {
+				log.Error(err)
+			}
+		}
+		return lifeJourneysFR
+	}
+
+	// default to english if no language is specified
+	if lifeJourneysEN == nil || len(lifeJourneysEN) == 0 {
 		var err error
-		if lifeJourneys, err = q.LoadLifeJourneys(); err != nil {
+		if lifeJourneysEN, err = q.LoadLifeJourneys(lang); err != nil {
 			log.Error(err)
 		}
 	}
-	return lifeJourneys
+	return lifeJourneysEN
 }
 
 // LifeJourney returns a Life Journey from an ID
-func (q *LifeJourneyServiceStruct) LifeJourney(id string) (models.LifeJourney, error) {
-	for _, lifeJourney := range q.LifeJourneys() {
+func (q *LifeJourneyServiceStruct) LifeJourney(lang, id string) (models.LifeJourney, error) {
+	for _, lifeJourney := range q.LifeJourneys(lang) {
 		if lifeJourney.ID == id {
 			return lifeJourney, nil
 		}
@@ -40,8 +57,12 @@ var osOpen = os.Open
 
 // LoadLifeJourneys will get Life Journeys from an external source
 // returns a list of Life Journeys
-func (q *LifeJourneyServiceStruct) LoadLifeJourneys() (lifeJourneys []models.LifeJourney, err error) {
-	jsonFile, err := osOpen(q.Filename)
+func (q *LifeJourneyServiceStruct) LoadLifeJourneys(lang string) (lifeJourneys []models.LifeJourney, err error) {
+	file := files[lang]
+	if file == "" {
+		file = files["en"]
+	}
+	jsonFile, err := osOpen(file)
 
 	if err != nil {
 		return
@@ -67,14 +88,4 @@ func readFile(reader io.Reader) ([]byte, error) {
 		log.Fatal(err)
 	}
 	return lines, err
-}
-
-// SetFilePath sets the path to the file to read data from
-func (q *LifeJourneyServiceStruct) SetFilePath(path string) {
-	q.Filename = path
-}
-
-// ClearLifeJourneys clears the underlying list
-func (q *LifeJourneyServiceStruct) ClearLifeJourneys() {
-	lifeJourneys = nil
 }

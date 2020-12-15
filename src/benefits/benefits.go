@@ -5,15 +5,12 @@ import (
 )
 
 type BenefitsInterface interface {
-	Benefits() []models.Benefits
-	Benefit(id string) (models.Benefits, error)
-	LoadBenefits() (Benefits []models.Benefits, err error)
-	ClearBenefits()
-	SetFilePath(path string)
+	Benefits(lang string) []models.Benefits
+	Benefit(lang, id string) (models.Benefits, error)
+	LoadBenefits(lang string) (Benefits []models.Benefits, err error)
 }
 
 type BenefitsServiceStruct struct {
-	Filename string
 }
 
 var BenefitsService BenefitsInterface = new(BenefitsServiceStruct)

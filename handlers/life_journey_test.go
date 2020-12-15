@@ -16,7 +16,7 @@ func TestLifeJourney(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = &lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
+	lifejourneys.LifeJourneyService = &lifejourneys.LifeJourneyServiceStruct{}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/lifejourneys", nil)
 	// Create a httptest record
@@ -27,7 +27,7 @@ func TestLifeJourney(t *testing.T) {
 	q.Add("id", "1")
 	q.Add("lang", "en")
 	// Assertions
-	if assert.NoError(t, HandlerService.LifeJourney(c)) {
+	if assert.NoError(t, HandlerService.LifeJourneys(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 	}
 }
@@ -36,7 +36,7 @@ func TestLifeJourneyBenefits(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = &lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
+	lifejourneys.LifeJourneyService = &lifejourneys.LifeJourneyServiceStruct{}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/lifejourneys/1/benefits", nil)
 	// Create a httptest record
@@ -56,7 +56,7 @@ func TestLifeJourneyBenefits_MultipleBenefits(t *testing.T) {
 	// Setup Echo service
 	e := echo.New()
 
-	lifejourneys.LifeJourneyService = &lifejourneys.LifeJourneyServiceStruct{Filename: "../life_journeys_en.json"}
+	lifejourneys.LifeJourneyService = &lifejourneys.LifeJourneyServiceStruct{}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/lifejourneys/1/benefits", nil)
 	// Create a httptest record
@@ -77,7 +77,8 @@ func TestLifeJourneyBenefits_MultipleBenefits(t *testing.T) {
 
 func TestGetLifeJourneyBenefitIds(t *testing.T) {
 	lifeJourneyId := "1"
-	lifeJourney, err := getLifeJourneyBenefitById(lifeJourneyId)
+	lang := "en"
+	lifeJourney, err := getLifeJourneyBenefitById(lang, lifeJourneyId)
 	if err != nil {
 		assert.Fail(t, "Error occured when getting life journey list")
 	}

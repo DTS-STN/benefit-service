@@ -21,7 +21,7 @@ import (
 // @Failure 404 {object} renderings.BenefitServiceError
 // @Failure 500 {object} renderings.BenefitServiceError
 // @Router /lifejourney [get]
-func (h *Handler) LifeJourney(c echo.Context) error {
+func (h *Handler) LifeJourneys(c echo.Context) error {
 	var lifeJourneyResponse = new(renderings.LifeJourneyResponse)
 	lifeJourneyRequest := new(bindings.LifeJourneyRequest)
 	var err error
@@ -32,24 +32,18 @@ func (h *Handler) LifeJourney(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
 	}
 
-	if lifeJourneyRequest.Lang != h.GetLanguage() {
-		h.SetLanguage(lifeJourneyRequest.Lang)
-		lifejourneys.LifeJourneyService.ClearLifeJourneys()
+	// if an ID is passed in, return the specific Life Journey
+	if lifeJourneyRequest.Id != "" {
+		if lifeJourneyResponse.LifeJourney, err = lifejourneys.LifeJourneyService.LifeJourney(lifeJourneyRequest.Lang, lifeJourneyRequest.Id); err != nil {
+			c.Logger().Error(err)
+			return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
+		}
+		return c.JSON(http.StatusOK, lifeJourneyResponse.LifeJourney)
 	}
 
-	// if request doesn not contain an ID, return all Life Journeys
-	if lifeJourneyRequest.Id == "" {
-		lifeJourneyResponse.LifeJourneyList = lifejourneys.LifeJourneyService.LifeJourneys()
-		return c.JSON(http.StatusOK, lifeJourneyResponse.LifeJourneyList)
-	}
-
-	// otherwise get the Life Journey based on the ID passed in
-	if lifeJourneyResponse.LifeJourney, err = lifejourneys.LifeJourneyService.LifeJourney(lifeJourneyRequest.Id); err != nil {
-		c.Logger().Error(err)
-		return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
-	}
-
-	return c.JSON(http.StatusOK, lifeJourneyResponse.LifeJourney)
+	// otherwise return all Life Journeys
+	lifeJourneyResponse.LifeJourneyList = lifejourneys.LifeJourneyService.LifeJourneys(lifeJourneyRequest.Lang)
+	return c.JSON(http.StatusOK, lifeJourneyResponse.LifeJourneyList)
 }
 
 // LifeJourneyBenefits
@@ -72,14 +66,14 @@ func (h *Handler) LifeJourneyBenefits(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
 	}
 
-	lifeJourney, err := getLifeJourneyBenefitById(lifeJourneyBenefitsRequest.Id)
+	lifeJourney, err := getLifeJourneyBenefitById(lifeJourneyBenefitsRequest.Lang, lifeJourneyBenefitsRequest.Id)
 	if err != nil {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
 	}
 
 	for _, benId := range lifeJourney.RelatedBenefits {
-		benefit, err := getBenefitById(benId)
+		benefit, err := getBenefitById(lifeJourneyBenefitsRequest.Lang, benId)
 		if err != nil {
 			c.Logger().Error(err)
 			return c.JSON(http.StatusInternalServerError, lifeJourneyBenefitsResponse)
@@ -90,9 +84,9 @@ func (h *Handler) LifeJourneyBenefits(c echo.Context) error {
 	return c.JSON(http.StatusOK, lifeJourneyBenefitsResponse)
 }
 
-func getLifeJourneyBenefitById(id string) (lifeJourney models.LifeJourney, err error) {
+func getLifeJourneyBenefitById(lang, id string) (lifeJourney models.LifeJourney, err error) {
 
-	ljList, err := lifejourneys.LifeJourneyService.LoadLifeJourneys()
+	ljList, err := lifejourneys.LifeJourneyService.LoadLifeJourneys(lang)
 	if err != nil {
 		return lifeJourney, err
 	}
@@ -107,9 +101,9 @@ func getLifeJourneyBenefitById(id string) (lifeJourney models.LifeJourney, err e
 	return lifeJourney, nil
 }
 
-func getAllLifeJourneyBenefits() (lifeJourneyList []models.LifeJourney, err error) {
+func getAllLifeJourneyBenefits(lang string) (lifeJourneyList []models.LifeJourney, err error) {
 
-	ljList, err := lifejourneys.LifeJourneyService.LoadLifeJourneys()
+	ljList, err := lifejourneys.LifeJourneyService.LoadLifeJourneys(lang)
 	if err != nil {
 		return lifeJourneyList, err
 	}
@@ -117,9 +111,9 @@ func getAllLifeJourneyBenefits() (lifeJourneyList []models.LifeJourney, err erro
 	return ljList, nil
 }
 
-func getBenefitById(benefitId string) (benefit models.Benefits, err error) {
+func getBenefitById(lang, benefitId string) (benefit models.Benefits, err error) {
 
-	benList, err := benefits.BenefitsService.LoadBenefits()
+	benList, err := benefits.BenefitsService.LoadBenefits(lang)
 	if err != nil {
 		return benefit, err
 	}

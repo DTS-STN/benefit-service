@@ -11,22 +11,39 @@ import (
 	"github.com/labstack/gommon/log"
 )
 
-var benefits []models.Benefits
+var benefitsEN []models.Benefits
+var benefitsFR []models.Benefits
+
+var files = map[string]string{
+	"en": "life_journeys_en.json",
+	"fr": "life_journeys_fr.json",
+}
 
 // Benefits is a getter for a list of benefits
-func (q *BenefitsServiceStruct) Benefits() []models.Benefits {
-	if benefits == nil || len(benefits) == 0 {
+func (q *BenefitsServiceStruct) Benefits(lang string) []models.Benefits {
+	if lang == "fr" {
+		if benefitsFR == nil || len(benefitsFR) == 0 {
+			var err error
+			if benefitsFR, err = BenefitsService.LoadBenefits(lang); err != nil {
+				log.Error(err)
+			}
+		}
+		return benefitsFR
+	}
+
+	// default to english if no lang is specified
+	if benefitsEN == nil || len(benefitsEN) == 0 {
 		var err error
-		if benefits, err = BenefitsService.LoadBenefits(); err != nil {
+		if benefitsEN, err = BenefitsService.LoadBenefits(lang); err != nil {
 			log.Error(err)
 		}
 	}
-	return benefits
+	return benefitsEN
 }
 
 // Benefit returns a Benefit from an ID
-func (q *BenefitsServiceStruct) Benefit(id string) (models.Benefits, error) {
-	for _, benefit := range q.Benefits() {
+func (q *BenefitsServiceStruct) Benefit(lang, id string) (models.Benefits, error) {
+	for _, benefit := range q.Benefits(lang) {
 		if benefit.ID == id {
 			return benefit, nil
 		}
@@ -40,8 +57,12 @@ var osOpen = os.Open
 
 // LoadBenefits loads data from an external source
 // Returns a list of questions
-func (q *BenefitsServiceStruct) LoadBenefits() (benefits []models.Benefits, err error) {
-	jsonFile, err := osOpen(q.Filename)
+func (q *BenefitsServiceStruct) LoadBenefits(lang string) (benefits []models.Benefits, err error) {
+	file := files[lang]
+	if file == "" {
+		file = files["en"]
+	}
+	jsonFile, err := osOpen(file)
 
 	if err != nil {
 		return
@@ -67,14 +88,4 @@ func readFile(reader io.Reader) ([]byte, error) {
 		log.Fatal(err)
 	}
 	return lines, err
-}
-
-// SetFilePath sets the path to the file to read data from
-func (q *BenefitsServiceStruct) SetFilePath(path string) {
-	q.Filename = path
-}
-
-// ClearBenefits clears the underlying benefits list
-func (q *BenefitsServiceStruct) ClearBenefits() {
-	benefits = nil
 }
