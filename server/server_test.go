@@ -16,7 +16,7 @@ func (m *HandlerServiceMock) HealthCheck(c echo.Context) error {
 	args := m.Called()
 	return args.Error(1)
 }
-func (m *HandlerServiceMock) LifeJourney(c echo.Context) error {
+func (m *HandlerServiceMock) LifeJourneys(c echo.Context) error {
 	args := m.Called()
 	return args.Error(1)
 }
@@ -27,13 +27,6 @@ func (m *HandlerServiceMock) LifeJourneyBenefits(c echo.Context) error {
 func (m *HandlerServiceMock) Benefits(c echo.Context) error {
 	args := m.Called()
 	return args.Error(1)
-}
-func (m *HandlerServiceMock) GetLanguage() string {
-	args := m.Called()
-	return args.String(1)
-}
-func (m *HandlerServiceMock) SetLanguage(lang string) {
-
 }
 
 // TODO: This doesn't work, need to setup an http client and call the endpoints to run tests

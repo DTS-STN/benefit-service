@@ -14,9 +14,9 @@ import (
 var benefitsEN []models.Benefits
 var benefitsFR []models.Benefits
 
-var files = map[string]string{
-	"en": "life_journeys_en.json",
-	"fr": "life_journeys_fr.json",
+var Files = map[string]string{
+	"en": "benefit_info_en.json",
+	"fr": "benefit_info_fr.json",
 }
 
 // Benefits is a getter for a list of benefits
@@ -58,10 +58,11 @@ var osOpen = os.Open
 // LoadBenefits loads data from an external source
 // Returns a list of questions
 func (q *BenefitsServiceStruct) LoadBenefits(lang string) (benefits []models.Benefits, err error) {
-	file := files[lang]
+	file := Files[lang]
 	if file == "" {
-		file = files["en"]
+		file = Files["en"]
 	}
+
 	jsonFile, err := osOpen(file)
 
 	if err != nil {

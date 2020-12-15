@@ -12,7 +12,19 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func setupLifeJourneyTests() func() {
+	lifejourneys.Files = map[string]string{
+		"en": "../life_journeys_en.json",
+		"fr": "../life_journeys_fr.json",
+	}
+	return func() {
+	}
+}
+
 func TestLifeJourney(t *testing.T) {
+	teardownTests := setupLifeJourneyTests()
+	defer teardownTests()
+
 	// Setup Echo service
 	e := echo.New()
 
@@ -33,6 +45,9 @@ func TestLifeJourney(t *testing.T) {
 }
 
 func TestLifeJourneyBenefits(t *testing.T) {
+	teardownTests := setupLifeJourneyTests()
+	defer teardownTests()
+
 	// Setup Echo service
 	e := echo.New()
 
@@ -53,6 +68,9 @@ func TestLifeJourneyBenefits(t *testing.T) {
 }
 
 func TestLifeJourneyBenefits_MultipleBenefits(t *testing.T) {
+	teardownTests := setupLifeJourneyTests()
+	defer teardownTests()
+
 	// Setup Echo service
 	e := echo.New()
 
@@ -76,6 +94,9 @@ func TestLifeJourneyBenefits_MultipleBenefits(t *testing.T) {
 }
 
 func TestGetLifeJourneyBenefitIds(t *testing.T) {
+	teardownTests := setupLifeJourneyTests()
+	defer teardownTests()
+
 	lifeJourneyId := "1"
 	lang := "en"
 	lifeJourney, err := getLifeJourneyBenefitById(lang, lifeJourneyId)
@@ -86,8 +107,12 @@ func TestGetLifeJourneyBenefitIds(t *testing.T) {
 }
 
 func TestGetBenefitsByIds(t *testing.T) {
+	teardownTests := setupLifeJourneyTests()
+	defer teardownTests()
+
 	benefitId := "1"
-	benefit, err := getBenefitById(benefitId)
+	lang := "en"
+	benefit, err := getBenefitById(lang, benefitId)
 	if err != nil {
 		assert.Fail(t, "Error occured when getting benefits by id")
 	}

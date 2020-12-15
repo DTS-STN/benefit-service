@@ -14,7 +14,7 @@ import (
 var lifeJourneysEN []models.LifeJourney
 var lifeJourneysFR []models.LifeJourney
 
-var files = map[string]string{
+var Files = map[string]string{
 	"en": "life_journeys_en.json",
 	"fr": "life_journeys_fr.json",
 }
@@ -58,9 +58,9 @@ var osOpen = os.Open
 // LoadLifeJourneys will get Life Journeys from an external source
 // returns a list of Life Journeys
 func (q *LifeJourneyServiceStruct) LoadLifeJourneys(lang string) (lifeJourneys []models.LifeJourney, err error) {
-	file := files[lang]
+	file := Files[lang]
 	if file == "" {
-		file = files["en"]
+		file = Files["en"]
 	}
 	jsonFile, err := osOpen(file)
 

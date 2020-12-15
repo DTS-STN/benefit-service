@@ -6,17 +6,29 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/DTS-STN/benefit-service/models"
 	"github.com/DTS-STN/benefit-service/renderings"
 	"github.com/DTS-STN/benefit-service/src/benefits"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 )
 
+func setupBenefitTests() func() {
+	benefits.Files = map[string]string{
+		"en": "../benefit_info_en.json",
+		"fr": "../benefit_info_fr.json",
+	}
+	return func() {
+
+	}
+}
+
 func TestBenefits(t *testing.T) {
+	teardownTests := setupBenefitTests()
+	defer teardownTests()
+
 	// Setup Echo service
 	e := echo.New()
-	//Load Benefits Data File
-	benefits.BenefitsService = &benefits.BenefitsServiceStruct{Filename: "../benefit_info_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/benefits", nil)
 	// Create a httptest record
@@ -31,10 +43,11 @@ func TestBenefits(t *testing.T) {
 }
 
 func TestBenefits_AllBenefits(t *testing.T) {
+	teardownTests := setupBenefitTests()
+	defer teardownTests()
+
 	// Setup Echo service
 	e := echo.New()
-	//Load Benefits Data File
-	benefits.BenefitsService = &benefits.BenefitsServiceStruct{Filename: "../benefit_info_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/benefits", nil)
 
@@ -53,10 +66,11 @@ func TestBenefits_AllBenefits(t *testing.T) {
 }
 
 func TestBenefits_SingleBenefit(t *testing.T) {
+	teardownTests := setupBenefitTests()
+	defer teardownTests()
+
 	// Setup Echo service
 	e := echo.New()
-	//Load Benefits Data File
-	benefits.BenefitsService = &benefits.BenefitsServiceStruct{Filename: "../benefit_info_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/benefits", nil)
 	q := req.URL.Query()
@@ -72,17 +86,72 @@ func TestBenefits_SingleBenefit(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, HandlerService.Benefits(c)) {
 		benefitResponse := new(renderings.BenefitsResponse)
-		json.NewDecoder(rec.Body).Decode(&benefitResponse.BenefitsList)
+		json.NewDecoder(rec.Body).Decode(&benefitResponse.Benefit)
 
-		assert.Equal(t, 1, len(benefitResponse.BenefitsList))
+		expectedResult := models.Benefits{
+			ID:              "1",
+			Title:           "Driver's License",
+			Description:     "License for Driver's",
+			LongDescription: "# Driver's License Benefit Details \nBrief description of the Driver's License Benefit \n## Overview \nShort Overview of Driver's License Process \n## Important Information \nImportant Information cli8ents need to know for the Driver's License benefit. \n## Eligibility criteria \nDescription of Driver's License Eligibility Criteria and how to qualify for the benefit. \n- Must be 16 years of age or older \n- Must be a resident of Canada \n- Must have completed a Driver Training Program \n- For client's under the age of 18, you must have parental consent \n### Examples \nDescription of different scenario's to provide examples to clients \n## Eligibility period \nDescription of Eligibility periods for a Driver's License. \n## How to apply \nDescription of How to apply for a Driver's License and what information is required. \n## Contact Information \nFor further Information on Driver's License and related Benefits contact 1-800-Drivers. \n## Payment Information \nDescription of Payment Information for a Driver's License.",
+			RelatedBenefits: []string{"5"},
+			BenefitDetails: []models.FieldDetails{
+				{
+					FieldName:             "Overview",
+					FieldShortDescription: "Short Overview of Driver's License Process",
+					FieldLongDescription:  "Long Overview of Driver's License Process",
+				},
+				{
+					FieldName:             "Eligibility criteria",
+					FieldShortDescription: "Short description of Driver's License Eligibility Criteria",
+					FieldLongDescription:  "Long description of Driver's License Eligibility Criteria",
+				},
+				{
+					FieldName:             "Eligibility period",
+					FieldShortDescription: "Short description of Eligibility periods for a Driver's License",
+					FieldLongDescription:  "Long description of Eligibility periods for a Driver's License",
+				},
+				{
+					FieldName:             "Important Information",
+					FieldShortDescription: "Short description of Important Information for a Driver's License",
+					FieldLongDescription:  "Long description of Important Information for a Driver's License",
+				},
+				{
+					FieldName:             "How to apply",
+					FieldShortDescription: "Short description of How to apply for a Driver's License",
+					FieldLongDescription:  "Long description of How to apply for a Driver's License",
+				},
+				{
+					FieldName:             "Contact Information",
+					FieldShortDescription: "Short description of Contact Information for a Driver's License",
+					FieldLongDescription:  "Long description of Contact Information for a Driver's License",
+				},
+				{
+					FieldName:             "Examples",
+					FieldShortDescription: "Short description of examples for a Driver's License",
+					FieldLongDescription:  "Long description of examples for a Driver's License",
+				},
+				{
+					FieldName:             "Payment Information",
+					FieldShortDescription: "Short description of Payment Information for a Driver's License",
+					FieldLongDescription:  "Long description of Payment Information for a Driver's License",
+				},
+				{
+					FieldName:             "Repayment Information",
+					FieldShortDescription: "Short description of Repayment Information for a Driver's License",
+					FieldLongDescription:  "Long description of Repayment Information for a Driver's License",
+				},
+			},
+		}
+		assert.Equal(t, expectedResult, benefitResponse.Benefit)
 	}
 }
 
 func TestBenefits_MultipleBenefits(t *testing.T) {
+	teardownTests := setupBenefitTests()
+	defer teardownTests()
+
 	// Setup Echo service
 	e := echo.New()
-	//Load Benefits Data File
-	benefits.BenefitsService = &benefits.BenefitsServiceStruct{Filename: "../benefit_info_en.json"}
 	// Setup http request using httptest
 	req := httptest.NewRequest(http.MethodGet, "/benefits", nil)
 	q := req.URL.Query()

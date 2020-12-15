@@ -48,7 +48,7 @@ func (h *Handler) Benefits(c echo.Context) error {
 		Ids := strings.Split(benefitsRequest.IdList, ",")
 		var benefit models.Benefits
 		for _, benId := range Ids {
-			if benefit, err = benefits.BenefitsService.Benefit(benefitsRequest.Lang, benId); err == nil {
+			if benefit, err = benefits.BenefitsService.Benefit(benefitsRequest.Lang, benId); err != nil {
 				c.Logger().Error(err)
 				continue
 			}
