@@ -57,6 +57,46 @@ definitions:
       title_fr:
         type: string
     type: object
+  models.Question:
+    properties:
+      answer:
+        type: string
+      dependency_of:
+        description: List of which benefits the question is a dependency of
+        items:
+          type: string
+        type: array
+      description:
+        type: string
+      id:
+        type: string
+      openfisca_ids:
+        description: The OpenFisca input variable name(s) attributed to this question
+        items:
+          type: string
+        type: array
+    type: object
+  renderings.BenefitQuestionsResponse:
+    properties:
+      benefit_list:
+        description: Array of specific benefits to get the questions for
+        items:
+          type: string
+        type: array
+      life_journeys:
+        description: Array of life journeys, which represent a subset of benefits
+        items:
+          type: string
+        type: array
+      question_list:
+        description: List of answered priority questions
+        items:
+          $ref: '#/definitions/models.Question'
+        type: array
+      request_date:
+        description: Date period for request in ms since epoch
+        type: integer
+    type: object
   renderings.BenefitServiceError:
     properties:
       error_code:
@@ -110,6 +150,32 @@ paths:
           schema:
             $ref: '#/definitions/renderings.BenefitServiceError'
       summary: Request Info on Benefits
+  /getquestions:
+    get:
+      consumes:
+      - application/json
+      description: Returns question dependencies for requested benefits
+      operationId: GetBenefitQuestions
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/renderings.BenefitQuestionsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/renderings.BenefitServiceError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/renderings.BenefitServiceError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/renderings.BenefitServiceError'
+      summary: Returns question dependencies for requested benefits
   /healthcheck:
     get:
       description: Returns Healthy

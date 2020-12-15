@@ -47,6 +47,45 @@
                 }
             }
         },
+        "/getquestions": {
+            "get": {
+                "description": "Returns question dependencies for requested benefits",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Returns question dependencies for requested benefits",
+                "operationId": "GetBenefitQuestions",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitQuestionsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    }
+                }
+            }
+        },
         "/healthcheck": {
             "get": {
                 "description": "Returns Healthy",
@@ -186,6 +225,64 @@
                 },
                 "title_fr": {
                     "type": "string"
+                }
+            }
+        },
+        "models.Question": {
+            "type": "object",
+            "properties": {
+                "answer": {
+                    "type": "string"
+                },
+                "dependency_of": {
+                    "description": "List of which benefits the question is a dependency of",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "openfisca_ids": {
+                    "description": "The OpenFisca input variable name(s) attributed to this question",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "renderings.BenefitQuestionsResponse": {
+            "type": "object",
+            "properties": {
+                "benefit_list": {
+                    "description": "Array of specific benefits to get the questions for",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "life_journeys": {
+                    "description": "Array of life journeys, which represent a subset of benefits",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "question_list": {
+                    "description": "List of answered priority questions",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Question"
+                    }
+                },
+                "request_date": {
+                    "description": "Date period for request in ms since epoch",
+                    "type": "integer"
                 }
             }
         },

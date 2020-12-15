@@ -29,8 +29,13 @@ func contains(s []string, str string) bool {
 // GetQuestions ...
 // @Summary Returns question dependencies for requested benefits
 // @Description Returns question dependencies for requested benefits
-// @ID benefitquestions
+// @ID GetBenefitQuestions
+// @Accept  json
+// @Produce json
 // @Success 200 {object} renderings.BenefitQuestionsResponse
+// @Failure 400 {object} renderings.BenefitServiceError
+// @Failure 404 {object} renderings.BenefitServiceError
+// @Failure 500 {object} renderings.BenefitServiceError
 // @Router /getquestions [get]
 func (h *Handler) GetQuestions(c echo.Context) error {
 	// Initialize request and response objects
