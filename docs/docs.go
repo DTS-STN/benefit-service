@@ -34,6 +34,14 @@ var doc = `{
                 ],
                 "summary": "Request Info on Benefits",
                 "operationId": "benefits",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The language the response should be in. Defaults to English. English and French supported.",
+                        "name": "lang",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -77,7 +85,7 @@ var doc = `{
                 }
             }
         },
-        "/lifejourney": {
+        "/lifejourneys": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -87,6 +95,14 @@ var doc = `{
                 ],
                 "summary": "Request Info on Life Journey",
                 "operationId": "life-journey",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The language the response should be in. Defaults to English. English and French supported.",
+                        "name": "lang",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",

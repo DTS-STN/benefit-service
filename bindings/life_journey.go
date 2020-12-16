@@ -5,6 +5,7 @@ type (
 	// required for the Benefit Service to return details on a Life Journey.
 	LifeJourneyRequest struct {
 		// Date period for request in ms since epoch
-		Id string `json:"id"`
+		Id   string `json:"id"`
+		Lang string `json:"lang"`
 	}
 )

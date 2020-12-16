@@ -6,21 +6,35 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGetBenefitIds(t *testing.T) {
-	Service = ServiceStruct{Filename: "../../life_journeys_en.json"}
+func setupBenefitTests() func() {
+	Files = map[string]string{
+		"en": "../../life_journeys_en.json",
+		"fr": "../../life_journeys_fr.json",
+	}
+	return func() {
+
+	}
+}
+
+func TestGetLifeJourenyIds(t *testing.T) {
+	teardownTests := setupBenefitTests()
+	defer teardownTests()
+
 	lifeJourneyId := "1"
-	lifeJourney, err := Service.GetById(lifeJourneyId)
+	lang := "en"
+	lifeJourney, err := Service.GetByID(lang, lifeJourneyId)
 	if err != nil {
 		assert.Fail(t, "Error occured when getting life journey list")
 	}
 	assert.Equal(t, lifeJourneyId, lifeJourney.ID)
 }
 
-func TestGetAllBenefits(t *testing.T) {
-	Service = ServiceStruct{Filename: "../../life_journeys_en.json"}
-	lifeJourney, err := Service.GetAllBenefits()
-	if err != nil {
-		assert.Fail(t, "Error occured when getting life journey list")
-	}
+func TestGetAllLifeJourneys(t *testing.T) {
+	teardownTests := setupBenefitTests()
+	defer teardownTests()
+
+	lang := "en"
+	lifeJourney := Service.GetAll(lang)
+
 	assert.Equal(t, 4, len(lifeJourney))
 }

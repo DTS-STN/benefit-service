@@ -7,4 +7,5 @@ import "github.com/DTS-STN/benefit-service/models"
 type LifeJourneyResponse struct {
 	// Life Journey ID
 	LifeJourneyList []models.LifeJourney `json:"lifejourneys"`
+	LifeJourney     models.LifeJourney
 }

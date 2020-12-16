@@ -78,6 +78,12 @@ paths:
       consumes:
       - application/json
       operationId: benefits
+      parameters:
+      - description: The language the response should be in. Defaults to English.
+          English and French supported.
+        in: query
+        name: lang
+        type: string
       produces:
       - application/json
       responses:
@@ -108,11 +114,17 @@ paths:
           schema:
             type: string
       summary: Returns Healthy
-  /lifejourney:
+  /lifejourneys:
     get:
       consumes:
       - application/json
       operationId: life-journey
+      parameters:
+      - description: The language the response should be in. Defaults to English.
+          English and French supported.
+        in: query
+        name: lang
+        type: string
       produces:
       - application/json
       responses:

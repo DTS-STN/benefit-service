@@ -13,32 +13,39 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
+func setupLifeJourneyTests() func() {
+	lifejourneys.Files = map[string]string{
+		"en": "../life_journeys_en.json",
+		"fr": "../life_journeys_fr.json",
+	}
+	return func() {
+	}
+}
+
 type LifeJourneyServiceMock struct {
 	mock.Mock
 }
 
-func (q *LifeJourneyServiceMock) LifeJourneys() (lifeJourneys []models.LifeJourney) {
-	return lifeJourneys
+func (q *LifeJourneyServiceMock) GetAll(lang string) []models.LifeJourney {
+	return []models.LifeJourney{
+		{
+			ID: "1",
+		},
+	}
 }
 
-func (q *LifeJourneyServiceMock) LoadLifeJourneys() (lifeJourneys []models.LifeJourney, err error) {
-	return lifeJourneys, nil
+func (q *LifeJourneyServiceMock) LoadLifeJourneys(lang string) ([]models.LifeJourney, error) {
+	return []models.LifeJourney{}, nil
 }
 
-func (q *LifeJourneyServiceMock) GetById(id string) (lifeJourney models.LifeJourney, err error) {
-	lifeJourney.ID = "2"
-	lifeJourney.RelatedBenefits = []string{"1", "2", "3"}
-	return lifeJourney, nil
-}
-
-func (q *LifeJourneyServiceMock) GetAllBenefits() (lifeJourneyList []models.LifeJourney, err error) {
-	lifeJourney := new(models.LifeJourney)
-	lifeJourney.ID = "1"
-	lifeJourneyList = append(lifeJourneyList, *lifeJourney)
-	return lifeJourneyList, nil
+func (q *LifeJourneyServiceMock) GetByID(lang, id string) (models.LifeJourney, error) {
+	return models.LifeJourney{ID: "2", RelatedBenefits: []string{"1", "2", "3"}}, nil
 }
 
 func TestLifeJourney(t *testing.T) {
+	teardownTests := setupLifeJourneyTests()
+	defer teardownTests()
+
 	// Setup Echo service
 	e := echo.New()
 
@@ -51,13 +58,17 @@ func TestLifeJourney(t *testing.T) {
 	c := e.NewContext(req, rec)
 	q := req.URL.Query()
 	q.Add("id", "1")
+	q.Add("lang", "en")
 	// Assertions
-	if assert.NoError(t, HandlerService.LifeJourney(c)) {
+	if assert.NoError(t, HandlerService.LifeJourneys(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 	}
 }
 
 func TestLifeJourneyBenefits(t *testing.T) {
+	teardownTests := setupLifeJourneyTests()
+	defer teardownTests()
+
 	// Setup Echo service
 	e := echo.New()
 
@@ -78,6 +89,9 @@ func TestLifeJourneyBenefits(t *testing.T) {
 }
 
 func TestLifeJourneyBenefits_MultipleBenefits(t *testing.T) {
+	teardownTests := setupLifeJourneyTests()
+	defer teardownTests()
+
 	// Setup Echo service
 	e := echo.New()
 

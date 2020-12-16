@@ -2,6 +2,7 @@ package benefits
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
@@ -10,28 +11,59 @@ import (
 	"github.com/labstack/gommon/log"
 )
 
-var benefits []models.Benefits
+var benefitsEN []models.Benefits
+var benefitsFR []models.Benefits
 
-// The getter for questions.
-// If questions
-func (q ServiceStruct) Benefits() []models.Benefits {
-	if benefits == nil || len(benefits) == 0 {
+var Files = map[string]string{
+	"en": "benefit_info_en.json",
+	"fr": "benefit_info_fr.json",
+}
+
+// GetAll is a getter for a list of benefits
+func (q *ServiceStruct) GetAll(lang string) []models.Benefits {
+	if lang == "fr" {
+		if benefitsFR == nil || len(benefitsFR) == 0 {
+			var err error
+			if benefitsFR, err = q.LoadBenefits(lang); err != nil {
+				log.Error(err)
+			}
+		}
+		return benefitsFR
+	}
+
+	// default to english if no lang is specified
+	if benefitsEN == nil || len(benefitsEN) == 0 {
 		var err error
-		if benefits, err = Service.LoadBenefits(); err != nil {
+		if benefitsEN, err = q.LoadBenefits(lang); err != nil {
 			log.Error(err)
 		}
 	}
-	return benefits
+	return benefitsEN
+}
+
+// GetByID returns a Benefit from an ID
+func (q *ServiceStruct) GetByID(lang, benefitId string) (models.Benefits, error) {
+	for _, benefit := range q.GetAll(lang) {
+		if benefit.ID == benefitId {
+			return benefit, nil
+		}
+	}
+	return models.Benefits{}, fmt.Errorf("Cannot find Benefit with ID: %s", benefitId)
 }
 
 // to make following more testable, we need to do this
 // trust me, I'm a developer
 var osOpen = os.Open
 
-// Loads questions from an external source
+// LoadBenefits loads data from an external source
 // Returns a list of questions
-func (q ServiceStruct) LoadBenefits() (benefits []models.Benefits, err error) {
-	jsonFile, err := osOpen(q.Filename)
+func (q *ServiceStruct) LoadBenefits(lang string) (benefits []models.Benefits, err error) {
+	file := Files[lang]
+	if file == "" {
+		file = Files["en"]
+	}
+
+	jsonFile, err := osOpen(file)
 
 	if err != nil {
 		return

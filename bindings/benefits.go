@@ -6,5 +6,6 @@ type (
 	BenefitsRequest struct {
 		Id     string `json:"id"`
 		IdList string `json:"id_list"`
+		Lang   string `json:"lang"`
 	}
 )

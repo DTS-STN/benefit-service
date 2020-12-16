@@ -2,6 +2,7 @@ package lifejourneys
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
@@ -10,28 +11,58 @@ import (
 	"github.com/labstack/gommon/log"
 )
 
-var lifeJourneys []models.LifeJourney
+var lifeJourneysEN []models.LifeJourney
+var lifeJourneysFR []models.LifeJourney
 
-// The getter for questions.
-// If questions
-func (q ServiceStruct) LifeJourneys() []models.LifeJourney {
-	if lifeJourneys == nil || len(lifeJourneys) == 0 {
+var Files = map[string]string{
+	"en": "life_journeys_en.json",
+	"fr": "life_journeys_fr.json",
+}
+
+// GetAll returns all Life Journeys
+func (q *ServiceStruct) GetAll(lang string) []models.LifeJourney {
+	if lang == "fr" {
+		if lifeJourneysFR == nil || len(lifeJourneysFR) == 0 {
+			var err error
+			if lifeJourneysFR, err = q.LoadLifeJourneys(lang); err != nil {
+				log.Error(err)
+			}
+		}
+		return lifeJourneysFR
+	}
+
+	// default to english if no language is specified
+	if lifeJourneysEN == nil || len(lifeJourneysEN) == 0 {
 		var err error
-		if lifeJourneys, err = Service.LoadLifeJourneys(); err != nil {
+		if lifeJourneysEN, err = q.LoadLifeJourneys(lang); err != nil {
 			log.Error(err)
 		}
 	}
-	return lifeJourneys
+	return lifeJourneysEN
+}
+
+// GetByID returns a Life Journey from an ID
+func (q *ServiceStruct) GetByID(lang, id string) (models.LifeJourney, error) {
+	for _, lifeJourney := range q.GetAll(lang) {
+		if lifeJourney.ID == id {
+			return lifeJourney, nil
+		}
+	}
+	return models.LifeJourney{}, fmt.Errorf("Cannot find Life Journey with ID: %s", id)
 }
 
 // to make following more testable, we need to do this
 // trust me, I'm a developer
 var osOpen = os.Open
 
-// Loads questions from an external source
-// Returns a list of questions
-func (q ServiceStruct) LoadLifeJourneys() (lifeJourneys []models.LifeJourney, err error) {
-	jsonFile, err := osOpen(q.Filename)
+// LoadLifeJourneys will get Life Journeys from an external source
+// returns a list of Life Journeys
+func (q *ServiceStruct) LoadLifeJourneys(lang string) (lifeJourneys []models.LifeJourney, err error) {
+	file := Files[lang]
+	if file == "" {
+		file = Files["en"]
+	}
+	jsonFile, err := osOpen(file)
 
 	if err != nil {
 		return
@@ -49,7 +80,7 @@ func (q ServiceStruct) LoadLifeJourneys() (lifeJourneys []models.LifeJourney, er
 	return
 }
 
-// This functions reads and returns the data from the file opened in LoadQuestions
+// readFile reads and returns the data from the file opened in LoadQuestions
 // Accepts a reader and returns a byte array
 func readFile(reader io.Reader) ([]byte, error) {
 	lines, err := ioutil.ReadAll(reader)

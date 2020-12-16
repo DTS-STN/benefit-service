@@ -5,28 +5,12 @@ import (
 )
 
 type BenefitsInterface interface {
-	Benefits() []models.Benefits
-	LoadBenefits() (Benefits []models.Benefits, err error)
-	GetBenefitById(benefitId string) (benefit models.Benefits, err error)
+	GetAll(lang string) []models.Benefits
+	LoadBenefits(lang string) ([]models.Benefits, error)
+	GetByID(lang, benefitId string) (models.Benefits, error)
 }
 
 type ServiceStruct struct {
-	Filename string
 }
 
-var Service BenefitsInterface
-
-func (q ServiceStruct) GetBenefitById(benefitId string) (benefit models.Benefits, err error) {
-
-	benList, err := Service.LoadBenefits()
-	if err != nil {
-		return benefit, err
-	}
-
-	for _, ben := range benList {
-		if ben.ID == benefitId {
-			benefit = ben
-		}
-	}
-	return benefit, nil
-}
+var Service BenefitsInterface = new(ServiceStruct)
