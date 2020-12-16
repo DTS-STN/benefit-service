@@ -22,7 +22,7 @@ func TestGetLifeJourenyIds(t *testing.T) {
 
 	lifeJourneyId := "1"
 	lang := "en"
-	lifeJourney, err := Service.GetById(lang, lifeJourneyId)
+	lifeJourney, err := Service.GetByID(lang, lifeJourneyId)
 	if err != nil {
 		assert.Fail(t, "Error occured when getting life journey list")
 	}
@@ -34,7 +34,7 @@ func TestGetAllLifeJourneys(t *testing.T) {
 	defer teardownTests()
 
 	lang := "en"
-	lifeJourney := Service.LifeJourneys(lang)
+	lifeJourney := Service.GetAll(lang)
 
 	assert.Equal(t, 4, len(lifeJourney))
 }

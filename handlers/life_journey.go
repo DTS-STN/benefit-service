@@ -34,7 +34,7 @@ func (h *Handler) LifeJourneys(c echo.Context) error {
 
 	// if an ID is passed in, return the specific Life Journey
 	if lifeJourneyRequest.Id != "" {
-		if lifeJourneyResponse.LifeJourney, err = lifejourneys.Service.GetById(lifeJourneyRequest.Lang, lifeJourneyRequest.Id); err != nil {
+		if lifeJourneyResponse.LifeJourney, err = lifejourneys.Service.GetByID(lifeJourneyRequest.Lang, lifeJourneyRequest.Id); err != nil {
 			c.Logger().Error(err)
 			return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
 		}
@@ -42,7 +42,7 @@ func (h *Handler) LifeJourneys(c echo.Context) error {
 	}
 
 	// otherwise return all Life Journeys
-	lifeJourneyResponse.LifeJourneyList = lifejourneys.Service.LifeJourneys(lifeJourneyRequest.Lang)
+	lifeJourneyResponse.LifeJourneyList = lifejourneys.Service.GetAll(lifeJourneyRequest.Lang)
 	return c.JSON(http.StatusOK, lifeJourneyResponse.LifeJourneyList)
 }
 
@@ -66,14 +66,14 @@ func (h *Handler) LifeJourneyBenefits(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
 	}
 
-	lifeJourney, err := lifejourneys.Service.GetById(lifeJourneyBenefitsRequest.Lang, lifeJourneyBenefitsRequest.Id)
+	lifeJourney, err := lifejourneys.Service.GetByID(lifeJourneyBenefitsRequest.Lang, lifeJourneyBenefitsRequest.Id)
 	if err != nil {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
 	}
 
 	for _, benId := range lifeJourney.RelatedBenefits {
-		benefit, err := benefits.Service.GetBenefitById(lifeJourneyBenefitsRequest.Lang, benId)
+		benefit, err := benefits.Service.GetByID(lifeJourneyBenefitsRequest.Lang, benId)
 		if err != nil {
 			c.Logger().Error(err)
 			return c.JSON(http.StatusInternalServerError, lifeJourneyBenefitsResponse)

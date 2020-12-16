@@ -26,7 +26,7 @@ type LifeJourneyServiceMock struct {
 	mock.Mock
 }
 
-func (q *LifeJourneyServiceMock) LifeJourneys(lang string) []models.LifeJourney {
+func (q *LifeJourneyServiceMock) GetAll(lang string) []models.LifeJourney {
 	return []models.LifeJourney{
 		{
 			ID: "1",
@@ -38,7 +38,7 @@ func (q *LifeJourneyServiceMock) LoadLifeJourneys(lang string) ([]models.LifeJou
 	return []models.LifeJourney{}, nil
 }
 
-func (q *LifeJourneyServiceMock) GetById(lang, id string) (models.LifeJourney, error) {
+func (q *LifeJourneyServiceMock) GetByID(lang, id string) (models.LifeJourney, error) {
 	return models.LifeJourney{ID: "2", RelatedBenefits: []string{"1", "2", "3"}}, nil
 }
 

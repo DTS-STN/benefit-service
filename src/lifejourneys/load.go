@@ -19,8 +19,8 @@ var Files = map[string]string{
 	"fr": "life_journeys_fr.json",
 }
 
-// LifeJourneys returns all Life Journeys
-func (q *ServiceStruct) LifeJourneys(lang string) []models.LifeJourney {
+// GetAll returns all Life Journeys
+func (q *ServiceStruct) GetAll(lang string) []models.LifeJourney {
 	if lang == "fr" {
 		if lifeJourneysFR == nil || len(lifeJourneysFR) == 0 {
 			var err error
@@ -41,9 +41,9 @@ func (q *ServiceStruct) LifeJourneys(lang string) []models.LifeJourney {
 	return lifeJourneysEN
 }
 
-// GetById returns a Life Journey from an ID
-func (q *ServiceStruct) GetById(lang, id string) (models.LifeJourney, error) {
-	for _, lifeJourney := range q.LifeJourneys(lang) {
+// GetByID returns a Life Journey from an ID
+func (q *ServiceStruct) GetByID(lang, id string) (models.LifeJourney, error) {
+	for _, lifeJourney := range q.GetAll(lang) {
 		if lifeJourney.ID == id {
 			return lifeJourney, nil
 		}

@@ -5,9 +5,9 @@ import (
 )
 
 type BenefitsInterface interface {
-	Benefits(lang string) []models.Benefits
+	GetAll(lang string) []models.Benefits
 	LoadBenefits(lang string) ([]models.Benefits, error)
-	GetBenefitById(lang, benefitId string) (models.Benefits, error)
+	GetByID(lang, benefitId string) (models.Benefits, error)
 }
 
 type ServiceStruct struct {

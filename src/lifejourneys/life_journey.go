@@ -5,8 +5,8 @@ import (
 )
 
 type LifeJourneyInterface interface {
-	LifeJourneys(lang string) []models.LifeJourney
-	GetById(lang, id string) (models.LifeJourney, error)
+	GetAll(lang string) []models.LifeJourney
+	GetByID(lang, id string) (models.LifeJourney, error)
 	LoadLifeJourneys(lang string) ([]models.LifeJourney, error)
 }
 

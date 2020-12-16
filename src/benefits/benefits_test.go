@@ -22,7 +22,7 @@ func TestGetBenefitsByIds(t *testing.T) {
 
 	benefitId := "1"
 	lang := "en"
-	benefit, err := Service.GetBenefitById(lang, benefitId)
+	benefit, err := Service.GetByID(lang, benefitId)
 	if err != nil {
 		assert.Fail(t, "Error occured when getting benefits by id")
 	}

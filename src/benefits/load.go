@@ -19,8 +19,8 @@ var Files = map[string]string{
 	"fr": "benefit_info_fr.json",
 }
 
-// Benefits is a getter for a list of benefits
-func (q *ServiceStruct) Benefits(lang string) []models.Benefits {
+// GetAll is a getter for a list of benefits
+func (q *ServiceStruct) GetAll(lang string) []models.Benefits {
 	if lang == "fr" {
 		if benefitsFR == nil || len(benefitsFR) == 0 {
 			var err error
@@ -41,9 +41,9 @@ func (q *ServiceStruct) Benefits(lang string) []models.Benefits {
 	return benefitsEN
 }
 
-// GetBenefitById returns a Benefit from an ID
-func (q *ServiceStruct) GetBenefitById(lang, benefitId string) (models.Benefits, error) {
-	for _, benefit := range q.Benefits(lang) {
+// GetByID returns a Benefit from an ID
+func (q *ServiceStruct) GetByID(lang, benefitId string) (models.Benefits, error) {
+	for _, benefit := range q.GetAll(lang) {
 		if benefit.ID == benefitId {
 			return benefit, nil
 		}
