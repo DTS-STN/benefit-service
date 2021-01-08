@@ -1,13 +1,13 @@
 package lifejourneys
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
 
 	"github.com/DTS-STN/benefit-service/models"
+	"github.com/DTS-STN/benefit-service/src/db"
 	"github.com/labstack/gommon/log"
 )
 
@@ -58,24 +58,25 @@ var osOpen = os.Open
 // LoadLifeJourneys will get Life Journeys from an external source
 // returns a list of Life Journeys
 func (q *ServiceStruct) LoadLifeJourneys(lang string) (lifeJourneys []models.LifeJourney, err error) {
-	file := Files[lang]
-	if file == "" {
-		file = Files["en"]
-	}
-	jsonFile, err := osOpen(file)
-
+	db := db.OpenDB()
+	rows, err := db.Query("select * from benefits.life_journey")
 	if err != nil {
-		return
+		log.Error(err)
 	}
+	defer rows.Close()
 
-	defer jsonFile.Close()
-
-	byteValue, err := readFile(jsonFile)
-	if err != nil {
-		return
+	for rows.Next() {
+		var (
+			id          string
+			title       string
+			description string
+		)
+		err := rows.Scan(&id, &title, &description)
+		if err != nil {
+			log.Error(err)
+		}
+		lifeJourneys = append(lifeJourneys, models.LifeJourney{ID: id, Title: title, Description: description})
 	}
-
-	err = json.Unmarshal(byteValue, &lifeJourneys)
 
 	return
 }
