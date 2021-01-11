@@ -34,10 +34,10 @@ releases:
     force: false
 
 
-  - name: benefit-serice-keycloak-{{ .Environment.Name }}
+  - name: keycloak-bs-{{ .Environment.Name }}
     chart: dts/dts-keycloak
     version: 9.0.1
-    namespace: benefit-service-security-{{ .Environment.Name }}
+    namespace: security-bs-{{ .Environment.Name }}
     values:
       - overrides/keycloak/keycloak.yaml.gotmpl
     labels:
