@@ -39,7 +39,7 @@ releases:
     version: 9.0.1
     namespace: security-bs-{{ .Environment.Name }}
     values:
-      - overrides/keycloak/keycloak.yaml.gotmpl
+      - overrides/keycloak.yaml.gotmpl
     labels:
         category: security
         app: keycloak
