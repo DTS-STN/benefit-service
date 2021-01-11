@@ -32,3 +32,18 @@ releases:
     installed: true
     wait: false
     force: false
+
+
+  - name: benefit-serice-keycloak-{{ .Environment.Name }}
+    chart: dts/dts-keycloak
+    version: 9.0.1
+    namespace: benefit-service-security-{{ .Environment.Name }}
+    values:
+      - overrides/keycloak/keycloak.yaml.gotmpl
+    labels:
+        category: security
+        app: keycloak
+        tier: full
+    installed: true
+    wait: false
+    force: false
