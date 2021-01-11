@@ -35,7 +35,7 @@ func (h *Handler) Benefits(c echo.Context) error {
 
 	// if an ID is passed in, get the benefit based on the ID
 	if benefitsRequest.Id != "" {
-		if benefitsResponse.Benefit, err = benefits.Service.GetByID(benefitsRequest.Lang, benefitsRequest.Id); err != nil {
+		if benefitsResponse.Benefit, err = benefits.Service.GetByID(benefitsRequest.Id); err != nil {
 			c.Logger().Error(err)
 			return c.JSON(http.StatusBadRequest, benefitsResponse)
 		}
@@ -48,7 +48,7 @@ func (h *Handler) Benefits(c echo.Context) error {
 		Ids := strings.Split(benefitsRequest.IdList, ",")
 		var benefit models.Benefits
 		for _, benId := range Ids {
-			if benefit, err = benefits.Service.GetByID(benefitsRequest.Lang, benId); err != nil {
+			if benefit, err = benefits.Service.GetByID(benId); err != nil {
 				c.Logger().Error(err)
 				continue
 			}
@@ -58,6 +58,10 @@ func (h *Handler) Benefits(c echo.Context) error {
 	}
 
 	// otherwise return all benefits
-	benefitsResponse.BenefitsList = benefits.Service.GetAll(benefitsRequest.Lang)
+	benefitsResponse.BenefitsList, err = benefits.Service.GetAll()
+	if err != nil {
+		c.Logger().Error(err)
+		return c.JSON(http.StatusBadRequest, benefitsResponse.BenefitsList)
+	}
 	return c.JSON(http.StatusOK, benefitsResponse.BenefitsList)
 }

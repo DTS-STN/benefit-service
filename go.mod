@@ -8,6 +8,7 @@ require (
 	github.com/go-openapi/jsonreference v0.19.5 // indirect
 	github.com/go-openapi/spec v0.19.14 // indirect
 	github.com/go-openapi/swag v0.19.12 // indirect
+	github.com/joho/godotenv v1.3.0
 	github.com/labstack/echo/v4 v4.1.17
 	github.com/labstack/gommon v0.3.0
 	github.com/lib/pq v1.9.0

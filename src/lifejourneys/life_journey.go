@@ -5,12 +5,26 @@ import (
 )
 
 type LifeJourneyInterface interface {
-	GetAll(lang string) []models.LifeJourney
-	GetByID(lang, id string) (models.LifeJourney, error)
-	LoadLifeJourneys(lang string) ([]models.LifeJourney, error)
+	GetAll() ([]models.LifeJourney, error)
+	GetByID(id string) (models.LifeJourney, error)
 }
 
 type ServiceStruct struct {
+	repository LifeJourneyInterface
 }
 
-var Service LifeJourneyInterface = new(ServiceStruct)
+// GetAll returns all Life Journeys
+func (q *ServiceStruct) GetAll() ([]models.LifeJourney, error) {
+	return q.repository.GetAll()
+}
+
+// GetByID returns a Life Journey from an ID
+func (q *ServiceStruct) GetByID(id string) (models.LifeJourney, error) {
+	return q.repository.GetByID(id)
+}
+
+func NewService(repository LifeJourneyRepo) *ServiceStruct {
+	return &ServiceStruct{repository: repository}
+}
+
+var Service LifeJourneyInterface
