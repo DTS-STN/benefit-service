@@ -1,3 +1,4 @@
+basePath: /
 definitions:
   models.Benefits:
     properties:
@@ -42,8 +43,12 @@ definitions:
           $ref: '#/definitions/models.Benefits'
         type: array
     type: object
+host: https://benefit-service-dev.dev.dts-stn.com
 info:
   contact: {}
+  description: This service returns information about Benefits
+  title: Benefit Service
+  version: "1.0"
 paths:
   /benefits:
     get:
