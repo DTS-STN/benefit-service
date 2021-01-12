@@ -1,85 +1,74 @@
 package handlers
 
-import (
-	"net/http"
+// // LifeJourney
+// // @Summary Request Info on Life Journey
+// // @ID life-journey
+// // @Accept  json
+// // @Produce json
+// // @Success 200 {object} renderings.LifeJourneyResponse
+// // @Failure 400 {object} renderings.BenefitServiceError
+// // @Failure 404 {object} renderings.BenefitServiceError
+// // @Failure 500 {object} renderings.BenefitServiceError
+// // @Router /lifejourney [get]
+// func (h *Handler) LifeJourneys(c echo.Context) error {
+// 	var lifeJourneyResponse = new(renderings.LifeJourneyResponse)
+// 	lifeJourneyRequest := new(bindings.LifeJourneyRequest)
+// 	var err error
 
-	"github.com/DTS-STN/benefit-service/bindings"
-	"github.com/DTS-STN/benefit-service/models"
-	"github.com/DTS-STN/benefit-service/renderings"
-	"github.com/DTS-STN/benefit-service/src/benefits"
-	"github.com/DTS-STN/benefit-service/src/lifejourneys"
-	"github.com/labstack/echo/v4"
-)
+// 	// Bind the request into our request struct
+// 	if err = c.Bind(lifeJourneyRequest); err != nil {
+// 		c.Logger().Error(err)
+// 		return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
+// 	}
 
-// LifeJourney
-// @Summary Request Info on Life Journey
-// @ID life-journey
-// @Accept  json
-// @Produce json
-// @Success 200 {object} renderings.LifeJourneyResponse
-// @Failure 400 {object} renderings.BenefitServiceError
-// @Failure 404 {object} renderings.BenefitServiceError
-// @Failure 500 {object} renderings.BenefitServiceError
-// @Router /lifejourney [get]
-func (h *Handler) LifeJourneys(c echo.Context) error {
-	var lifeJourneyResponse = new(renderings.LifeJourneyResponse)
-	lifeJourneyRequest := new(bindings.LifeJourneyRequest)
-	var err error
+// 	// if an ID is passed in, return the specific Life Journey
+// 	if lifeJourneyRequest.Id != "" {
+// 		if lifeJourneyResponse.LifeJourney, err = lifejourneys.Service.GetByID(lifeJourneyRequest.Lang, lifeJourneyRequest.Id); err != nil {
+// 			c.Logger().Error(err)
+// 			return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
+// 		}
+// 		return c.JSON(http.StatusOK, lifeJourneyResponse.LifeJourney)
+// 	}
 
-	// Bind the request into our request struct
-	if err = c.Bind(lifeJourneyRequest); err != nil {
-		c.Logger().Error(err)
-		return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
-	}
+// 	// otherwise return all Life Journeys
+// 	lifeJourneyResponse.LifeJourneyList = lifejourneys.Service.GetAll(lifeJourneyRequest.Lang)
+// 	return c.JSON(http.StatusOK, lifeJourneyResponse.LifeJourneyList)
+// }
 
-	// if an ID is passed in, return the specific Life Journey
-	if lifeJourneyRequest.Id != "" {
-		if lifeJourneyResponse.LifeJourney, err = lifejourneys.Service.GetByID(lifeJourneyRequest.Lang, lifeJourneyRequest.Id); err != nil {
-			c.Logger().Error(err)
-			return c.JSON(http.StatusBadRequest, lifeJourneyResponse)
-		}
-		return c.JSON(http.StatusOK, lifeJourneyResponse.LifeJourney)
-	}
+// // LifeJourneyBenefits
+// // @Summary Request Info on Life Journey Related Benefits
+// // @ID life-journey-benefits
+// // @Accept  json
+// // @Produce json
+// // @Success 200 {object} []models.Benefits
+// // @Failure 400 {object} renderings.BenefitServiceError
+// // @Failure 404 {object} renderings.BenefitServiceError
+// // @Failure 500 {object} renderings.BenefitServiceError
+// // @Router /lifejourneys/:id/benefits [get]
+// func (h *Handler) LifeJourneyBenefits(c echo.Context) error {
+// 	var lifeJourneyBenefitsResponse []models.Benefits
+// 	lifeJourneyBenefitsRequest := new(bindings.LifeJourneyBenefitsRequest)
 
-	// otherwise return all Life Journeys
-	lifeJourneyResponse.LifeJourneyList = lifejourneys.Service.GetAll(lifeJourneyRequest.Lang)
-	return c.JSON(http.StatusOK, lifeJourneyResponse.LifeJourneyList)
-}
+// 	// Bind the request into our request struct
+// 	if err := c.Bind(lifeJourneyBenefitsRequest); err != nil {
+// 		c.Logger().Error(err)
+// 		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
+// 	}
 
-// LifeJourneyBenefits
-// @Summary Request Info on Life Journey Related Benefits
-// @ID life-journey-benefits
-// @Accept  json
-// @Produce json
-// @Success 200 {object} []models.Benefits
-// @Failure 400 {object} renderings.BenefitServiceError
-// @Failure 404 {object} renderings.BenefitServiceError
-// @Failure 500 {object} renderings.BenefitServiceError
-// @Router /lifejourneys/:id/benefits [get]
-func (h *Handler) LifeJourneyBenefits(c echo.Context) error {
-	var lifeJourneyBenefitsResponse []models.Benefits
-	lifeJourneyBenefitsRequest := new(bindings.LifeJourneyBenefitsRequest)
+// 	lifeJourney, err := lifejourneys.Service.GetByID(lifeJourneyBenefitsRequest.Lang, lifeJourneyBenefitsRequest.Id)
+// 	if err != nil {
+// 		c.Logger().Error(err)
+// 		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
+// 	}
 
-	// Bind the request into our request struct
-	if err := c.Bind(lifeJourneyBenefitsRequest); err != nil {
-		c.Logger().Error(err)
-		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
-	}
+// 	for _, benId := range lifeJourney.RelatedBenefits {
+// 		benefit, err := benefits.Service.GetByID(lifeJourneyBenefitsRequest.Lang, benId)
+// 		if err != nil {
+// 			c.Logger().Error(err)
+// 			return c.JSON(http.StatusInternalServerError, lifeJourneyBenefitsResponse)
+// 		}
+// 		lifeJourneyBenefitsResponse = append(lifeJourneyBenefitsResponse, benefit)
+// 	}
 
-	lifeJourney, err := lifejourneys.Service.GetByID(lifeJourneyBenefitsRequest.Lang, lifeJourneyBenefitsRequest.Id)
-	if err != nil {
-		c.Logger().Error(err)
-		return c.JSON(http.StatusBadRequest, lifeJourneyBenefitsResponse)
-	}
-
-	for _, benId := range lifeJourney.RelatedBenefits {
-		benefit, err := benefits.Service.GetByID(lifeJourneyBenefitsRequest.Lang, benId)
-		if err != nil {
-			c.Logger().Error(err)
-			return c.JSON(http.StatusInternalServerError, lifeJourneyBenefitsResponse)
-		}
-		lifeJourneyBenefitsResponse = append(lifeJourneyBenefitsResponse, benefit)
-	}
-
-	return c.JSON(http.StatusOK, lifeJourneyBenefitsResponse)
-}
+// 	return c.JSON(http.StatusOK, lifeJourneyBenefitsResponse)
+// }
