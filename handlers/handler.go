@@ -6,6 +6,7 @@ import (
 
 type HandlerServiceInterface interface {
 	HealthCheck(c echo.Context) error
+	CuramHealthCheck(c echo.Context) error
 	Benefits(c echo.Context) error
 }
 

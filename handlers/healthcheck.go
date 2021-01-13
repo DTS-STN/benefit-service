@@ -15,3 +15,14 @@ import (
 func (h *Handler) HealthCheck(c echo.Context) error {
 	return c.String(http.StatusOK, "Healthy")
 }
+
+// CuramHealthcheck
+// @Summary Returns CuramHealthy
+// @Description Returns CuramHealthy
+// @ID curamhealthcheck
+// @Success 200 {string} string	"CuramHealthy"
+// @Router /curamhealthcheck [get]
+func (h *Handler) CuramHealthCheck(c echo.Context) error {
+	return c.String(http.StatusOK, "CuramHealthy")
+}
+

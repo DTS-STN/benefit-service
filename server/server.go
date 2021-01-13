@@ -27,6 +27,7 @@ func service() {
 	// Routes
 	echoService.GET("/swagger/*", echoSwagger.WrapHandler)
 	echoService.GET("/healthcheck", handlers.HandlerService.HealthCheck)
+	echoService.GET("/curamhealthcheck", handlers.HandlerService.CuramHealthCheck)
 	echoService.GET("/benefits", handlers.HandlerService.Benefits)
 	echoService.GET("/benefits/:id", handlers.HandlerService.Benefits)
 	// Start server
