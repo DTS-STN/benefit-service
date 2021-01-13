@@ -1,0 +1,25 @@
+rbac:
+    create: true
+ingress:
+    enabled: true
+    annotations:
+        kubernetes.io/ingress.class: traefik
+        kubernetes.io/tls-acme: "true"
+    rules:
+      -
+        host: 'keycloak.{{ .Environment.Name }}.{{ requiredEnv "BASE_DOMAIN" }}'
+        paths:
+            - /
+extraEnv: |-
+  - name: PROXY_ADDRESS_FORWARDING
+    value: "true"
+postgresql:
+  persistence:
+    enabled: true
+    storageClass: dtsstorageclass-dev
+  global:
+    storageClass: dtsstorageclass-dev
+  postgresqlUsername: dtskeycloak
+  postgresqlPassword: {{ requiredEnv "TF_VAR_KEYCLOAK_PGSQL_PASSWORD_DEV" }}
+
+  postgresqlDatabase: keycloak
