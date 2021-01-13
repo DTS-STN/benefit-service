@@ -32,18 +32,3 @@ releases:
     installed: true
     wait: false
     force: false
-
-
-  - name: keycloak-bs-{{ .Environment.Name }}
-    chart: dts/dts-keycloak
-    version: 9.0.1
-    namespace: security-bs-{{ .Environment.Name }}
-    values:
-      - overrides/keycloak.yaml.gotmpl
-    labels:
-        category: security
-        app: keycloak
-        tier: full
-    installed: true
-    wait: false
-    force: false
