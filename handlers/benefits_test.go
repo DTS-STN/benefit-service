@@ -61,7 +61,7 @@ func TestBenefits_AllBenefits(t *testing.T) {
 		benefitResponse := new(renderings.BenefitsResponse)
 		json.NewDecoder(rec.Body).Decode(&benefitResponse.BenefitsList)
 
-		assert.Equal(t, 5, len(benefitResponse.BenefitsList))
+		assert.Equal(t, 3, len(benefitResponse.BenefitsList))
 	}
 }
 
@@ -90,55 +90,55 @@ func TestBenefits_SingleBenefit(t *testing.T) {
 
 		expectedResult := models.Benefits{
 			ID:              "1",
-			Title:           "Driver's License",
-			Description:     "License for Driver's",
-			LongDescription: "# Driver's License Benefit Details \nBrief description of the Driver's License Benefit \n## Overview \nShort Overview of Driver's License Process \n## Important Information \nImportant Information cli8ents need to know for the Driver's License benefit. \n## Eligibility criteria \nDescription of Driver's License Eligibility Criteria and how to qualify for the benefit. \n- Must be 16 years of age or older \n- Must be a resident of Canada \n- Must have completed a Driver Training Program \n- For client's under the age of 18, you must have parental consent \n### Examples \nDescription of different scenario's to provide examples to clients \n## Eligibility period \nDescription of Eligibility periods for a Driver's License. \n## How to apply \nDescription of How to apply for a Driver's License and what information is required. \n## Contact Information \nFor further Information on Driver's License and related Benefits contact 1-800-Drivers. \n## Payment Information \nDescription of Payment Information for a Driver's License.",
-			RelatedBenefits: []string{"5"},
+			Title:           "Employment Insurance",
+			Description:     "Employment Insurance Lorem Ipsum Dolor Sit Amet.",
+			LongDescription: "# Employment Insurance Details \n* Lorem ipsum dolor sit amet \n## Curabitur feugiat, turpis a dignissim dictum \n* Praesent fermentum lectus ac vulputate suscipit  \n## Aliquam vehicula consectetur felis ac luctus \n* Praesent et sollicitudin felis, vitae lobortis sapien \n## Pellentesque consequat \n* Suspendisse ac posuere tortor, consequat imperdiet augue \n* Must have a permanant address \n* Must be a resident of Canada \n* Must be a Canadian Citizen \n### Vestibulum mollis in dolor in pretium \n* Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos \n## Phasellus varius \n* Pellentesque consequat diam in rhoncus dapibus \n## Quisque tempus \n* Morbi sit amet varius mi, ut viverra lorem. \n## Duis vestibulum \n* Cras fringilla euismod ante sit amet consequat. \n## Donec rutrum \n* Donec ultrices ultricies ipsum, ut iaculis sapien euismod eget.",
+			RelatedBenefits: []string{},
 			BenefitDetails: []models.FieldDetails{
 				{
 					FieldName:             "Overview",
-					FieldShortDescription: "Short Overview of Driver's License Process",
-					FieldLongDescription:  "Long Overview of Driver's License Process",
+					FieldShortDescription: "Short Overview of Employment Insurance Process",
+					FieldLongDescription:  "Long Overview of Employment Insurance Process",
 				},
 				{
 					FieldName:             "Eligibility criteria",
-					FieldShortDescription: "Short description of Driver's License Eligibility Criteria",
-					FieldLongDescription:  "Long description of Driver's License Eligibility Criteria",
+					FieldShortDescription: "Short description of Employment Insurance Eligibility Criteria",
+					FieldLongDescription:  "Long description of Employment Insurance Eligibility Criteria",
 				},
 				{
 					FieldName:             "Eligibility period",
-					FieldShortDescription: "Short description of Eligibility periods for a Driver's License",
-					FieldLongDescription:  "Long description of Eligibility periods for a Driver's License",
+					FieldShortDescription: "Short description of Eligibility periods for Employment Insurance",
+					FieldLongDescription:  "Long description of Eligibility periods for Employment Insurance",
 				},
 				{
 					FieldName:             "Important Information",
-					FieldShortDescription: "Short description of Important Information for a Driver's License",
-					FieldLongDescription:  "Long description of Important Information for a Driver's License",
+					FieldShortDescription: "Short description of Important Information for Employment Insurance",
+					FieldLongDescription:  "Long description of Important Information for Employment Insurance",
 				},
 				{
 					FieldName:             "How to apply",
-					FieldShortDescription: "Short description of How to apply for a Driver's License",
-					FieldLongDescription:  "Long description of How to apply for a Driver's License",
+					FieldShortDescription: "Short description of How to apply for Employment Insurance",
+					FieldLongDescription:  "Long description of How to apply for Employment Insurance",
 				},
 				{
 					FieldName:             "Contact Information",
-					FieldShortDescription: "Short description of Contact Information for a Driver's License",
-					FieldLongDescription:  "Long description of Contact Information for a Driver's License",
+					FieldShortDescription: "Short description of Contact Information for Employment Insurance",
+					FieldLongDescription:  "Long description of Contact Information for Employment Insurance",
 				},
 				{
 					FieldName:             "Examples",
-					FieldShortDescription: "Short description of examples for a Driver's License",
-					FieldLongDescription:  "Long description of examples for a Driver's License",
+					FieldShortDescription: "Short description of examples for Employment Insurance",
+					FieldLongDescription:  "Long description of examples for Employment Insurance",
 				},
 				{
 					FieldName:             "Payment Information",
-					FieldShortDescription: "Short description of Payment Information for a Driver's License",
-					FieldLongDescription:  "Long description of Payment Information for a Driver's License",
+					FieldShortDescription: "Short description of Payment Information for Employment Insurance",
+					FieldLongDescription:  "Long description of Payment Information for Employment Insurance",
 				},
 				{
 					FieldName:             "Repayment Information",
-					FieldShortDescription: "Short description of Repayment Information for a Driver's License",
-					FieldLongDescription:  "Long description of Repayment Information for a Driver's License",
+					FieldShortDescription: "Short description of Repayment Information for Employment Insurance",
+					FieldLongDescription:  "Long description of Repayment Information for Employment Insurance",
 				},
 			},
 		}
