@@ -28,23 +28,6 @@ definitions:
       fieldname:
         type: string
     type: object
-  models.LifeJourney:
-    properties:
-      description:
-        type: string
-      id:
-        type: string
-      lifejourney_details:
-        items:
-          $ref: '#/definitions/models.FieldDetails'
-        type: array
-      related_benefits:
-        items:
-          type: string
-        type: array
-      title:
-        type: string
-    type: object
   renderings.BenefitServiceError:
     properties:
       error_code:
@@ -52,18 +35,12 @@ definitions:
     type: object
   renderings.BenefitsResponse:
     properties:
+      benefit:
+        $ref: '#/definitions/models.Benefits'
       benefits:
         description: Life Journey ID
         items:
           $ref: '#/definitions/models.Benefits'
-        type: array
-    type: object
-  renderings.LifeJourneyResponse:
-    properties:
-      lifejourneys:
-        description: Life Journey ID
-        items:
-          $ref: '#/definitions/models.LifeJourney'
         type: array
     type: object
 host: https://benefit-service-dev.dev.dts-stn.com
@@ -79,8 +56,7 @@ paths:
       - application/json
       operationId: benefits
       parameters:
-      - description: The language the response should be in. Defaults to English.
-          English and French supported.
+      - description: The language the response should be in. Defaults to English. English and French supported.
         in: query
         name: lang
         type: string
@@ -114,62 +90,4 @@ paths:
           schema:
             type: string
       summary: Returns Healthy
-  /lifejourneys:
-    get:
-      consumes:
-      - application/json
-      operationId: life-journey
-      parameters:
-      - description: The language the response should be in. Defaults to English.
-          English and French supported.
-        in: query
-        name: lang
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/renderings.LifeJourneyResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/renderings.BenefitServiceError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/renderings.BenefitServiceError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/renderings.BenefitServiceError'
-      summary: Request Info on Life Journey
-  /lifejourneys/:id/benefits:
-    get:
-      consumes:
-      - application/json
-      operationId: life-journey-benefits
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/models.Benefits'
-            type: array
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/renderings.BenefitServiceError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/renderings.BenefitServiceError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/renderings.BenefitServiceError'
-      summary: Request Info on Life Journey Related Benefits
 swagger: "2.0"

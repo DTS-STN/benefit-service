@@ -69,93 +69,6 @@
                     }
                 }
             }
-        },
-        "/lifejourneys": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Request Info on Life Journey",
-                "operationId": "life-journey",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "The language the response should be in. Defaults to English. English and French supported.",
-                        "name": "lang",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/renderings.LifeJourneyResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/renderings.BenefitServiceError"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/renderings.BenefitServiceError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/renderings.BenefitServiceError"
-                        }
-                    }
-                }
-            }
-        },
-        "/lifejourneys/:id/benefits": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Request Info on Life Journey Related Benefits",
-                "operationId": "life-journey-benefits",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/models.Benefits"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/renderings.BenefitServiceError"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/renderings.BenefitServiceError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/renderings.BenefitServiceError"
-                        }
-                    }
-                }
-            }
         }
     },
     "definitions": {
@@ -202,32 +115,6 @@
                 }
             }
         },
-        "models.LifeJourney": {
-            "type": "object",
-            "properties": {
-                "description": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "lifejourney_details": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.FieldDetails"
-                    }
-                },
-                "related_benefits": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
         "renderings.BenefitServiceError": {
             "type": "object",
             "properties": {
@@ -239,23 +126,14 @@
         "renderings.BenefitsResponse": {
             "type": "object",
             "properties": {
+                "benefit": {
+                    "$ref": "#/definitions/models.Benefits"
+                },
                 "benefits": {
                     "description": "Life Journey ID",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/models.Benefits"
-                    }
-                }
-            }
-        },
-        "renderings.LifeJourneyResponse": {
-            "type": "object",
-            "properties": {
-                "lifejourneys": {
-                    "description": "Life Journey ID",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.LifeJourney"
                     }
                 }
             }

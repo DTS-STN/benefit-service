@@ -16,14 +16,6 @@ func (m *HandlerServiceMock) HealthCheck(c echo.Context) error {
 	args := m.Called()
 	return args.Error(1)
 }
-func (m *HandlerServiceMock) LifeJourneys(c echo.Context) error {
-	args := m.Called()
-	return args.Error(1)
-}
-func (m *HandlerServiceMock) LifeJourneyBenefits(c echo.Context) error {
-	args := m.Called()
-	return args.Error(1)
-}
 func (m *HandlerServiceMock) Benefits(c echo.Context) error {
 	args := m.Called()
 	return args.Error(1)
