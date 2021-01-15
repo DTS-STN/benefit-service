@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"strconv"
 
 	"github.com/DTS-STN/benefit-service/models"
 	"github.com/labstack/gommon/log"
@@ -44,7 +45,11 @@ func (q *ServiceStruct) GetAll(lang string) []models.Benefits {
 // GetByID returns a Benefit from an ID
 func (q *ServiceStruct) GetByID(lang, benefitId string) (models.Benefits, error) {
 	for _, benefit := range q.GetAll(lang) {
-		if benefit.ID == benefitId {
+		val, err := strconv.Atoi(benefitId)
+		if err != nil {
+			return models.Benefits{}, fmt.Errorf("Cannot parse %s", benefitId)
+		}
+		if benefit.ID == val {
 			return benefit, nil
 		}
 	}

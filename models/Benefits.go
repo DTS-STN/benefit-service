@@ -1,7 +1,7 @@
 package models
 
 type Benefits struct {
-	ID              string   `json:"id"`
+	ID              int      `json:"id,string"`
 	Title           string   `json:"title"`
 	Description     string   `json:"description"`
 	LongDescription string   `json:"long_description"`

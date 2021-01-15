@@ -1,6 +1,7 @@
 package benefits
 
 import (
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -26,5 +27,7 @@ func TestGetBenefitsByIds(t *testing.T) {
 	if err != nil {
 		assert.Fail(t, "Error occured when getting benefits by id")
 	}
-	assert.Equal(t, benefitId, benefit.ID)
+	val, err := strconv.Atoi(benefitId)
+	assert.NoError(t, err)
+	assert.Equal(t, val, benefit.ID)
 }
