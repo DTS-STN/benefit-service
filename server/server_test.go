@@ -20,6 +20,10 @@ func (m *HandlerServiceMock) Benefits(c echo.Context) error {
 	args := m.Called()
 	return args.Error(1)
 }
+func (m *HandlerServiceMock) BenefitsCount(c echo.Context) error {
+	args := m.Called()
+	return args.Error(1)
+}
 
 // TODO: This doesn't work, need to setup an http client and call the endpoints to run tests
 func TestServer(t *testing.T) {

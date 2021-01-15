@@ -61,3 +61,9 @@ func (h *Handler) Benefits(c echo.Context) error {
 	benefitsResponse.BenefitsList = benefits.Service.GetAll(benefitsRequest.Lang)
 	return c.JSON(http.StatusOK, benefitsResponse.BenefitsList)
 }
+
+func (h *Handler) BenefitsCount(c echo.Context) error {
+	benefitsRequest := new(bindings.BenefitsRequest)
+	count := benefits.Service.Count(benefitsRequest.Lang)
+	return c.JSON(http.StatusOK, count)
+}
