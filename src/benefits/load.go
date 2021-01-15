@@ -51,6 +51,12 @@ func (q *ServiceStruct) GetByID(lang, benefitId string) (models.Benefits, error)
 	return models.Benefits{}, fmt.Errorf("Cannot find Benefit with ID: %s", benefitId)
 }
 
+// Count returns a count of all benefits
+func (q *ServiceStruct) Count(lang string) int {
+	benefitsList := q.GetAll(lang)
+	return len(benefitsList)
+}
+
 // to make following more testable, we need to do this
 // trust me, I'm a developer
 var osOpen = os.Open
