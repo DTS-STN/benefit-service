@@ -90,57 +90,16 @@ func TestBenefits_SingleBenefit(t *testing.T) {
 
 		expectedResult := models.Benefits{
 			ID:              "1",
-			Title:           "Employment Insurance",
-			Description:     "Employment Insurance Lorem Ipsum Dolor Sit Amet.",
-			LongDescription: "# Employment Insurance Details \n* Lorem ipsum dolor sit amet \n## Curabitur feugiat, turpis a dignissim dictum \n* Praesent fermentum lectus ac vulputate suscipit  \n## Aliquam vehicula consectetur felis ac luctus \n* Praesent et sollicitudin felis, vitae lobortis sapien \n## Pellentesque consequat \n* Suspendisse ac posuere tortor, consequat imperdiet augue \n* Must have a permanant address \n* Must be a resident of Canada \n* Must be a Canadian Citizen \n### Vestibulum mollis in dolor in pretium \n* Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos \n## Phasellus varius \n* Pellentesque consequat diam in rhoncus dapibus \n## Quisque tempus \n* Morbi sit amet varius mi, ut viverra lorem. \n## Duis vestibulum \n* Cras fringilla euismod ante sit amet consequat. \n## Donec rutrum \n* Donec ultrices ultricies ipsum, ut iaculis sapien euismod eget.",
+			Title:           "Regular EI Benefit",
+			Description:     "Regular EI Benefit Lorem Ipsum Dolor Sit Amet.",
+			LongDescription: "# Regular EI Benefit Details \n* Lorem ipsum dolor sit amet \n## Curabitur feugiat, turpis a dignissim dictum \n* Praesent fermentum lectus ac vulputate suscipit  \n## Aliquam vehicula consectetur felis ac luctus \n* Praesent et sollicitudin felis, vitae lobortis sapien \n## Pellentesque consequat \n* Suspendisse ac posuere tortor, consequat imperdiet augue \n* Must have a permanant address \n* Must be a resident of Canada \n* Must be a Canadian Citizen \n### Vestibulum mollis in dolor in pretium \n* Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos \n## Phasellus varius \n* Pellentesque consequat diam in rhoncus dapibus \n## Quisque tempus \n* Morbi sit amet varius mi, ut viverra lorem. \n## Duis vestibulum \n* Cras fringilla euismod ante sit amet consequat. \n## Donec rutrum \n* Donec ultrices ultricies ipsum, ut iaculis sapien euismod eget.",
 			RelatedBenefits: []string{},
-			BenefitDetails: []models.FieldDetails{
-				{
-					FieldName:             "Overview",
-					FieldShortDescription: "Short Overview of Employment Insurance Process",
-					FieldLongDescription:  "Long Overview of Employment Insurance Process",
-				},
-				{
-					FieldName:             "Eligibility criteria",
-					FieldShortDescription: "Short description of Employment Insurance Eligibility Criteria",
-					FieldLongDescription:  "Long description of Employment Insurance Eligibility Criteria",
-				},
-				{
-					FieldName:             "Eligibility period",
-					FieldShortDescription: "Short description of Eligibility periods for Employment Insurance",
-					FieldLongDescription:  "Long description of Eligibility periods for Employment Insurance",
-				},
-				{
-					FieldName:             "Important Information",
-					FieldShortDescription: "Short description of Important Information for Employment Insurance",
-					FieldLongDescription:  "Long description of Important Information for Employment Insurance",
-				},
-				{
-					FieldName:             "How to apply",
-					FieldShortDescription: "Short description of How to apply for Employment Insurance",
-					FieldLongDescription:  "Long description of How to apply for Employment Insurance",
-				},
-				{
-					FieldName:             "Contact Information",
-					FieldShortDescription: "Short description of Contact Information for Employment Insurance",
-					FieldLongDescription:  "Long description of Contact Information for Employment Insurance",
-				},
-				{
-					FieldName:             "Examples",
-					FieldShortDescription: "Short description of examples for Employment Insurance",
-					FieldLongDescription:  "Long description of examples for Employment Insurance",
-				},
-				{
-					FieldName:             "Payment Information",
-					FieldShortDescription: "Short description of Payment Information for Employment Insurance",
-					FieldLongDescription:  "Long description of Payment Information for Employment Insurance",
-				},
-				{
-					FieldName:             "Repayment Information",
-					FieldShortDescription: "Short description of Repayment Information for Employment Insurance",
-					FieldLongDescription:  "Long description of Repayment Information for Employment Insurance",
-				},
-			},
+			ServiceType:     "Internal",
+			BenefitType:     "Regular",
+			BenefitKey:      "ei_reg",
+			BenefitTags:     []string{},
+			RedirectURL:     "169.59.166.121:9044/ua",
+			APIURL:          "api.us-east.apiconnect.appdomain.cloud/hmakhijadeloitteca-api/dev/curam-prototype-apis/getProfileInfoAndSubmittedApplications",
 		}
 		assert.Equal(t, expectedResult, benefitResponse.Benefit)
 	}
