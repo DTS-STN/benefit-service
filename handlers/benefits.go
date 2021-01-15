@@ -63,7 +63,6 @@ func (h *Handler) Benefits(c echo.Context) error {
 }
 
 func (h *Handler) BenefitsCount(c echo.Context) error {
-	benefitsRequest := new(bindings.BenefitsRequest)
-	count := benefits.Service.Count(benefitsRequest.Lang)
+	count := benefits.Service.Count()
 	return c.JSON(http.StatusOK, count)
 }

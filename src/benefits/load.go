@@ -52,8 +52,8 @@ func (q *ServiceStruct) GetByID(lang, benefitId string) (models.Benefits, error)
 }
 
 // Count returns a count of all benefits
-func (q *ServiceStruct) Count(lang string) int {
-	benefitsList := q.GetAll(lang)
+func (q *ServiceStruct) Count() int {
+	benefitsList := q.GetAll("")
 	return len(benefitsList)
 }
 

@@ -10,8 +10,7 @@ func TestCountBenefits(t *testing.T) {
 	teardownTests := setupBenefitTests()
 	defer teardownTests()
 
-	lang := "en"
-	count := Service.Count(lang)
+	count := Service.Count()
 
 	assert.Equal(t, 3, count)
 }
