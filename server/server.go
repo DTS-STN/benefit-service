@@ -23,6 +23,7 @@ func service() {
 
 	// Middleware
 	echoService.Use(middleware.Recover())
+	echoService.Use(middleware.CORSWithConfig(middleware.DefaultCORSConfig))
 
 	// Routes
 	echoService.GET("/swagger/*", echoSwagger.WrapHandler)
