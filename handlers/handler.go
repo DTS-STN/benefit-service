@@ -7,6 +7,7 @@ import (
 type HandlerServiceInterface interface {
 	HealthCheck(c echo.Context) error
 	Benefits(c echo.Context) error
+	BenefitsCount(c echo.Context) error
 }
 
 type Handler struct {

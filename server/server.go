@@ -29,6 +29,7 @@ func service() {
 	echoService.GET("/healthcheck", handlers.HandlerService.HealthCheck)
 	echoService.GET("/benefits", handlers.HandlerService.Benefits)
 	echoService.GET("/benefits/:id", handlers.HandlerService.Benefits)
+	echoService.GET("/benefits/count", handlers.HandlerService.BenefitsCount)
 	// Start server
 	echoService.Logger.Fatal(echoService.Start(":8080"))
 }
