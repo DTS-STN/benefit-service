@@ -90,19 +90,31 @@ var doc = `{
         "models.Benefits": {
             "type": "object",
             "properties": {
-                "benefit_details": {
+                "api_url": {
+                    "type": "string"
+                },
+                "benefit_key": {
+                    "type": "string"
+                },
+                "benefit_tags": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.FieldDetails"
+                        "type": "string"
                     }
+                },
+                "benefit_type": {
+                    "type": "string"
                 },
                 "description": {
                     "type": "string"
                 },
                 "id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "long_description": {
+                    "type": "string"
+                },
+                "redirect_url": {
                     "type": "string"
                 },
                 "related_benefits": {
@@ -111,21 +123,10 @@ var doc = `{
                         "type": "string"
                     }
                 },
+                "service_type": {
+                    "type": "string"
+                },
                 "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.FieldDetails": {
-            "type": "object",
-            "properties": {
-                "field_long_description": {
-                    "type": "string"
-                },
-                "field_short_description": {
-                    "type": "string"
-                },
-                "fieldname": {
                     "type": "string"
                 }
             }
