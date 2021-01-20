@@ -28,3 +28,9 @@ readinessDelay: 60
 livenessPath: /
 readinessPath: /
 port: 80
+
+extraEnv:
+  - name: CURAM_PRESCREENING_LINK 
+    value: {{ requiredEnv "CURAM_PRESCREENING_LINK" | quote}}
+  - name: CURAM_IEG_LINK
+    value: {{ requiredEnv "CURAM_IEG_LINK" | quote}}

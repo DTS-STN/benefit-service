@@ -31,6 +31,8 @@ func service() {
 	echoService.GET("/benefits", handlers.HandlerService.Benefits)
 	echoService.GET("/benefits/:id", handlers.HandlerService.Benefits)
 	echoService.GET("/benefits/count", handlers.HandlerService.BenefitsCount)
+	echoService.POST("/benefits/apply", handlers.HandlerService.BenefitsApply)
+
 	// Start server
 	echoService.Logger.Fatal(echoService.Start(":8080"))
 }
