@@ -35,6 +35,13 @@ func (h *Handler) BenefitsApply(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, errObj)
 	}
 
+	if benefit.BenefitType == "" {
+		errObj := new(models.Error)
+		errObj.Status = http.StatusBadRequest
+		errObj.ErrorMessage = "benefitType was not supplied"
+		return c.JSON(http.StatusBadRequest, errObj)
+	}
+
 	benefitJson, _ := json.Marshal(benefit)
 	req, err := http.NewRequest("POST", os.Getenv("CURAM_PRESCREENING_LINK"), bytes.NewBuffer(benefitJson))
 	req.Header.Set("Content-Type", "application/json")
@@ -61,9 +68,8 @@ func (h *Handler) BenefitsApply(c echo.Context) error {
 	}
 
 	jsonMap := make(map[string]interface{})
-	jsonErr := json.Unmarshal(body, &jsonMap)
 
-	if jsonErr != nil {
+	if jsonErr := json.Unmarshal(body, &jsonMap); jsonErr != nil {
 		errObj := new(models.Error)
 		errObj.Status = http.StatusInternalServerError
 		errObj.ErrorMessage = err.Error()
