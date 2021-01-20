@@ -70,6 +70,61 @@ var doc = `{
                 }
             }
         },
+        "/benefits/apply": {
+            "post": {
+                "security": [
+                    {
+                        "OAuth2AccessCode": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Request redirect url to IEG for a particular benefit",
+                "operationId": "benefits-apply",
+                "parameters": [
+                    {
+                        "description": "the benefit you are requesting an apply redirect for",
+                        "name": "requestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/bindings.BenefitApplyRequest"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "the bearer token for a particular user",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "307": {
+                        "description": "Temporary Redirect",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.Error"
+                        }
+                    }
+                }
+            }
+        },
         "/healthcheck": {
             "get": {
                 "description": "Returns Healthy",
@@ -87,6 +142,26 @@ var doc = `{
         }
     },
     "definitions": {
+        "bindings.BenefitApplyRequest": {
+            "type": "object",
+            "properties": {
+                "benefitType": {
+                    "type": "string"
+                },
+                "incomeDetails": {
+                    "type": "string"
+                },
+                "outOfWork": {
+                    "type": "string"
+                },
+                "reasonForSeperation": {
+                    "type": "string"
+                },
+                "regularLookingForWork": {
+                    "type": "string"
+                }
+            }
+        },
         "models.Benefits": {
             "type": "object",
             "properties": {
@@ -128,6 +203,17 @@ var doc = `{
                 },
                 "title": {
                     "type": "string"
+                }
+            }
+        },
+        "models.Error": {
+            "type": "object",
+            "properties": {
+                "errorMessage": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
                 }
             }
         },

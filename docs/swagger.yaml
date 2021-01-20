@@ -1,5 +1,18 @@
 basePath: /
 definitions:
+  bindings.BenefitApplyRequest:
+    properties:
+      benefitType:
+        type: string
+      incomeDetails:
+        type: string
+      outOfWork:
+        type: string
+      reasonForSeperation:
+        type: string
+      regularLookingForWork:
+        type: string
+    type: object
   models.Benefits:
     properties:
       api_url:
@@ -28,6 +41,13 @@ definitions:
         type: string
       title:
         type: string
+    type: object
+  models.Error:
+    properties:
+      errorMessage:
+        type: string
+      status:
+        type: integer
     type: object
   renderings.BenefitServiceError:
     properties:
@@ -82,6 +102,41 @@ paths:
           schema:
             $ref: '#/definitions/renderings.BenefitServiceError'
       summary: Request Info on Benefits
+  /benefits/apply:
+    post:
+      consumes:
+      - application/json
+      operationId: benefits-apply
+      parameters:
+      - description: the benefit you are requesting an apply redirect for
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/bindings.BenefitApplyRequest'
+      - description: the bearer token for a particular user
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "307":
+          description: Temporary Redirect
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      security:
+      - OAuth2AccessCode: []
+      summary: Request redirect url to IEG for a particular benefit
   /healthcheck:
     get:
       description: Returns Healthy
