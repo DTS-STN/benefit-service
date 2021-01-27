@@ -12,9 +12,9 @@ import (
 	"github.com/labstack/gommon/log"
 )
 
-var questions = map[string][]models.Question{
-	"en": []models.Question{},
-	"fr": []models.Question{},
+var questionList = map[string][]models.Question{
+	"en": {},
+	"fr": {},
 }
 
 // GetAll returns a list of questions
@@ -24,15 +24,16 @@ func (q *ServiceStruct) GetAll(lang string) ([]models.Question, error) {
 		lang = "en"
 	}
 
-	if questions[lang] == nil || len(questions[lang]) == 0 {
-		if q, err := loadQuestions(lang); err != nil {
-			return questions[lang], err
-		} else {
-			questions[lang] = q
+	if questionList[lang] == nil || len(questionList[lang]) == 0 {
+		var q []models.Question
+		var err error
+		if q, err = loadQuestions(lang); err != nil {
+			return questionList[lang], err
 		}
+		questionList[lang] = q
 	}
 
-	return questions[lang], nil
+	return questionList[lang], nil
 }
 
 // GetByID returns a single question from an id
@@ -56,10 +57,11 @@ func (q *ServiceStruct) GetByID(lang, id string) (models.Question, error) {
 
 // to make following more testable, we need to do this
 var osOpen = os.Open
+var loadQuestions = loadQuestionsFunc
 
 // LoadQuestions loads questions from an external source
 // Returns a list of questions
-func loadQuestions(lang string) (questions []models.Question, err error) {
+func loadQuestionsFunc(lang string) (questions []models.Question, err error) {
 
 	jsonFile, err := osOpen("questions_" + lang + ".json")
 
