@@ -2,36 +2,66 @@ package questions
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
+	"strconv"
 
 	"github.com/DTS-STN/benefit-service/models"
 	"github.com/labstack/gommon/log"
 )
 
-var questions []models.Question
+var questions = map[string][]models.Question{
+	"en": []models.Question{},
+	"fr": []models.Question{},
+}
 
-// Questions is the getter for questions.
-// If questions
-func (q *ServiceStruct) Questions() []models.Question {
-	if questions == nil || len(questions) == 0 {
-		var err error
-		if questions, err = Service.LoadQuestions(); err != nil {
-			log.Error(err)
+// GetAll returns a list of questions
+func (q *ServiceStruct) GetAll(lang string) ([]models.Question, error) {
+	// if lang isn't set, just return the english questions
+	if lang == "" {
+		lang = "en"
+	}
+
+	if questions[lang] == nil || len(questions[lang]) == 0 {
+		if q, err := loadQuestions(lang); err != nil {
+			return questions[lang], err
+		} else {
+			questions[lang] = q
 		}
 	}
-	return questions
+
+	return questions[lang], nil
+}
+
+// GetByID returns a single question from an id
+func (q *ServiceStruct) GetByID(lang, id string) (models.Question, error) {
+	if ques, err := q.GetAll(lang); err == nil {
+		for _, question := range ques {
+			val, err := strconv.Atoi(id)
+			if err != nil {
+				return models.Question{}, fmt.Errorf("Cannot parse id: %s", id)
+			}
+			if question.ID == val {
+				return question, nil
+			}
+		}
+	} else {
+		return models.Question{}, err
+	}
+
+	return models.Question{}, fmt.Errorf("Cannot find question with id: %s", id)
 }
 
 // to make following more testable, we need to do this
-// trust me, I'm a developer
 var osOpen = os.Open
 
 // LoadQuestions loads questions from an external source
 // Returns a list of questions
-func (q *ServiceStruct) LoadQuestions() (questions []models.Question, err error) {
-	jsonFile, err := osOpen(q.Filename)
+func loadQuestions(lang string) (questions []models.Question, err error) {
+
+	jsonFile, err := osOpen("questions_" + lang + ".json")
 
 	if err != nil {
 		return

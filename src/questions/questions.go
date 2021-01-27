@@ -6,14 +6,15 @@ import (
 
 // QuestionInterface for getting questions and loading questions from file
 type QuestionInterface interface {
-	Questions() []models.Question
-	LoadQuestions() ([]models.Question, error)
+	GetAll(lang string) ([]models.Question, error)
+	GetByID(lang, id string) (models.Question, error)
+
+	//LoadQuestions(lang string) ([]models.Question, error)
 }
 
 // QuestionServiceStruct is a struct used for passing in the questions file
 type ServiceStruct struct {
-	Filename string
 }
 
 // QuestionService is an instance of QuestionInterface
-var Service QuestionInterface
+var Service QuestionInterface = new(ServiceStruct)

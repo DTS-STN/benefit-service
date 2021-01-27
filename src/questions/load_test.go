@@ -15,18 +15,18 @@ type QuestionServiceMock struct {
 	mock.Mock
 }
 
-func (m *QuestionServiceMock) Questions() []models.Question {
-	args := m.Called()
-	return args.Get(0).([]models.Question)
-}
-
-func (m *QuestionServiceMock) LoadQuestions() ([]models.Question, error) {
+func (m *QuestionServiceMock) GetAll(lang string) ([]models.Question, error) {
 	args := m.Called()
 	return args.Get(0).([]models.Question), args.Error(1)
 }
 
+func (m *QuestionServiceMock) GetByID(lang, id string) (models.Question, error) {
+	args := m.Called()
+	return args.Get(0).(models.Question), args.Error(1)
+}
+
 func osOpenMock(path string) (*os.File, error) {
-	return os.Open("questions_test.json")
+	return os.Open("../../questions_en.json")
 }
 
 // anything that should be run a the end of the unit tests should go here
@@ -39,10 +39,20 @@ func setupTests() {
 func TestQuestions(t *testing.T) {
 	setupTests()
 
-	var realQuestionService = ServiceStruct{Filename: ""}
+	var realQuestionService = ServiceStruct{}
 
 	// Expected result data
-	expectedResult := []models.Question{{ID: "1", Description: "are you a resident of canada?", Answer: "", OpenFiscaIds: []string{"is_canadian_resident"}}}
+	expectedResult := []models.Question{
+		{
+			ID:   1,
+			Text: "How much income have you earned in Canada the last year?",
+			Answers: []models.QuestionAnswers{
+				{"lt-30k", "Less than $30,000"},
+				{"30k-to-60k", "Between $30,000 & $60,000"},
+				{"gt-60k", "More than $60,000"},
+			},
+		},
+	}
 
 	// Create a Mock for the interface
 	qsMock := new(QuestionServiceMock)
@@ -56,9 +66,10 @@ func TestQuestions(t *testing.T) {
 	osOpen = osOpenMock
 
 	// Actual result data
-	actual := realQuestionService.Questions()
+	actual, err := realQuestionService.GetAll("en")
 
 	// Assertions
+	assert.NoError(t, err)
 	assert.Equal(t, expectedResult, actual)
 }
 
