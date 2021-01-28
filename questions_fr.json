@@ -66,5 +66,19 @@
         "text": "I had a baby [FR]"
       }
     ]
+  },
+  {
+    "id": 5,
+    "text": "What is your gender? [FR]",
+    "answers": [
+      {
+        "id": "male",
+        "text": "Male [FR]"
+      },
+      {
+        "id": "female",
+        "text": "Female [FR]"
+      }
+    ]
   }
 ]

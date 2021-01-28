@@ -66,5 +66,19 @@
         "text": "I had a baby"
       }
     ]
+  },
+  {
+    "id": 5,
+    "text": "What is your gender?",
+    "answers": [
+      {
+        "id": "male",
+        "text": "Male"
+      },
+      {
+        "id": "female",
+        "text": "Female"
+      }
+    ]
   }
 ]
