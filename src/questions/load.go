@@ -27,7 +27,7 @@ func (q *ServiceStruct) GetAll(lang string) ([]models.Question, error) {
 	if questionList[lang] == nil || len(questionList[lang]) == 0 {
 		var q []models.Question
 		var err error
-		if q, err = loadQuestions(lang); err != nil {
+		if q, err = loadQuestions("questions_" + lang + ".json"); err != nil {
 			return questionList[lang], err
 		}
 		questionList[lang] = q
@@ -61,9 +61,9 @@ var loadQuestions = loadQuestionsFunc
 
 // LoadQuestions loads questions from an external source
 // Returns a list of questions
-func loadQuestionsFunc(lang string) (questions []models.Question, err error) {
+func loadQuestionsFunc(path string) (questions []models.Question, err error) {
 
-	jsonFile, err := osOpen("questions_" + lang + ".json")
+	jsonFile, err := osOpen(path)
 
 	if err != nil {
 		return
