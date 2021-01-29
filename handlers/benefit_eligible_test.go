@@ -49,11 +49,11 @@ func TestBenefits_SingleEligible(t *testing.T) {
 	defer teardownTests()
 
 	benefit := bindings.BenefitEligibilityRequest {
-		IncomeDetails:		"gt-60k",
-		TimeOutOfWork:		"lt-2weeks",
-		AbleToWork:			"yes",
+		IncomeDetails:	    "gt-60k",
+		TimeOutOfWork:	    "lt-2weeks",
+		AbleToWork:	    "yes",
 		ReasonForOutOfWork: "lost-job",
-		Gender:				"male",
+		Gender:		    "male",
 	}
 
 	benefit_json, _ := json.Marshal(benefit)
@@ -98,11 +98,11 @@ func TestBenefits_NonEligible(t *testing.T) {
 	defer teardownTests()
 
 	benefit := bindings.BenefitEligibilityRequest {
-		IncomeDetails:		"lt-30k",
-		TimeOutOfWork:		"lt-2weeks",
-		AbleToWork:			"yes",
+		IncomeDetails:	    "lt-30k",
+		TimeOutOfWork:	    "lt-2weeks",
+		AbleToWork:	    "yes",
 		ReasonForOutOfWork: "lost-job",
-		Gender:				"male",
+		Gender:		    "male",
 	}
 
 	benefit_json, _ := json.Marshal(benefit)
