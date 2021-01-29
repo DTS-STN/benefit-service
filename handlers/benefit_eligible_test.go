@@ -48,12 +48,12 @@ func TestBenefits_SingleEligible(t *testing.T) {
 	teardownTests := setupBenefitTests()
 	defer teardownTests()
 
-	benefit := bindings.BenefitEligibilityRequest {
-		IncomeDetails:	    "gt-60k",
-		TimeOutOfWork:	    "lt-2weeks",
-		AbleToWork:	    "yes",
+	benefit := bindings.BenefitEligibilityRequest{
+		IncomeDetails:      "gt-60k",
+		TimeOutOfWork:      "lt-2weeks",
+		AbleToWork:         "yes",
 		ReasonForOutOfWork: "lost-job",
-		Gender:		    "male",
+		Gender:             "male",
 	}
 
 	benefit_json, _ := json.Marshal(benefit)
@@ -82,7 +82,7 @@ func TestBenefits_SingleEligible(t *testing.T) {
 			LongDescription: "# Regular EI Benefit Details \n* Lorem ipsum dolor sit amet \n## Curabitur feugiat, turpis a dignissim dictum \n* Praesent fermentum lectus ac vulputate suscipit  \n## Aliquam vehicula consectetur felis ac luctus \n* Praesent et sollicitudin felis, vitae lobortis sapien \n## Pellentesque consequat \n* Suspendisse ac posuere tortor, consequat imperdiet augue \n* Must have a permanant address \n* Must be a resident of Canada \n* Must be a Canadian Citizen \n### Vestibulum mollis in dolor in pretium \n* Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos \n## Phasellus varius \n* Pellentesque consequat diam in rhoncus dapibus \n## Quisque tempus \n* Morbi sit amet varius mi, ut viverra lorem. \n## Duis vestibulum \n* Cras fringilla euismod ante sit amet consequat. \n## Donec rutrum \n* Donec ultrices ultricies ipsum, ut iaculis sapien euismod eget.",
 			RelatedBenefits: []string{},
 			ServiceType:     "Internal",
-			BenefitType:     "Regular",
+			BenefitType:     "HFPPN1",
 			BenefitKey:      "ei_reg",
 			BenefitTags:     []string{},
 			RedirectURL:     "169.59.166.121:9044/ua",
@@ -97,12 +97,12 @@ func TestBenefits_NonEligible(t *testing.T) {
 	teardownTests := setupBenefitTests()
 	defer teardownTests()
 
-	benefit := bindings.BenefitEligibilityRequest {
-		IncomeDetails:	    "lt-30k",
-		TimeOutOfWork:	    "lt-2weeks",
-		AbleToWork:	    "yes",
+	benefit := bindings.BenefitEligibilityRequest{
+		IncomeDetails:      "lt-30k",
+		TimeOutOfWork:      "lt-2weeks",
+		AbleToWork:         "yes",
 		ReasonForOutOfWork: "lost-job",
-		Gender:		    "male",
+		Gender:             "male",
 	}
 
 	benefit_json, _ := json.Marshal(benefit)
