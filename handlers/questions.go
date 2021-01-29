@@ -9,6 +9,17 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// Questions
+// @Summary Get a list of questions for pre-screening eligibilty
+// @ID questions
+// @Accept  json
+// @Produce json
+// @Success 200 {object} renderings.QuestionsResponse
+// @Failure 400 {object} renderings.BenefitServiceError
+// @Failure 404 {object} renderings.BenefitServiceError
+// @Failure 500 {object} renderings.BenefitServiceError
+// @Param lang query string false "The language the response should be in. Defaults to English. English and French supported."
+// @Router /questions [get]
 func (h *Handler) Questions(c echo.Context) error {
 	var res = new(renderings.QuestionResponse)
 	req := new(bindings.QuestionRequest)
