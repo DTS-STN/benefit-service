@@ -1,9 +1,6 @@
 package questions
 
 import (
-	"bytes"
-	"errors"
-	"os"
 	"testing"
 
 	"github.com/DTS-STN/benefit-service/models"
@@ -15,157 +12,191 @@ type QuestionServiceMock struct {
 	mock.Mock
 }
 
-func (m *QuestionServiceMock) Questions() []models.Question {
-	args := m.Called()
-	return args.Get(0).([]models.Question)
-}
-
-func (m *QuestionServiceMock) LoadQuestions() ([]models.Question, error) {
+func (m *QuestionServiceMock) GetAll(lang string) ([]models.Question, error) {
 	args := m.Called()
 	return args.Get(0).([]models.Question), args.Error(1)
 }
 
-func osOpenMock(path string) (*os.File, error) {
-	return os.Open("questions_test.json")
+func (m *QuestionServiceMock) GetByID(lang, id string) (models.Question, error) {
+	args := m.Called()
+	return args.Get(0).(models.Question), args.Error(1)
+}
+
+func loadQuestionsMock(path string) (questions []models.Question, err error) {
+	if path == "questions_fr.json" {
+		return data_fr, nil
+	}
+	return data_en, nil
+}
+
+var data_en = []models.Question{
+	{
+		ID:   1,
+		Text: "question 1",
+		Answers: []models.QuestionAnswers{
+			{
+				ID:   "1_a",
+				Text: "one_a",
+			},
+			{
+				ID:   "1_b",
+				Text: "one_b",
+			},
+		},
+	},
+	{
+		ID:   2,
+		Text: "question 2",
+		Answers: []models.QuestionAnswers{
+			{
+				ID:   "2_a",
+				Text: "two_a",
+			},
+			{
+				ID:   "2_b",
+				Text: "two_b",
+			},
+		},
+	},
+}
+
+var data_fr = []models.Question{
+	{
+		ID:   1,
+		Text: "question 1 [FR]",
+		Answers: []models.QuestionAnswers{
+			{
+				ID:   "1_a [FR]",
+				Text: "one_a",
+			},
+			{
+				ID:   "1_b [FR]",
+				Text: "one_b",
+			},
+		},
+	},
+	{
+		ID:   2,
+		Text: "question 2 [FR]",
+		Answers: []models.QuestionAnswers{
+			{
+				ID:   "2_a [FR]",
+				Text: "two_a",
+			},
+			{
+				ID:   "2_b [FR]",
+				Text: "two_b",
+			},
+		},
+	},
 }
 
 // anything that should be run a the end of the unit tests should go here
 func setupTests() {
-	osOpen = os.Open
-	questions = nil
+	questionList = map[string][]models.Question{
+		"en": {},
+		"fr": {},
+	}
 	Service = new(ServiceStruct)
 }
 
-func TestQuestions(t *testing.T) {
+func TestGetAll_English(t *testing.T) {
+	// setup tests
 	setupTests()
 
-	var realQuestionService = ServiceStruct{Filename: ""}
+	// mock unexported functions
+	loadQuestions = loadQuestionsMock
 
-	// Expected result data
-	expectedResult := []models.Question{{ID: "1", Description: "are you a resident of canada?", Answer: "", OpenFiscaIds: []string{"is_canadian_resident"}}}
-
-	// Create a Mock for the interface
-	qsMock := new(QuestionServiceMock)
-	// Add a mock call request
-	qsMock.On("LoadQuestions").
-		Return(expectedResult, nil)
-	// Set the mock to be used by the code
-	Service = QuestionInterface(qsMock)
-
-	// redirect to test data
-	osOpen = osOpenMock
-
-	// Actual result data
-	actual := realQuestionService.Questions()
+	// result data
+	data, err := Service.GetAll("en")
 
 	// Assertions
-	assert.Equal(t, expectedResult, actual)
-}
-
-func TestQuestionsNotEqual(t *testing.T) {
-	setupTests()
-
-	var realQuestionService = ServiceStruct{Filename: ""}
-
-	// Expected result data
-	expectedResult := []models.Question{{ID: "1", Description: "are you a resident of canada?", Answer: "", OpenFiscaIds: []string{"is_canadian_resident"}}}
-
-	// Create a Mock for the interface
-	qsMock := new(QuestionServiceMock)
-	// Add a mock call request
-	qsMock.On("LoadQuestions").
-		Return([]models.Question{{ID: "2", Description: "are you a resident of canada?", Answer: "", OpenFiscaIds: []string{"2"}}}, nil)
-	// Set the mock to be used by the code
-	Service = QuestionInterface(qsMock)
-
-	// redirect to test data
-	osOpen = osOpenMock
-
-	// Actual result data
-	actual := realQuestionService.Questions()
-
-	// Assertions
-	assert.NotEqual(t, expectedResult, actual)
-}
-
-func TestPrefilledQuestions(t *testing.T) {
-	setupTests()
-
-	var realQuestionService = ServiceStruct{Filename: ""}
-
-	// Expected result data
-	expectedResult := []models.Question{{ID: "2", Description: "are you a resident of canada?", Answer: "", OpenFiscaIds: []string{"2"}}}
-
-	// prefill test data
-	questions = expectedResult
-
-	// Create a Mock for the interface
-	qsMock := new(QuestionServiceMock)
-	// mock a different result from LoadQuestions, to prove that when questions is populated, LoadQuestions isn't called
-	qsMock.On("LoadQuestions").
-		Return([]models.Question{{ID: "1", Description: "are you a resident of canada?", Answer: "", OpenFiscaIds: []string{"1"}}}, nil)
-	// Set the mock to be used by the code
-	Service = QuestionInterface(qsMock)
-
-	// redirect to test data
-	osOpen = osOpenMock
-
-	// Actual result data
-	actual := realQuestionService.Questions()
-
-	// Assertions
-	assert.Equal(t, expectedResult, actual)
-	assert.Equal(t, expectedResult, questions)
-}
-
-func TestReadFile(t *testing.T) {
-	setupTests()
-
-	var buffer bytes.Buffer
-	buffer.WriteString("test read data. testing to see if readFile works")
-
-	// expected results
-	expected := buffer.Bytes()
-
-	// actual results
-	content, err := readFile(&buffer)
-
-	// assertions
-	assert.NoError(t, err)
-	assert.Equal(t, expected, content)
-}
-
-func TestLoadQuestions(t *testing.T) {
-	setupTests()
-
-	// redirect to test data
-	osOpen = osOpenMock
-
-	// Expected result data
-	expectedResult := []models.Question{{ID: "1", Description: "are you a resident?", Answer: "", OpenFiscaIds: []string{"is_canadian_resident"}}}
-
-	// Actual result data
-	actual, err := Service.LoadQuestions()
-
-	// Assertions
-	assert.NoError(t, err)
-	assert.Equal(t, expectedResult, actual)
-}
-
-// Bug: overriding osOpen is not returning an error when the file is non existent
-func TestLoadQuestionsError(t *testing.T) {
-	setupTests()
-
-	// redirect to test data
-	// want to return an error here
-	osOpen = func(path string) (*os.File, error) {
-		return &os.File{}, errors.New("missing file")
+	if assert.NoError(t, err) {
+		assert.Equal(t, 2, len(data))
+		assert.Equal(t, "question 1", data[0].Text)
 	}
+}
 
-	// Actual result data
-	results, err := Service.LoadQuestions()
+func TestGetAll_French(t *testing.T) {
+	// setup tests
+	setupTests()
+
+	// mock unexported functions
+	loadQuestions = loadQuestionsMock
+
+	// result data
+	data, err := Service.GetAll("fr")
 
 	// Assertions
-	assert.Error(t, err)
-	assert.Nil(t, results)
+	if assert.NoError(t, err) {
+		assert.Equal(t, 2, len(data))
+		assert.Equal(t, "question 1 [FR]", data[0].Text)
+	}
+}
+
+func TestGetAll_Default(t *testing.T) {
+	// setup tests
+	setupTests()
+
+	// mock unexported functions
+	loadQuestions = loadQuestionsMock
+
+	// result data
+	data, err := Service.GetAll("")
+
+	// Assertions
+	if assert.NoError(t, err) {
+		assert.Equal(t, 2, len(data))
+		assert.Equal(t, "question 1", data[0].Text)
+	}
+}
+
+func TestGetByID_English(t *testing.T) {
+	var realService = ServiceStruct{}
+	lang := "en"
+	id := "1"
+
+	// create a mock interface
+	qsMock := new(QuestionServiceMock)
+
+	// mock GetAll to return what we want
+	qsMock.On("GetAll").Return(data_en, nil)
+	// not sure this is right, but want to test the real function
+	qsMock.On("GetByID").Return(realService.GetByID(lang, id))
+
+	// set the service to the mock
+	Service = QuestionInterface(qsMock)
+
+	// this should call the real GetByID function, which will call the mock GetAll function
+	result, err := Service.GetByID(lang, id)
+
+	if assert.NoError(t, err) {
+		assert.Equal(t, 1, result.ID)
+		assert.Equal(t, "question 1", result.Text)
+	}
+}
+
+func TestGetByID_French(t *testing.T) {
+	var realService = ServiceStruct{}
+	lang := "fr"
+	id := "2"
+
+	// create a mock interface
+	qsMock := new(QuestionServiceMock)
+
+	// mock GetAll to return what we want
+	qsMock.On("GetAll").Return(data_fr, nil)
+	// not sure this is right, but want to test the real function
+	qsMock.On("GetByID").Return(realService.GetByID(lang, id))
+
+	// set the service to the mock
+	Service = QuestionInterface(qsMock)
+
+	// this should call the real GetByID function, which will call the mock GetAll function
+	result, err := Service.GetByID(lang, id)
+
+	if assert.NoError(t, err) {
+		assert.Equal(t, 2, result.ID)
+		assert.Equal(t, "question 2 [FR]", result.Text)
+	}
 }

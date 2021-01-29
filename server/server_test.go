@@ -31,6 +31,11 @@ func (m *HandlerServiceMock) BenefitsApply(c echo.Context) error {
 }
 
 func (m *HandlerServiceMock) BenefitsEligibility(c echo.Context) error {
+  args := m.Called()
+	return args.Error(1)
+}
+
+func (m *HandlerServiceMock) Questions(c echo.Context) error {
 	args := m.Called()
 	return args.Error(1)
 }

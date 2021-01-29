@@ -1,0 +1,84 @@
+[
+  {
+    "id": 1,
+    "text": "How much income have you earned in Canada the last year?",
+    "answers": [
+      { 
+        "id": "lt-30k",
+        "text": "Less than $30,000"
+      },
+      {
+        "id": "30k-to-60k",
+        "text": "Between $30,000 & $60,000"
+      },
+      {
+        "id": "gt-60k",
+        "text": "More than $60,000"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "text": "How long have you been out of work?",
+    "answers": [
+      {
+        "id": "lt-2weeks",
+        "text": "Less than 2 weeks"
+      },
+      {
+        "id": "2weeks-3months",
+        "text": "More than 2 weeks but less than 3 months"
+      },
+      {
+        "id": "gt-3months",
+        "text": "More than 3 months"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "text": "Are you able to work / look for work?",
+    "answers": [
+      {
+        "id": "yes",
+        "text": "Yes"
+      },
+      {
+        "id": "no",
+        "text": "No"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "text": "Why are you currently out of work?",
+    "answers": [
+      {
+        "id": "lost-job",
+        "text": "I lost my job"
+      },
+      {
+        "id": "sick",
+        "text": "I am sick/injured"
+      },
+      {
+        "id": "baby",
+        "text": "I had a baby"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "text": "What is your gender?",
+    "answers": [
+      {
+        "id": "male",
+        "text": "Male"
+      },
+      {
+        "id": "female",
+        "text": "Female"
+      }
+    ]
+  }
+]
