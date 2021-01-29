@@ -17,7 +17,7 @@ func (h *Handler) BenefitsEligibility(c echo.Context) error {
 
 	//Bind the request into our request struct
 	eligible := new(bindings.BenefitEligibilityRequest)
-	if err := c.Bind(eligible); err != nil {
+	if err = c.Bind(eligible); err != nil {
 		errObj := new(models.Error)
 		errObj.Status = http.StatusBadRequest
 		errObj.ErrorMessage = err.Error()
@@ -65,7 +65,7 @@ func (h *Handler) BenefitsEligibility(c echo.Context) error {
 	if (eligible.IncomeDetails != "lt-30k") &&
 		(eligible.AbleToWork == "yes") &&
 		(eligible.ReasonForOutOfWork == "lost-job") {
-		
+
 		//Get Regular EI Benefit and append it to the BenefitsList
 		if benefit, err = benefits.Service.GetByID("en", "1"); err != nil {
 			c.Logger().Error(err)
@@ -93,7 +93,7 @@ func (h *Handler) BenefitsEligibility(c echo.Context) error {
 		(eligible.AbleToWork == "no") &&
 		(eligible.ReasonForOutOfWork == "sick") {
 
-		//Get sickness benefit and append it to the BenefitsList	
+		//Get sickness benefit and append it to the BenefitsList
 		if benefit, err = benefits.Service.GetByID("en", "3"); err != nil {
 			c.Logger().Error(err)
 		}

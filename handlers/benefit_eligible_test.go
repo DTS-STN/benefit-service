@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
-	//"net/url"
 	"strings"
 	"testing"
 
@@ -49,23 +48,16 @@ func TestBenefits_SingleEligible(t *testing.T) {
 	teardownTests := setupBenefitTests()
 	defer teardownTests()
 
-	benefit := new(bindings.BenefitEligibilityRequest)
-
-	benefit.IncomeDetails = "gt-60k"
-	benefit.TimeOutOfWork = "lt-2weeks"
-	benefit.AbleToWork = "yes"
-	benefit.ReasonForOutOfWork = "lost-job"
-	benefit.Gender = "male"
+	benefit := bindings.BenefitEligibilityRequest {
+		IncomeDetails:		"gt-60k",
+		TimeOutOfWork:		"lt-2weeks",
+		AbleToWork:			"yes",
+		ReasonForOutOfWork: "lost-job",
+		Gender:				"male",
+	}
 
 	benefit_json, _ := json.Marshal(benefit)
 	benefitJSON := string(benefit_json)
-
-/* 	data := url.Values{}
-	data.Set("incomeDetails", "gt-60k")
-	data.Set("timeOutOfWork", "lt-2weeks")
-	data.Set("ableToWork", "yes")
-	data.Set("reasonForOutOfWork", "lost-job")
-	data.Set("gender", "male") */
 
 	// Setup Echo service
 	e := echo.New()
@@ -81,7 +73,7 @@ func TestBenefits_SingleEligible(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, HandlerService.BenefitsEligibility(c)) {
 		benefitResponse := new(renderings.BenefitsResponse)
-		json.NewDecoder(rec.Body).Decode(&benefitResponse.Benefit)
+		json.NewDecoder(rec.Body).Decode(&benefitResponse.BenefitsList)
 
 		expectedResult := models.Benefits{
 			ID:              1,
@@ -97,6 +89,43 @@ func TestBenefits_SingleEligible(t *testing.T) {
 			APIURL:          "api.us-east.apiconnect.appdomain.cloud/hmakhijadeloitteca-api/dev/curam-prototype-apis/getProfileInfoAndSubmittedApplications",
 		}
 
-		assert.Equal(t, expectedResult, benefitResponse.Benefit)
+		assert.Equal(t, expectedResult, benefitResponse.BenefitsList[0])
+	}
+}
+
+func TestBenefits_NonEligible(t *testing.T) {
+	teardownTests := setupBenefitTests()
+	defer teardownTests()
+
+	benefit := bindings.BenefitEligibilityRequest {
+		IncomeDetails:		"lt-30k",
+		TimeOutOfWork:		"lt-2weeks",
+		AbleToWork:			"yes",
+		ReasonForOutOfWork: "lost-job",
+		Gender:				"male",
+	}
+
+	benefit_json, _ := json.Marshal(benefit)
+	benefitJSON := string(benefit_json)
+
+	// Setup Echo service
+	e := echo.New()
+	// Setup http request using httptest
+	req := httptest.NewRequest("POST", "/benefits/eligible", strings.NewReader(benefitJSON))
+	req.Header.Set("Content-Type", "application/json")
+
+	// Create a httptest record
+	rec := httptest.NewRecorder()
+	// Create a new Echo Context
+	c := e.NewContext(req, rec)
+
+	// Assertions
+	if assert.NoError(t, HandlerService.BenefitsEligibility(c)) {
+		benefitResponse := new(renderings.BenefitsResponse)
+		json.NewDecoder(rec.Body).Decode(&benefitResponse.BenefitsList)
+
+		expectedResult := []models.Benefits([]models.Benefits(nil))
+
+		assert.Equal(t, expectedResult, benefitResponse.BenefitsList)
 	}
 }
