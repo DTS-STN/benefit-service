@@ -49,6 +49,24 @@ definitions:
       status:
         type: integer
     type: object
+  models.Question:
+    properties:
+      answers:
+        items:
+          $ref: '#/definitions/models.QuestionAnswers'
+        type: array
+      id:
+        type: integer
+      text:
+        type: string
+    type: object
+  models.QuestionAnswers:
+    properties:
+      id:
+        type: string
+      text:
+        type: string
+    type: object
   renderings.BenefitServiceError:
     properties:
       error_code:
@@ -62,6 +80,15 @@ definitions:
         description: Life Journey ID
         items:
           $ref: '#/definitions/models.Benefits'
+        type: array
+    type: object
+  renderings.QuestionResponse:
+    properties:
+      question:
+        $ref: '#/definitions/models.Question'
+      questions:
+        items:
+          $ref: '#/definitions/models.Question'
         type: array
     type: object
 host: https://benefit-service-dev.dev.dts-stn.com
@@ -147,4 +174,35 @@ paths:
           schema:
             type: string
       summary: Returns Healthy
+  /questions:
+    get:
+      consumes:
+      - application/json
+      operationId: questions
+      parameters:
+      - description: The language the response should be in. Defaults to English.
+          English and French supported.
+        in: query
+        name: lang
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/renderings.QuestionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/renderings.BenefitServiceError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/renderings.BenefitServiceError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/renderings.BenefitServiceError'
+      summary: Get a list of questions for pre-screening eligibilty
 swagger: "2.0"

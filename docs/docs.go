@@ -139,6 +139,52 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/questions": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a list of questions for pre-screening eligibilty",
+                "operationId": "questions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The language the response should be in. Defaults to English. English and French supported.",
+                        "name": "lang",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.QuestionResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/renderings.BenefitServiceError"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -217,6 +263,34 @@ var doc = `{
                 }
             }
         },
+        "models.Question": {
+            "type": "object",
+            "properties": {
+                "answers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.QuestionAnswers"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "text": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.QuestionAnswers": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                }
+            }
+        },
         "renderings.BenefitServiceError": {
             "type": "object",
             "properties": {
@@ -236,6 +310,20 @@ var doc = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/models.Benefits"
+                    }
+                }
+            }
+        },
+        "renderings.QuestionResponse": {
+            "type": "object",
+            "properties": {
+                "question": {
+                    "$ref": "#/definitions/models.Question"
+                },
+                "questions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Question"
                     }
                 }
             }
