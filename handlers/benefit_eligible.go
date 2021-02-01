@@ -24,6 +24,11 @@ func (h *Handler) BenefitsEligibility(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, errObj)
 	}
 
+	//Default language is English, so set Lang to en if not otherwise specified
+	if eligible.Lang == "" {
+		eligible.Lang = "en"
+	}
+
 	//Check to see if any of the fields are empty
 	//TODO: Clean this up/reduce redundant code
 	if eligible.IncomeDetails == "" {
@@ -67,7 +72,7 @@ func (h *Handler) BenefitsEligibility(c echo.Context) error {
 		(eligible.ReasonForOutOfWork == "lost-job") {
 
 		//Get Regular EI Benefit and append it to the BenefitsList
-		if benefit, err = benefits.Service.GetByID("en", "1"); err != nil {
+		if benefit, err = benefits.Service.GetByID(eligible.Lang, "1"); err != nil {
 			c.Logger().Error(err)
 		}
 		benefitsResponse.BenefitsList = append(benefitsResponse.BenefitsList, benefit)
@@ -81,7 +86,7 @@ func (h *Handler) BenefitsEligibility(c echo.Context) error {
 		(eligible.Gender == "female") {
 
 		//Get Maternity benefit	and append it to the BenefitsList
-		if benefit, err = benefits.Service.GetByID("en", "2"); err != nil {
+		if benefit, err = benefits.Service.GetByID(eligible.Lang, "2"); err != nil {
 			c.Logger().Error(err)
 		}
 		benefitsResponse.BenefitsList = append(benefitsResponse.BenefitsList, benefit)
@@ -94,7 +99,7 @@ func (h *Handler) BenefitsEligibility(c echo.Context) error {
 		(eligible.ReasonForOutOfWork == "sick") {
 
 		//Get sickness benefit and append it to the BenefitsList
-		if benefit, err = benefits.Service.GetByID("en", "3"); err != nil {
+		if benefit, err = benefits.Service.GetByID(eligible.Lang, "3"); err != nil {
 			c.Logger().Error(err)
 		}
 		benefitsResponse.BenefitsList = append(benefitsResponse.BenefitsList, benefit)
