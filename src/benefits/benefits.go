@@ -9,6 +9,7 @@ type BenefitsInterface interface {
 	LoadBenefits(lang string) ([]models.Benefits, error)
 	GetByID(lang, benefitId string) (models.Benefits, error)
 	Count() int
+	Match(input, pattern map[string]interface{}) bool
 }
 
 type ServiceStruct struct {

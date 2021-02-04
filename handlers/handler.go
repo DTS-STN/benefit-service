@@ -10,6 +10,7 @@ type HandlerServiceInterface interface {
 	BenefitsCount(c echo.Context) error
 	BenefitsApply(c echo.Context) error
 	Questions(c echo.Context) error
+  	BenefitsEligibility(c echo.Context) error
 }
 
 type Handler struct {

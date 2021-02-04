@@ -13,6 +13,19 @@ definitions:
       regularLookingForWork:
         type: string
     type: object
+  bindings.BenefitEligibilityRequest:
+    properties:
+      ableToWork:
+        type: string
+      gender:
+        type: string
+      incomeDetails:
+        type: string
+      reasonForOutOfWork:
+        type: string
+      timeOutOfWork:
+        type: string
+    type: object
   models.Benefits:
     properties:
       api_url:
@@ -164,6 +177,32 @@ paths:
       security:
       - OAuth2AccessCode: []
       summary: Request redirect url to IEG for a particular benefit
+  /benefits/eligible:
+    post:
+      consumes:
+      - application/json
+      operationId: benefits-eligible
+      parameters:
+      - description: The answers to the questions that determine benefit eligibility
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/bindings.BenefitEligibilityRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: integer
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Request ids of eligible benefits
   /healthcheck:
     get:
       description: Returns Healthy

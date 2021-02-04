@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"reflect"
 	"strconv"
 
 	"github.com/DTS-STN/benefit-service/models"
@@ -100,4 +101,35 @@ func readFile(reader io.Reader) ([]byte, error) {
 		log.Fatal(err)
 	}
 	return lines, err
+}
+
+/*This function checks to see if the map from the request body matches a pre-defined
+pattern map. Returns true if they match, else returns false
+*/
+func (q *ServiceStruct) Match(input, pattern map[string]interface{}) bool {
+
+	//Iterate over map, determine if the type of the value is a string or an array, then determine equivalence
+	for key, value := range pattern {
+		v := reflect.ValueOf(value)
+		switch v.Kind() {
+		case reflect.String:
+			if input[key].(string) != value.(string) { //If value doesn't match, return false
+				return false
+			}
+		case reflect.Slice:
+			var patternData []string = pattern[key].([]string)
+			var inputData string = input[key].(string)
+			count := 0
+			for i := 0; i < len(patternData); i++ {
+				if patternData[i] == inputData { //If any of the values in the array match, increment count
+					count++
+				}
+			}
+			if count == 0 { //If nothing matches, return false
+				return false
+			}
+		}
+	}
+	//if maps are determined to be equivalent, return true
+	return true
 }
