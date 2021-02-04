@@ -2,6 +2,7 @@
   {
     "id": 1,
     "text": "How much income have you earned in Canada the last year?",
+    "value": "incomeDetails",
     "answers": [
       { 
         "id": "lt-30k",
@@ -20,6 +21,7 @@
   {
     "id": 2,
     "text": "How long have you been out of work?",
+    "value": "timeOutOfWork",
     "answers": [
       {
         "id": "lt-2weeks",
@@ -38,6 +40,7 @@
   {
     "id": 3,
     "text": "Are you able to work / look for work?",
+    "value": "ableToWork",
     "answers": [
       {
         "id": "yes",
@@ -52,6 +55,7 @@
   {
     "id": 4,
     "text": "Why are you currently out of work?",
+    "value": "reasonForOutOfWork",
     "answers": [
       {
         "id": "lost-job",
@@ -70,6 +74,7 @@
   {
     "id": 5,
     "text": "What is your gender?",
+    "value": "gender",
     "answers": [
       {
         "id": "male",
