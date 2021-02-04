@@ -125,6 +125,46 @@ var doc = `{
                 }
             }
         },
+        "/benefits/eligible": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Request ids of eligible benefits",
+                "operationId": "benefits-eligible",
+                "parameters": [
+                    {
+                        "description": "The answers to the questions that determine benefit eligibility",
+                        "name": "requestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/bindings.BenefitEligibilityRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Error"
+                        }
+                    }
+                }
+            }
+        },
         "/healthcheck": {
             "get": {
                 "description": "Returns Healthy",
@@ -158,6 +198,26 @@ var doc = `{
                     "type": "string"
                 },
                 "regularLookingForWork": {
+                    "type": "string"
+                }
+            }
+        },
+        "bindings.BenefitEligibilityRequest": {
+            "type": "object",
+            "properties": {
+                "ableToWork": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "incomeDetails": {
+                    "type": "string"
+                },
+                "reasonForOutOfWork": {
+                    "type": "string"
+                },
+                "timeOutOfWork": {
                     "type": "string"
                 }
             }

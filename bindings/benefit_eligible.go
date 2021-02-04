@@ -6,5 +6,4 @@ type BenefitEligibilityRequest struct {
 	AbleToWork         string `json:"ableToWork"`
 	ReasonForOutOfWork string `json:"reasonForOutOfWork"`
 	Gender             string `json:"gender"`
-	Lang			   string `json:"lang"`
 }

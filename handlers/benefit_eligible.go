@@ -1,19 +1,28 @@
 package handlers
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/DTS-STN/benefit-service/bindings"
 	"github.com/DTS-STN/benefit-service/models"
-	"github.com/DTS-STN/benefit-service/renderings"
 	"github.com/DTS-STN/benefit-service/src/benefits"
 	"github.com/labstack/echo/v4"
 )
 
+// Determine benefit eligibility
+// @Summary Request ids of eligible benefits
+// @ID benefits-eligible
+// @Accept  json
+// @Produce json
+// @Success 200 {array} int
+// @Failure 400 {object} models.Error
+// @Param requestBody body bindings.BenefitEligibilityRequest true "The answers to the questions that determine benefit eligibility"
+// @Router /benefits/eligible [post]
 func (h *Handler) BenefitsEligibility(c echo.Context) error {
-	var benefitsResponse = new(renderings.BenefitsResponse)
-	var benefit models.Benefits
 	var err error
+	var requestMap map[string]interface{}
+	var idArr []int
 
 	//Bind the request into our request struct
 	eligible := new(bindings.BenefitEligibilityRequest)
@@ -24,86 +33,41 @@ func (h *Handler) BenefitsEligibility(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, errObj)
 	}
 
-	//Default language is English, so set Lang to en if not otherwise specified
-	if eligible.Lang == "" {
-		eligible.Lang = "en"
-	}
+	//Decode request into a map
+	data, _ := json.Marshal(eligible)
+	json.Unmarshal(data, &requestMap)
 
-	//Check to see if any of the fields are empty
-	//TODO: Clean this up/reduce redundant code
-	if eligible.IncomeDetails == "" {
-		errObj := new(models.Error)
-		errObj.Status = http.StatusBadRequest
-		errObj.ErrorMessage = "incomeDetails were not supplied"
-		return c.JSON(http.StatusBadRequest, errObj)
-	}
-
-	if eligible.TimeOutOfWork == "" {
-		errObj := new(models.Error)
-		errObj.Status = http.StatusBadRequest
-		errObj.ErrorMessage = "timeOutOfWork was not supplied"
-		return c.JSON(http.StatusBadRequest, errObj)
-	}
-
-	if eligible.AbleToWork == "" {
-		errObj := new(models.Error)
-		errObj.Status = http.StatusBadRequest
-		errObj.ErrorMessage = "ableToWork was not supplied"
-		return c.JSON(http.StatusBadRequest, errObj)
-	}
-
-	if eligible.ReasonForOutOfWork == "" {
-		errObj := new(models.Error)
-		errObj.Status = http.StatusBadRequest
-		errObj.ErrorMessage = "reasonForOutOfWork was not supplied"
-		return c.JSON(http.StatusBadRequest, errObj)
-	}
-
-	if eligible.Gender == "" {
-		errObj := new(models.Error)
-		errObj.Status = http.StatusBadRequest
-		errObj.ErrorMessage = "gender was not supplied"
-		return c.JSON(http.StatusBadRequest, errObj)
-	}
+	//Create a map to compare against
+	patternMap := map[string]interface{}{}
 
 	//Determine if individual qualifies for Regular EI Benefit
-	if (eligible.IncomeDetails != "lt-30k") &&
-		(eligible.AbleToWork == "yes") &&
-		(eligible.ReasonForOutOfWork == "lost-job") {
-
-		//Get Regular EI Benefit and append it to the BenefitsList
-		if benefit, err = benefits.Service.GetByID(eligible.Lang, "1"); err != nil {
-			c.Logger().Error(err)
-		}
-		benefitsResponse.BenefitsList = append(benefitsResponse.BenefitsList, benefit)
+	patternMap["incomeDetails"] = []string{"30k-to-60k", "gt-60k"}
+	patternMap["timeOutOfWork"] = []string{"lt-2weeks", "2weeks-3months", "gt-3months"}
+	patternMap["ableToWork"] = "yes"
+	patternMap["reasonForOutOfWork"] = "lost-job"
+	patternMap["gender"] = []string{"male", "female"}
+	if benefits.Service.Match(requestMap, patternMap) {
+		idArr = append(idArr, 1)
 	}
 
 	//Determine if individual qualifies for Maternity Benefit
-	if (eligible.IncomeDetails != "lt-30k") &&
-		(eligible.TimeOutOfWork == "lt-2weeks") &&
-		(eligible.AbleToWork == "no") &&
-		(eligible.ReasonForOutOfWork == "baby") &&
-		(eligible.Gender == "female") {
-
-		//Get Maternity benefit	and append it to the BenefitsList
-		if benefit, err = benefits.Service.GetByID(eligible.Lang, "2"); err != nil {
-			c.Logger().Error(err)
-		}
-		benefitsResponse.BenefitsList = append(benefitsResponse.BenefitsList, benefit)
+	patternMap["incomeDetails"] = []string{"30k-to-60k", "gt-60k"}
+	patternMap["timeOutOfWork"] = "lt-2weeks"
+	patternMap["ableToWork"] = "no"
+	patternMap["reasonForOutOfWork"] = "baby"
+	patternMap["gender"] = "female"
+	if benefits.Service.Match(requestMap, patternMap) {
+		idArr = append(idArr, 2)
 	}
 
 	//Determine if individual qualifies for Sickness Benefit
-	if (eligible.IncomeDetails != "lt-30k") &&
-		(eligible.TimeOutOfWork != "gt-3months") &&
-		(eligible.AbleToWork == "no") &&
-		(eligible.ReasonForOutOfWork == "sick") {
-
-		//Get sickness benefit and append it to the BenefitsList
-		if benefit, err = benefits.Service.GetByID(eligible.Lang, "3"); err != nil {
-			c.Logger().Error(err)
-		}
-		benefitsResponse.BenefitsList = append(benefitsResponse.BenefitsList, benefit)
+	patternMap["incomeDetails"] = []string{"30k-to-60k", "gt-60k"}
+	patternMap["timeOutOfWork"] = []string{"lt-2weeks", "2weeks-3months"}
+	patternMap["ableToWork"] = "no"
+	patternMap["reasonForOutOfWork"] = "sick"
+	patternMap["gender"] = []string{"male", "female"}
+	if benefits.Service.Match(requestMap, patternMap) {
+		idArr = append(idArr, 3)
 	}
-
-	return c.JSON(http.StatusOK, benefitsResponse.BenefitsList)
+	return c.JSON(http.StatusOK, idArr)
 }
