@@ -103,8 +103,8 @@ func readFile(reader io.Reader) ([]byte, error) {
 	return lines, err
 }
 
-/*This function checks to see if a map matches a pattern that has been passed in and returns
-an id corresponding to a benefit if it matches
+/*This function checks to see if the map from the request body matches a pre-defined
+pattern map. Returns true if they match, else returns false
 */
 func (q *ServiceStruct) Match(input, pattern map[string]interface{}) bool {
 
