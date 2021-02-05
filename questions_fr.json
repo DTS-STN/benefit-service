@@ -5,15 +5,15 @@
     "value": "incomeDetails",
     "answers": [
       { 
-        "id": "lt-30k",
+        "id": "HFPIR3",
         "text": "Less than $30,000 [FR]"
       },
       {
-        "id": "30k-to-60k",
+        "id": "HFPIR2",
         "text": "Between $30,000 & $60,000 [FR]"
       },
       {
-        "id": "gt-60k",
+        "id": "HFPIR1",
         "text": "More than $60,000 [FR]"
       }
     ]
@@ -21,18 +21,18 @@
   {
     "id": 2,
     "text": "How long have you been out of work? [FR]",
-    "value": "timeOutOfWork",
+    "value": "outOfWork",
     "answers": [
       {
-        "id": "lt-2weeks",
+        "id": "HFPOOW1",
         "text": "Less than 2 weeks [FR]"
       },
       {
-        "id": "2weeks-3months",
+        "id": "HFPOOW2",
         "text": "More than 2 weeks but less than 3 months [FR]"
       },
       {
-        "id": "gt-3months",
+        "id": "HFPOOW3",
         "text": "More than 3 months [FR]"
       }
     ]
@@ -55,18 +55,18 @@
   {
     "id": 4,
     "text": "Why are you currently out of work? [FR]",
-    "value": "reasonForOutOfWork",
+    "value": "reasonForSeparation",
     "answers": [
       {
-        "id": "lost-job",
+        "id": "HFPRE1",
         "text": "I lost my job [FR]"
       },
       {
-        "id": "sick",
+        "id": "HFPRE2",
         "text": "I am sick/injured [FR]"
       },
       {
-        "id": "baby",
+        "id": "HFPRE3",
         "text": "I had a baby [FR]"
       }
     ]

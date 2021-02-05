@@ -41,30 +41,30 @@ func (h *Handler) BenefitsEligibility(c echo.Context) error {
 	patternMap := map[string]interface{}{}
 
 	//Determine if individual qualifies for Regular EI Benefit
-	patternMap["incomeDetails"] = []string{"30k-to-60k", "gt-60k"}
-	patternMap["timeOutOfWork"] = []string{"lt-2weeks", "2weeks-3months", "gt-3months"}
+	patternMap["incomeDetails"] = []string{"HFPIR2", "HFPIR1"}
+	patternMap["outOfWork"] = []string{"HFPOOW1", "HFPOOW2", "HFPOOW3"}
 	patternMap["ableToWork"] = "yes"
-	patternMap["reasonForOutOfWork"] = "lost-job"
+	patternMap["reasonForSeparation"] = "HFPRE1"
 	patternMap["gender"] = []string{"male", "female"}
 	if benefits.Service.Match(requestMap, patternMap) {
 		idArr = append(idArr, 1)
 	}
 
 	//Determine if individual qualifies for Maternity Benefit
-	patternMap["incomeDetails"] = []string{"30k-to-60k", "gt-60k"}
-	patternMap["timeOutOfWork"] = "lt-2weeks"
+	patternMap["incomeDetails"] = []string{"HFPIR2", "HFPIR1"}
+	patternMap["outOfWork"] = "HFPOOW1"
 	patternMap["ableToWork"] = "no"
-	patternMap["reasonForOutOfWork"] = "baby"
+	patternMap["reasonForSeparation"] = "HFPRE3"
 	patternMap["gender"] = "female"
 	if benefits.Service.Match(requestMap, patternMap) {
 		idArr = append(idArr, 2)
 	}
 
 	//Determine if individual qualifies for Sickness Benefit
-	patternMap["incomeDetails"] = []string{"30k-to-60k", "gt-60k"}
-	patternMap["timeOutOfWork"] = []string{"lt-2weeks", "2weeks-3months"}
+	patternMap["incomeDetails"] = []string{"HFPIR2", "HFPIR1"}
+	patternMap["outOfWork"] = []string{"HFPOOW1", "HFPOOW2"}
 	patternMap["ableToWork"] = "no"
-	patternMap["reasonForOutOfWork"] = "sick"
+	patternMap["reasonForSeparation"] = "HFPRE2"
 	patternMap["gender"] = []string{"male", "female"}
 	if benefits.Service.Match(requestMap, patternMap) {
 		idArr = append(idArr, 3)

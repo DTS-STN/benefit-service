@@ -38,6 +38,8 @@ func (h *Handler) BenefitsApply(c echo.Context) error {
 		return c.JSON(http.StatusForbidden, errObj)
 	}
 
+	fmt.Println("something")
+
 	//get the body from the request and try binding it to apply binding
 	benefit := new(bindings.BenefitApplyRequest)
 	if err := c.Bind(benefit); err != nil {
@@ -58,11 +60,13 @@ func (h *Handler) BenefitsApply(c echo.Context) error {
 	req, err := http.NewRequest("POST", os.Getenv("CURAM_PRESCREENING_LINK"), bytes.NewBuffer(benefitJson))
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", auth)
+	req.Header.Set("guid", "cc6e16b0-db92-459a-91df-f8144befdda9")
 
 	client := interfaces.Client
 	resp, err := client.Do(req)
 
 	if err != nil {
+		fmt.Println("something 2")
 		errObj := new(models.Error)
 		errObj.Status = http.StatusInternalServerError
 		errObj.ErrorMessage = err.Error()
@@ -101,6 +105,8 @@ func (h *Handler) BenefitsApply(c echo.Context) error {
 	iegUrl := os.Getenv("CURAM_IEG_LINK")
 
 	iegUrlWithIEGCode := strings.Replace(iegUrl, "{IEGCode}", fmt.Sprint(ieg), -1)
+
+	fmt.Println(iegUrlWithIEGCode)
 
 	return c.Redirect(http.StatusTemporaryRedirect, iegUrlWithIEGCode)
 }
