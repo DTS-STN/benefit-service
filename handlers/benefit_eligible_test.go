@@ -47,11 +47,11 @@ func TestBenefits_EligibleOnlyRegular(t *testing.T) {
 	defer teardownTests()
 
 	benefit := bindings.BenefitEligibilityRequest{
-		IncomeDetails:      "gt-60k",
-		TimeOutOfWork:      "lt-2weeks",
-		AbleToWork:         "yes",
-		ReasonForOutOfWork: "lost-job",
-		Gender:             "male",
+		IncomeDetails:       "HFPIR1",
+		OutOfWork:           "HFPOOW1",
+		AbleToWork:          "yes",
+		ReasonForSeparation: "HFPRE1",
+		Gender:              "male",
 	}
 
 	benefit_json, _ := json.Marshal(benefit)
@@ -84,11 +84,11 @@ func TestBenefits_EligibleOnlyMaternity(t *testing.T) {
 	defer teardownTests()
 
 	benefit := bindings.BenefitEligibilityRequest{
-		IncomeDetails:      "gt-60k",
-		TimeOutOfWork:      "lt-2weeks",
-		AbleToWork:         "no",
-		ReasonForOutOfWork: "baby",
-		Gender:             "female",
+		IncomeDetails:       "HFPIR1",
+		OutOfWork:           "HFPOOW1",
+		AbleToWork:          "no",
+		ReasonForSeparation: "HFPRE3",
+		Gender:              "female",
 	}
 
 	benefit_json, _ := json.Marshal(benefit)
@@ -121,11 +121,11 @@ func TestBenefits_EligibleOnlySickness(t *testing.T) {
 	defer teardownTests()
 
 	benefit := bindings.BenefitEligibilityRequest{
-		IncomeDetails:      "gt-60k",
-		TimeOutOfWork:      "lt-2weeks",
-		AbleToWork:         "no",
-		ReasonForOutOfWork: "sick",
-		Gender:             "male",
+		IncomeDetails:       "HFPIR1",
+		OutOfWork:           "HFPOOW1",
+		AbleToWork:          "no",
+		ReasonForSeparation: "HFPRE2",
+		Gender:              "male",
 	}
 
 	benefit_json, _ := json.Marshal(benefit)
@@ -158,11 +158,11 @@ func TestBenefits_NonEligible(t *testing.T) {
 	defer teardownTests()
 
 	benefit := bindings.BenefitEligibilityRequest{
-		IncomeDetails:      "lt-30k",
-		TimeOutOfWork:      "lt-2weeks",
-		AbleToWork:         "yes",
-		ReasonForOutOfWork: "lost-job",
-		Gender:             "male",
+		IncomeDetails:       "HFPIR3",
+		OutOfWork:           "HFPOOW1",
+		AbleToWork:          "yes",
+		ReasonForSeparation: "HFPRE1",
+		Gender:              "male",
 	}
 
 	benefit_json, _ := json.Marshal(benefit)
