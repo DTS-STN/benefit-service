@@ -260,10 +260,13 @@ var doc = `{
                 "incomeDetails": {
                     "type": "string"
                 },
-                "reasonForOutOfWork": {
+                "outOfWork": {
                     "type": "string"
                 },
-                "timeOutOfWork": {
+                "province": {
+                    "type": "string"
+                },
+                "reasonForSeparation": {
                     "type": "string"
                 }
             }
@@ -315,10 +318,10 @@ var doc = `{
         "models.Error": {
             "type": "object",
             "properties": {
-                "errorMessage": {
+                "error_message": {
                     "type": "string"
                 },
-                "status": {
+                "status_code": {
                     "type": "integer"
                 }
             }
@@ -336,6 +339,9 @@ var doc = `{
                     "type": "integer"
                 },
                 "text": {
+                    "type": "string"
+                },
+                "value": {
                     "type": "string"
                 }
             }
