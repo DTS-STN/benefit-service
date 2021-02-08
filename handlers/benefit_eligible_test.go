@@ -52,6 +52,7 @@ func TestBenefits_EligibleOnlyRegular(t *testing.T) {
 		AbleToWork:          "yes",
 		ReasonForSeparation: "HFPRE1",
 		Gender:              "male",
+		Province:            "ON",
 	}
 
 	benefit_json, _ := json.Marshal(benefit)
@@ -89,6 +90,7 @@ func TestBenefits_EligibleOnlyMaternity(t *testing.T) {
 		AbleToWork:          "no",
 		ReasonForSeparation: "HFPRE3",
 		Gender:              "female",
+		Province:            "ON",
 	}
 
 	benefit_json, _ := json.Marshal(benefit)
@@ -126,6 +128,7 @@ func TestBenefits_EligibleOnlySickness(t *testing.T) {
 		AbleToWork:          "no",
 		ReasonForSeparation: "HFPRE2",
 		Gender:              "male",
+		Province:            "ON",
 	}
 
 	benefit_json, _ := json.Marshal(benefit)
@@ -163,6 +166,7 @@ func TestBenefits_NonEligible(t *testing.T) {
 		AbleToWork:          "yes",
 		ReasonForSeparation: "HFPRE1",
 		Gender:              "male",
+		Province:            "ON",
 	}
 
 	benefit_json, _ := json.Marshal(benefit)
