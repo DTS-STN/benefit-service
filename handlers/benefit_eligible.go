@@ -38,7 +38,7 @@ func (h *Handler) BenefitsEligibility(c echo.Context) error {
 	json.Unmarshal(data, &requestMap)
 
 	//Create a map to compare against
-	patternMap := map[string]interface{}{}
+	patternMap := make(map[string]interface{})
 
 	//Determine if individual qualifies for Regular EI Benefit
 	patternMap["incomeDetails"] = []string{"HFPIR2", "HFPIR1"}
@@ -50,7 +50,9 @@ func (h *Handler) BenefitsEligibility(c echo.Context) error {
 	if benefits.Service.Match(requestMap, patternMap) {
 		idArr = append(idArr, 1)
 	}
-
+	
+	// clear map
+	patternMap = make(map[string]interface{})
 	//Determine if individual qualifies for Maternity Benefit
 	patternMap["incomeDetails"] = []string{"HFPIR2", "HFPIR1"}
 	patternMap["outOfWork"] = "HFPOOW1"
@@ -62,6 +64,8 @@ func (h *Handler) BenefitsEligibility(c echo.Context) error {
 		idArr = append(idArr, 2)
 	}
 
+	// clear map
+	patternMap = make(map[string]interface{})
 	//Determine if individual qualifies for Sickness Benefit
 	patternMap["incomeDetails"] = []string{"HFPIR2", "HFPIR1"}
 	patternMap["outOfWork"] = []string{"HFPOOW1", "HFPOOW2"}
@@ -72,5 +76,24 @@ func (h *Handler) BenefitsEligibility(c echo.Context) error {
 	if benefits.Service.Match(requestMap, patternMap) {
 		idArr = append(idArr, 3)
 	}
+
+	// clear map
+	patternMap = make(map[string]interface{})
+	// check Ontario child care subsidy
+	patternMap["reasonForSeparation"] = "HFPRE3"
+	patternMap["province"] = "ON"
+	if benefits.Service.Match(requestMap, patternMap) {
+		idArr = append(idArr, 4)
+	}
+
+	// clear map
+	patternMap = make(map[string]interface{})
+	// check Ontario low income credit
+	patternMap["incomeDetails"] = "HFPIR3"
+	patternMap["province"] = "ON"
+	if benefits.Service.Match(requestMap, patternMap) {
+		idArr = append(idArr, 5)
+	}
+
 	return c.JSON(http.StatusOK, idArr)
 }
