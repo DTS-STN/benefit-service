@@ -46,6 +46,7 @@ func (h *Handler) BenefitsEligibility(c echo.Context) error {
 	patternMap["ableToWork"] = "yes"
 	patternMap["reasonForSeparation"] = "HFPRE1"
 	patternMap["gender"] = []string{"male", "female"}
+	patternMap["province"] = []string{"NL", "PE", "NS", "NB", "QC", "ON", "MB", "SK", "AB", "BC", "YT", "NT", "NU"}
 	if benefits.Service.Match(requestMap, patternMap) {
 		idArr = append(idArr, 1)
 	}
@@ -56,6 +57,7 @@ func (h *Handler) BenefitsEligibility(c echo.Context) error {
 	patternMap["ableToWork"] = "no"
 	patternMap["reasonForSeparation"] = "HFPRE3"
 	patternMap["gender"] = "female"
+	patternMap["province"] = []string{"NL", "PE", "NS", "NB", "QC", "ON", "MB", "SK", "AB", "BC", "YT", "NT", "NU"}
 	if benefits.Service.Match(requestMap, patternMap) {
 		idArr = append(idArr, 2)
 	}
@@ -66,6 +68,7 @@ func (h *Handler) BenefitsEligibility(c echo.Context) error {
 	patternMap["ableToWork"] = "no"
 	patternMap["reasonForSeparation"] = "HFPRE2"
 	patternMap["gender"] = []string{"male", "female"}
+	patternMap["province"] = []string{"NL", "PE", "NS", "NB", "QC", "ON", "MB", "SK", "AB", "BC", "YT", "NT", "NU"}
 	if benefits.Service.Match(requestMap, patternMap) {
 		idArr = append(idArr, 3)
 	}

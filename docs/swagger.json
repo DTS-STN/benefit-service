@@ -245,10 +245,13 @@
                 "incomeDetails": {
                     "type": "string"
                 },
-                "reasonForOutOfWork": {
+                "outOfWork": {
                     "type": "string"
                 },
-                "timeOutOfWork": {
+                "province": {
+                    "type": "string"
+                },
+                "reasonForSeparation": {
                     "type": "string"
                 }
             }
@@ -300,10 +303,10 @@
         "models.Error": {
             "type": "object",
             "properties": {
-                "errorMessage": {
+                "error_message": {
                     "type": "string"
                 },
-                "status": {
+                "status_code": {
                     "type": "integer"
                 }
             }
@@ -321,6 +324,9 @@
                     "type": "integer"
                 },
                 "text": {
+                    "type": "string"
+                },
+                "value": {
                     "type": "string"
                 }
             }

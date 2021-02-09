@@ -21,9 +21,11 @@ definitions:
         type: string
       incomeDetails:
         type: string
-      reasonForOutOfWork:
+      outOfWork:
         type: string
-      timeOutOfWork:
+      province:
+        type: string
+      reasonForSeparation:
         type: string
     type: object
   models.Benefits:
@@ -57,9 +59,9 @@ definitions:
     type: object
   models.Error:
     properties:
-      errorMessage:
+      error_message:
         type: string
-      status:
+      status_code:
         type: integer
     type: object
   models.Question:
@@ -71,6 +73,8 @@ definitions:
       id:
         type: integer
       text:
+        type: string
+      value:
         type: string
     type: object
   models.QuestionAnswers:
