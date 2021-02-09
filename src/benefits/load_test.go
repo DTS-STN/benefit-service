@@ -12,5 +12,5 @@ func TestCountBenefits(t *testing.T) {
 
 	count := Service.Count()
 
-	assert.Equal(t, 3, count)
+	assert.Equal(t, 5, count)
 }
