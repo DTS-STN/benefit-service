@@ -61,7 +61,7 @@ func TestBenefits_AllBenefits(t *testing.T) {
 		benefitResponse := new(renderings.BenefitsResponse)
 		json.NewDecoder(rec.Body).Decode(&benefitResponse.BenefitsList)
 
-		assert.Equal(t, 3, len(benefitResponse.BenefitsList))
+		assert.Equal(t, 5, len(benefitResponse.BenefitsList))
 	}
 }
 

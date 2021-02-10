@@ -90,7 +90,7 @@ func TestBenefits_EligibleOnlyMaternity(t *testing.T) {
 		AbleToWork:          "no",
 		ReasonForSeparation: "HFPRE3",
 		Gender:              "female",
-		Province:            "ON",
+		Province:            "QC",
 	}
 
 	benefit_json, _ := json.Marshal(benefit)
@@ -113,6 +113,75 @@ func TestBenefits_EligibleOnlyMaternity(t *testing.T) {
 		json.NewDecoder(rec.Body).Decode(&benefitResponse)
 
 		expectedResult := []int{2}
+
+		assert.Equal(t, expectedResult, benefitResponse)
+	}
+}
+
+func TestBenefits_EligibleChildCareSubsidy(t *testing.T) {
+	teardownTests := setupBenefitTests()
+	defer teardownTests()
+
+	benefit := bindings.BenefitEligibilityRequest{
+		ReasonForSeparation: "HFPRE3",
+		Gender:              "female",
+		Province:            "ON",
+	}
+
+	benefit_json, _ := json.Marshal(benefit)
+	benefitJSON := string(benefit_json)
+
+	// Setup Echo service
+	e := echo.New()
+	// Setup http request using httptest
+	req := httptest.NewRequest("POST", "/benefits/eligible", strings.NewReader(benefitJSON))
+	req.Header.Set("Content-Type", "application/json")
+
+	// Create a httptest record
+	rec := httptest.NewRecorder()
+	// Create a new Echo Context
+	c := e.NewContext(req, rec)
+
+	// Assertions
+	if assert.NoError(t, HandlerService.BenefitsEligibility(c)) {
+		benefitResponse := []int{}
+		json.NewDecoder(rec.Body).Decode(&benefitResponse)
+
+		expectedResult := []int{4}
+
+		assert.Equal(t, expectedResult, benefitResponse)
+	}
+}
+
+func TestBenefits_EligibleLowIncome(t *testing.T) {
+	teardownTests := setupBenefitTests()
+	defer teardownTests()
+
+	benefit := bindings.BenefitEligibilityRequest{
+		IncomeDetails: "HFPIR3",
+		Province:      "ON",
+	}
+
+	benefit_json, _ := json.Marshal(benefit)
+	benefitJSON := string(benefit_json)
+
+	// Setup Echo service
+	e := echo.New()
+	// Setup http request using httptest
+	req := httptest.NewRequest("POST", "/benefits/eligible", strings.NewReader(benefitJSON))
+	req.Header.Set("Content-Type", "application/json")
+
+	// Create a httptest record
+	rec := httptest.NewRecorder()
+	// Create a new Echo Context
+	c := e.NewContext(req, rec)
+
+	// Assertions
+	if assert.NoError(t, HandlerService.BenefitsEligibility(c)) {
+		benefitResponse := []int{}
+		json.NewDecoder(rec.Body).Decode(&benefitResponse)
+
+		expectedResult := []int{5}
 
 		assert.Equal(t, expectedResult, benefitResponse)
 	}
@@ -166,7 +235,7 @@ func TestBenefits_NonEligible(t *testing.T) {
 		AbleToWork:          "yes",
 		ReasonForSeparation: "HFPRE1",
 		Gender:              "male",
-		Province:            "ON",
+		Province:            "QC",
 	}
 
 	benefit_json, _ := json.Marshal(benefit)
