@@ -85,5 +85,64 @@
         "text": "Female"
       }
     ]
+  },
+  {
+    "id": 6,
+    "text": "What province do you live in?",
+    "value": "province",
+    "answers": [
+      {
+        "id": "NL",
+        "text": "Newfoundland and Labrador"
+      },
+      {
+        "id": "PE",
+        "text": "Prince Edward Island"
+      },
+      {
+        "id": "NS",
+        "text": "Nova Scotia"
+      },
+      {
+        "id": "NB",
+        "text": "New Brunswick"
+      },
+      {
+        "id": "QC",
+        "text": "Quebec"
+      },
+      {
+        "id": "ON",
+        "text": "Ontario"
+      },
+      {
+        "id": "MB",
+        "text": "Manitoba"
+      },
+      {
+        "id": "SK",
+        "text": "Saskatchewan"
+      },
+      {
+        "id": "AB",
+        "text": "Alberta"
+      },
+      {
+        "id": "BC",
+        "text": "British Columbia"
+      },
+      {
+        "id": "YT",
+        "text": "Yukon"
+      },
+      {
+        "id": "NT",
+        "text": "Northwest Territories"
+      },
+      {
+        "id": "NU",
+        "text": "Nunavut"
+      }
+    ]
   }
 ]
