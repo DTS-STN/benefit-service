@@ -1,94 +1,7 @@
 [
   {
     "id": 1,
-    "text": "How much income have you earned in Canada the last year?",
-    "value": "incomeDetails",
-    "answers": [
-      { 
-        "id": "HFPIR3",
-        "text": "Less than $30,000"
-      },
-      {
-        "id": "HFPIR2",
-        "text": "Between $30,000 & $60,000"
-      },
-      {
-        "id": "HFPIR1",
-        "text": "More than $60,000"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "text": "How long have you been out of work?",
-    "value": "outOfWork",
-    "answers": [
-      {
-        "id": "HFPOOW1",
-        "text": "Less than 2 weeks"
-      },
-      {
-        "id": "HFPOOW2",
-        "text": "More than 2 weeks but less than 3 months"
-      },
-      {
-        "id": "HFPOOW3",
-        "text": "More than 3 months"
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "text": "Are you able to work / look for work?",
-    "value": "ableToWork",
-    "answers": [
-      {
-        "id": "yes",
-        "text": "Yes"
-      },
-      {
-        "id": "no",
-        "text": "No"
-      }
-    ]
-  },
-  {
-    "id": 4,
-    "text": "Why are you currently out of work?",
-    "value": "reasonForSeparation",
-    "answers": [
-      {
-        "id": "HFPRE1",
-        "text": "I lost my job"
-      },
-      {
-        "id": "HFPRE2",
-        "text": "I am sick/injured"
-      },
-      {
-        "id": "HFPRE3",
-        "text": "I had a baby"
-      }
-    ]
-  },
-  {
-    "id": 5,
-    "text": "What is your gender?",
-    "value": "gender",
-    "answers": [
-      {
-        "id": "male",
-        "text": "Male"
-      },
-      {
-        "id": "female",
-        "text": "Female"
-      }
-    ]
-  },
-  {
-    "id": 6,
-    "text": "What province do you live in?",
+    "text": "What province are you from?",
     "value": "province",
     "answers": [
       {
@@ -142,6 +55,93 @@
       {
         "id": "NU",
         "text": "Nunavut"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "text": "How much income have you earned in Canada the last year?",
+    "value": "incomeDetails",
+    "answers": [
+      { 
+        "id": "HFPIR3",
+        "text": "Less than $30,000"
+      },
+      {
+        "id": "HFPIR2",
+        "text": "Between $30,000 & $60,000"
+      },
+      {
+        "id": "HFPIR1",
+        "text": "More than $60,000"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "text": "How long have you been out of work?",
+    "value": "outOfWork",
+    "answers": [
+      {
+        "id": "HFPOOW1",
+        "text": "Less than 2 weeks"
+      },
+      {
+        "id": "HFPOOW2",
+        "text": "More than 2 weeks but less than 3 months"
+      },
+      {
+        "id": "HFPOOW3",
+        "text": "More than 3 months"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "text": "Are you able to work / look for work?",
+    "value": "ableToWork",
+    "answers": [
+      {
+        "id": "yes",
+        "text": "Yes"
+      },
+      {
+        "id": "no",
+        "text": "No"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "text": "Why are you currently out of work?",
+    "value": "reasonForSeparation",
+    "answers": [
+      {
+        "id": "HFPRE1",
+        "text": "I lost my job"
+      },
+      {
+        "id": "HFPRE2",
+        "text": "I am sick/injured"
+      },
+      {
+        "id": "HFPRE3",
+        "text": "I had a baby"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "text": "What is your gender?",
+    "value": "gender",
+    "answers": [
+      {
+        "id": "male",
+        "text": "Male"
+      },
+      {
+        "id": "female",
+        "text": "Female"
       }
     ]
   }
